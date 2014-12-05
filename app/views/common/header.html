@@ -1,0 +1,20 @@
+<!-- Fixed navbar -->
+<header class="navbar navbar-inverse navbar-fixed-top blog-header" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand <% if (locals.mainPage) { %>active<% } %>" href="/">首页</a>
+      <a class="navbar-brand <% if (locals.fucaiPage) { %>active<% } %>" href="/">福彩3D</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="<% if (locals.aboutPage) { %>active<% } %>"><a target="_blank" ng-href="/about">关于</a></li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</header>
