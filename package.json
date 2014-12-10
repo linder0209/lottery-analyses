@@ -17,7 +17,8 @@
     "serve-favicon": "~2.1.7",
     "debug": "~2.1.0",
     "ejs": "~1.0.0",
-    "less-middleware": "1.0.4"
+    "less-middleware": "1.0.4",
+    "express-session": "~1.9.2"
   },
 
   "devDependencies": {

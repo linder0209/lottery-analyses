@@ -1,0 +1,119 @@
+/**
+ * 处理一些样式的前缀
+ * see Bootstrap  'less/mixins/vendor-prefixes.less'
+**/
+/**
+* http://www.lavishbootstrap.com/?image_url=http://design-seeds.com/palettes/12/SpringTones505.jpg
+* 官网提供的默认值为 #28363d   用以下公式计算为 #283637
+**/
+html,
+body {
+  height: auto;
+  min-height: 100%;
+}
+html {
+  position: relative;
+}
+body {
+  padding-top: 50px;
+}
+/**
+* 外边距
+**/
+.margin-top-md {
+  margin-top: 10px;
+}
+.margin-top-vl {
+  margin-top: 30px;
+}
+.margin-top-hg {
+  margin-top: 50px;
+}
+.margin-left-md {
+  margin-left: 10px;
+}
+.margin-left-lg {
+  margin-left: 20px;
+}
+/**
+ * 页面头部样式
+**/
+.navbar-inverse {
+  background-color: #28363d;
+  border-color: #141b1e;
+  background-image: -webkit-linear-gradient(top, #32444c 0%, #28363d 100%);
+  background-image: -o-linear-gradient(top, #32444c 0%, #28363d 100%);
+  background-image: linear-gradient(to bottom, #32444c 0%, #28363d 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff32444c', endColorstr='#ff28363d', GradientType=0);
+}
+.navbar-inverse .navbar-brand {
+  color: #e0e7ea;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #fff;
+}
+.navbar-inverse .navbar-brand.active {
+  color: #fff;
+  font-weight: bold;
+  background-color: #26333a;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #e0e7ea;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #fff;
+}
+.navbar-inverse .navbar-nav > li.active {
+  font-weight: bold;
+}
+.navbar-inverse .navbar-nav > li.active a,
+.navbar-inverse .navbar-nav > li.active a:hover,
+.navbar-inverse .navbar-nav > li.active a:focus {
+  background-color: #26333a;
+}
+/*
+* 页面底部样式
+*/
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.footer-assist {
+  padding-top: 350px;
+}
+.footer-copyright {
+  background-color: #F5F5F5;
+  color: #333;
+  padding: 10px 0 0;
+}
+.alert {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+input[type="radio"],
+input[type="checkbox"] {
+  margin-top: 3px;
+}
+/**
+ * 以下是一些通用的Angular 动画 css
+**/
+.animate-show {
+  -webkit-transition: all linear 0.5s;
+  -o-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  opacity: 1;
+}
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+}
+.masthead-button-links {
+  margin-top: 30px;
+}
+.masthead-button-links a + a {
+  margin-left: 20px;
+}

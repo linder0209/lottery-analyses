@@ -13,12 +13,12 @@
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/lottery-index.css">
   <!-- endbuild -->
 </head>
 <body ng-app="lotteryAnalysesApp">
 <% include ./views/common/header.html %>
-<div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+<div ng-view></div>
 <% include ./views/common/footer.html %>
 <!-- build:js(.) scripts/oldieshim-main.js -->
 <!--[if lt IE 9]>
@@ -27,6 +27,6 @@
 <![endif]-->
 <!-- endbuild -->
 
-<script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
+<script src="bower_components/requirejs/require.js" data-main="scripts/index.js"></script>
 </body>
 </html>

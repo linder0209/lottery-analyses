@@ -11,7 +11,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
+var session = require('express-session');
+
 var routes = require('./server/routes/routes');
+var config = require('./server/config');
 
 var app = express();
 var environment = 'development';
@@ -27,7 +30,14 @@ app.use(logger('dev'));
 app.use(bodyParser({limit: '10mb'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.cookieSecret));
+
+// Populates req.session
+app.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: config.sessionSecret
+}));
 
 //定义路由
 routes(app);

@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         }
       },
       less: {
-        files: ['<%= yeoman.app %>/less/{,*/}*.less'],
+        files: ['<%= yeoman.app %>/less/{,**/}*.less'],
         tasks: ['less']
       }
     },
@@ -394,7 +394,8 @@ module.exports = function (grunt) {
           paths: ['<%= yeoman.app %>/']
         },
         files: {
-          '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/less/main.less'
+          '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/less/main.less',
+          '<%= yeoman.app %>/styles/spring-tones/lottery-index.css': '<%= yeoman.app %>/less/lottery-index.less'
         }
       }
     }
