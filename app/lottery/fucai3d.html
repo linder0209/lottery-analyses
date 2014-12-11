@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><%= title %></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- build:css(.) styles/vendor-fucai.css -->
+  <link rel="stylesheet" href=" ../styles/spring-tones/bootstrap/css/bootstrap.css"/>
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/fucai.css -->
+  <link rel="stylesheet" href="../styles/spring-tones/lottery-analyses.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="lotteryAnalysesApp">
+<% include ../views/common/header.html %>
+
+<div class="">
+  <button class="btn btn-link btn-lg" type="button" ng-click="manageBlog();"><span
+    class="glyphicon glyphicon-cog"></span> 数据导入
+  </button>
+  <button class="btn btn-link btn-lg" type="button" ng-click="createBlog();"><span
+    class="glyphicon glyphicon-plus"></span> 模型创建
+  </button>
+  <button class="btn btn-link btn-lg" type="button" ng-click="createBlog();"><span
+    class="glyphicon glyphicon-plus"></span> 盈利统计
+  </button>
+</div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-sm-offset-2 col-sm-10 " ng-view>
+
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.container -->
+
+<% include ../views/common/footer.html %>
+<!-- build:js(.) scripts/oldieshim-fucai.js -->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<script src="../bower_components/requirejs/require.js" data-main="../scripts/fucai3d/config.js"></script>
+</body>
+</html>
+

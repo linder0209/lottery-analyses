@@ -143,12 +143,6 @@ body {
 .links-item-content {
   color: #f6f9f7;
 }
-.masthead-button-links {
-  margin-top: 30px;
-}
-.masthead-button-links a + a {
-  margin-left: 20px;
-}
 .alert {
   padding-top: 10px;
   padding-bottom: 10px;

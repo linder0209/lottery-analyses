@@ -337,6 +337,12 @@ module.exports = function (grunt) {
         options: {
           exclude: ['requirejs', 'json3', 'es5-shim']
         }
+      },
+      fucai3d:{
+        rjsConfig: '<%= yeoman.app %>/scripts/fucai3d/config.js',
+        options: {
+          exclude: ['requirejs', 'json3', 'es5-shim']
+        }
       }
     },
 
@@ -370,6 +376,22 @@ module.exports = function (grunt) {
             mangle: false
           }
         }
+      },
+      fucai3d: {
+        options: {
+          dir: '<%= yeoman.dist %>/scripts/',
+          modules: [{
+            name: 'fucai3d'
+          }],
+          preserveLicenseComments: false, // remove all comments
+          removeCombined: true,
+          baseUrl: '.tmp/<%= yeoman.app %>/scripts',
+          mainConfigFile: '.tmp/<%= yeoman.app %>/scripts/fucai3d/config.js',
+          optimize: 'uglify2',
+          uglify2: {
+            mangle: false
+          }
+        }
       }
     },
 
@@ -395,7 +417,8 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/less/main.less',
-          '<%= yeoman.app %>/styles/spring-tones/lottery-index.css': '<%= yeoman.app %>/less/lottery-index.less'
+          '<%= yeoman.app %>/styles/spring-tones/lottery-index.css': '<%= yeoman.app %>/less/lottery-index.less',
+          '<%= yeoman.app %>/styles/spring-tones/lottery-analyses.css': '<%= yeoman.app %>/less/lottery-analyses.less'
         }
       }
     }
@@ -425,7 +448,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'less:publish',//把less转换为css
-    'bower:app',
+    'bower',
     'replace:test',
     'concurrent:test',
     'autoprefixer',
@@ -437,7 +460,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'less:publish',//把less转换为css
-    'bower:app',
+    'bower',
     'replace:test',
     'useminPrepare',
     'concurrent:dist',
@@ -451,7 +474,7 @@ module.exports = function (grunt) {
     // 'uglify',
     'filerev',
     'usemin',
-    'requirejs:dist',
+    'requirejs',
     'htmlmin'
   ]);
 
