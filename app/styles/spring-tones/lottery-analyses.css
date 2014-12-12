@@ -143,6 +143,29 @@ body {
 .links-item-content {
   color: #f6f9f7;
 }
+.lottery-container {
+  margin-top: 20px;
+}
+.lottery-nav-tabs {
+  border-color: #6d9197;
+}
+.lottery-nav-tabs > li > a:hover {
+  border-color: #c4cdc1 #c4cdc1 #6d9197;
+}
+.lottery-nav-tabs > li.active > a,
+.lottery-nav-tabs > li.active > a:hover,
+.lottery-nav-tabs > li.active > a:focus {
+  border-color: #6d9197 #6d9197 transparent;
+}
+.lottery-box-layout {
+  background-color: #f8f9f8;
+  border: 1px solid #455f4c;
+  -webkit-box-shadow: 0 0 5px;
+  box-shadow: 0 0 5px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+}
 .alert {
   padding-top: 10px;
   padding-bottom: 10px;

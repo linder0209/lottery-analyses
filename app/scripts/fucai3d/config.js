@@ -64,7 +64,10 @@ require([
   'angular-sanitize',
   'angular-resource',
   'angular-animate',
-  'angular-touch'
+  'angular-touch',
+  '../services/httpInterceptor',
+  'services/service-import',
+  'directives/directive-link-active'
 ], function(angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch) {
   /* jshint ignore:start */
   var $html = angular.element(document.getElementsByTagName('html')[0]);

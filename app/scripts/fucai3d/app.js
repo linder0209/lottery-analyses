@@ -1,6 +1,7 @@
 /*jshint unused: vars */
-define(['angular', 'controllers/controller-import', 'controllers/controller-model', 'controllers/controller-analyses']/*deps*/,
-  function (angular, ImportCtrl, ModelCtrl, AnalysesCtrl)/*invoke*/ {
+define(['angular', 'controllers/controller-import', 'controllers/controller-model',
+    'controllers/controller-analyses', 'controllers/controller-main']/*deps*/,
+  function (angular, ImportCtrl, ModelCtrl, AnalysesCtrl, MainCtrl)/*invoke*/ {
   'use strict';
 
   /**
@@ -11,8 +12,11 @@ define(['angular', 'controllers/controller-import', 'controllers/controller-mode
    *
    * Main module of the application.
    */
-  return angular.module('lotteryAnalysesApp', ['lotteryAnalysesApp.controllers.ImportCtrl',
-    'lotteryAnalysesApp.controllers.ModelCtrl','lotteryAnalysesApp.controllers.AnalysesCtrl',/*angJSDeps*/
+  return angular.module('lotteryAnalysesApp', ['lotteryAnalysesApp.services.lotteryHttpInterceptor',
+    'lotteryAnalysesApp.services.importService',
+    'lotteryAnalysesApp.controllers.ImportCtrl',
+    'lotteryAnalysesApp.controllers.ModelCtrl','lotteryAnalysesApp.controllers.AnalysesCtrl',
+    'lotteryAnalysesApp.controllers.MainCtrl','lotteryAnalysesApp.directives.linkActive',/*angJSDeps*/
     'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ngAnimate', 'ngTouch']).config(function ($routeProvider) {
     $routeProvider.when('/import', {
       templateUrl: '../views/fucai3d/import.html', controller: 'ImportCtrl'

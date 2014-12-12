@@ -1,0 +1,25 @@
+.lottery-container{
+  margin-top: @margin-lg;
+}
+.lottery-nav-tabs{
+  border-color: @gray;
+  > li > a:hover{
+    border-color: @gray-lighter @gray-lighter @gray;
+  }
+  > li.active{
+    > a,
+    > a:hover,
+    > a:focus{
+      border-color: @gray @gray transparent;
+    }
+  }
+}
+
+.lottery-box-layout {
+  background-color: lighten(@body-bg, 10%);
+  border: 1px solid darken(@brand-primary, 15%);
+  .box-shadow(0 0 5px);
+  border-radius: 5px;
+  margin-bottom: @margin-vl;
+  padding: 10px 20px;
+}

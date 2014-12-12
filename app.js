@@ -25,9 +25,10 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/' + ('development' === app.get('env') ? 'app' : 'webapp') + '/favicon.ico'));
+var rootPath = __dirname + '/' + ('development' === app.get('env') ? 'app' : 'webapp');
+app.use(favicon(rootPath + '/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser({limit: '10mb'}));
+app.use(bodyParser({limit: '10mb',keepExtensions: true, uploadDir: rootPath + '/upload/tmp'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.cookieSecret));

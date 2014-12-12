@@ -1,5 +1,5 @@
 /*jshint unused: vars */
-define(['angular', 'controllers/main', 'controllers/about']/*deps*/, function (angular, MainCtrl, AboutCtrl)/*invoke*/ {
+define(['angular', 'controllers/main', 'controllers/about', 'directives/mydirective']/*deps*/, function (angular, MainCtrl, AboutCtrl, MyDirectiveDirective)/*invoke*/ {
   'use strict';
 
   /**
@@ -13,6 +13,7 @@ define(['angular', 'controllers/main', 'controllers/about']/*deps*/, function (a
   return angular
     .module('lotteryAnalysesApp', ['lotteryAnalysesApp.controllers.MainCtrl',
 'lotteryAnalysesApp.controllers.AboutCtrl',
+'lotteryAnalysesApp.directives.MyDirective',
 /*angJSDeps*/
     'ngCookies',
     'ngResource',

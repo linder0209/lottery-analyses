@@ -1,7 +1,7 @@
 'use strict';
 
 var index = require('./index');
-var lottery = require('./lottery');
+var fucai3d = require('./lottery/fucai3d');
 
 
 /**
@@ -17,5 +17,5 @@ var lottery = require('./lottery');
 
 module.exports = function (app) {
   app.use('/', index);
-  app.use('/lottery', lottery);
+  app.use('/lottery/fucai3d', fucai3d);
 };
