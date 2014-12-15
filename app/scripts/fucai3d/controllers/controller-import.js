@@ -9,38 +9,61 @@ define(['angular'], function (angular) {
    * Controller of the lotteryanalysesApp
    */
   angular.module('lotteryAnalysesApp.controllers.ImportCtrl', [])
-    .controller('ImportCtrl', function ($scope, importService) {
+    .controller('ImportCtrl', function ($scope, importService, findConditions) {
+      $scope.conditions = findConditions;
+      $scope.fucai3d = {
+        condition : findConditions[0]
+      };
+
+      //数据导入
       $scope.import = function(){
         var data = new FormData();
         var files = angular.element('#historyData')[0].files;
         if (files) {
           data.append('importData',files[0]);
         }
-        var config = {
-          cache: false,
-          dataType: 'json',
-          contentType: false,
-          processData: false
+
+        // FIXME 这里不知道利用Angular怎样写上传文件的请求，故先用jQuery来代替
+        // 可参考第三方插件 https://www.npmjs.com/package/angular-file-upload 来实现，待研究
+        /*var config = {
+          cache: false
         };
 
         importService.upload(data, config, function (data) {
           if (data.success === true) {
             console.info(1);
           }
-        });
+        });*/
 
-        /*$.ajax({
+        $.ajax({
           cache: false,
           type: 'post',
           dataType: 'json',
-          url:'upload',
+          url:'fucai3d/upload',
           data : data,
           contentType: false,
           processData: false,
-          success : function () {
-
+          success : function (data) {
+            if (data.success === true) {
+              $scope.items = data.items;
+              $scope.$apply();
+            }
           }
-        });*/
+        });
       };
+
+      //查询数据
+      $scope.find = function(){
+        importService.find($scope.fucai3d.condition,  function (data) {
+          if (data.success === true) {
+            $scope.items = data.items;
+            //if (!$scope.$root.$$phase) {
+            //  $scope.$apply();
+            //}
+          }
+        });
+      };
+
+      $scope.find();
     });
 });

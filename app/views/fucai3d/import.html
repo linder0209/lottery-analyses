@@ -4,13 +4,47 @@
       <form class="form-inline lottery-box-layout" enctype="multipart/form-data">
         <div class="form-group">
           <label>
-            历史数据 <input id="historyData" name="historyData" type="file">
+            历史数据
+            <input id="historyData" name="historyData" type="file" class="margin-left-lg">
           </label>
         </div>
-        <button type="submit" class="btn btn-default" ng-click="import();">导入</button>
+        <button type="submit" class="btn btn-primary" ng-click="import();">导入</button>
+      </form>
+
+      <form class="form-inline lottery-box-layout" ng-if="items.length > 0">
+        <div class="form-group">
+          <label>
+            查询
+            <select name="condition" class="form-control" ng-model="fucai3d.condition" ng-options="c.label for c in conditions"
+                    ng-change="find();">
+            </select>
+          </label>
+        </div>
       </form>
     </div>
   </div>
-</div>
+  <div class="table-responsive" ng-if="items.length > 0">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th>期数</th>
+        <th>开奖号码</th>
+        <th>类型</th>
+        <th>和值</th>
+        <th popover="是指三个号码相加之和。其中，三个号码相加之和在19（含）至27（含）之间时为大，在0（含）至8（含）之间时为小。"
+        popover-trigger="mouseenter" popover-popup-delay="300" popover-placement="right">大小</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in items">
+        <td>{{item.period}}</td>
+        <td>{{item.number}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.sum}}</td>
+        <td>{{item.size}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 
-importData
+</div>

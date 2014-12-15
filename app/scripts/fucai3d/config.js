@@ -5,6 +5,7 @@
 /*jshint unused: vars */
 require.config({
   paths: {
+    jquery: '../../bower_components/jquery/dist/jquery',
     angular: '../../bower_components/angular/angular',
     'angular-animate': '../../bower_components/angular-animate/angular-animate',
     'angular-cookies': '../../bower_components/angular-cookies/angular-cookies',
@@ -14,11 +15,15 @@ require.config({
     'angular-sanitize': '../../bower_components/angular-sanitize/angular-sanitize',
     'angular-scenario': '../../bower_components/angular-scenario/angular-scenario',
     'angular-touch': '../../bower_components/angular-touch/angular-touch',
-    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
+    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
+    'angular-bootstrap':  '../../bower_components/angular-bootstrap/ui-bootstrap-tpls'
   },
   shim: {
     angular: {
-      exports: 'angular'
+      exports: 'angular',
+      deps: [
+        'jquery'
+      ]
     },
     'angular-route': [
       'angular'
@@ -43,6 +48,12 @@ require.config({
         'angular'
       ],
       exports: 'angular.mock'
+    },
+    'angular-bootstrap': {
+      deps: [
+        'angular',
+        'bootstrap'
+      ]
     }
   },
   priority: [
@@ -57,7 +68,10 @@ require.config({
 window.name = 'NG_DEFER_BOOTSTRAP!';
 
 require([
+  'jquery',
   'angular',
+  'bootstrap',
+  'angular-bootstrap',
   'app',
   'angular-route',
   'angular-cookies',
@@ -68,7 +82,7 @@ require([
   '../services/httpInterceptor',
   'services/service-import',
   'directives/directive-link-active'
-], function(angular, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch) {
+], function(jquery, angular, bootstrap, angularBootstrap, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch) {
   /* jshint ignore:start */
   var $html = angular.element(document.getElementsByTagName('html')[0]);
   /* jshint ignore:end */

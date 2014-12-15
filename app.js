@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var session = require('express-session');
+var multer  = require('multer');
 
 var routes = require('./server/routes/routes');
 var config = require('./server/config');
@@ -28,10 +29,23 @@ app.set('view engine', 'html');
 var rootPath = __dirname + '/' + ('development' === app.get('env') ? 'app' : 'webapp');
 app.use(favicon(rootPath + '/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser({limit: '10mb',keepExtensions: true, uploadDir: rootPath + '/upload/tmp'}));
+app.use(bodyParser({limit: '10mb'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.cookieSecret));
+
+//上传文件中间件 https://www.npmjs.com/package/multer
+app.use(multer({ dest: rootPath + '/upload/tmp',
+  rename: function (fieldname, filename) {
+    return  filename.replace(/\W+/g, '-').toLowerCase() + Date.now();
+  },
+  onFileUploadStart: function (file) {
+    console.log(file.originalname + ' is starting ...');
+  },
+  onFileUploadComplete: function (file) {
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
+  }
+}));
 
 // Populates req.session
 app.use(session({
