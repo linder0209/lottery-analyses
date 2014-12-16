@@ -432,6 +432,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'less:publish',//把less转换为css
       'wiredep',
       'concurrent:server',
       'autoprefixer',
