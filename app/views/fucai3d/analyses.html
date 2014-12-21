@@ -1,0 +1,47 @@
+<div class="container-fluid lottery-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary" ng-click="startAnalyses('zx');">直选重复出现的几率</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">组选三重复出现的几率</button>
+      <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">组选六重复出现的几率</button>
+      <button type="button" class="btn btn-primary" ng-click="startAnalyses('sum');">每个和值出现的几率</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('interval');">组选六最大间隔</button>
+      <button type="button" class="btn btn-info" ng-click="startAnalyses('capRate');">各种投注中奖几率</button>
+    </div>
+  </div>
+
+  <div ng-if="analysesType=='sum'">
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <select name="year" class="form-control" ng-model="analyses.year" ng-options="y for y in years"
+                ng-change="sumQuery();">
+          <option value="">所有数据</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <!--<th>期号</th>
+          <th>开奖号码</th>-->
+          <th>和值</th>
+          <th>出现的次数</th>
+          <th>出现的几率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in sumDatas">
+          <td>{{$index + 1}}</td>
+          <td>{{item._id}}</td>
+          <td>{{item.time}}</td>
+          <td>{{item.probability}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

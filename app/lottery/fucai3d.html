@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- build:css(.) styles/vendor-fucai.css -->
-  <link rel="stylesheet" href=" ../styles/spring-tones/bootstrap/css/bootstrap.css"/>
+  <link rel="stylesheet" href="../styles/spring-tones/bootstrap/css/bootstrap.css"/>
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/fucai.css -->
   <link rel="stylesheet" href="../styles/spring-tones/lottery-analyses.css">
@@ -23,8 +23,9 @@
     <div class="col-sm-12">
       <ul class="nav nav-tabs lottery-nav-tabs">
         <li role="presentation" link-active="active"><a ng-href="#/import" ng-click="preventDefaultEvent($event);">数据导入</a></li>
-        <li role="presentation" link-active="active"><a ng-href="#/model" ng-click="preventDefaultEvent($event);">模型创建</a></li>
-        <li role="presentation" link-active="active"><a ng-href="#/analyses" ng-click="preventDefaultEvent($event);">盈利统计</a></li>
+        <li role="presentation" link-active="active"><a ng-href="#/model" ng-click="preventDefaultEvent($event);">创建模型</a></li>
+        <li role="presentation" link-active="active"><a ng-href="#/statistics" ng-click="preventDefaultEvent($event);">盈利统计</a></li>
+        <li role="presentation" link-active="active"><a ng-href="#/analyses" ng-click="preventDefaultEvent($event);">数据分析</a></li>
       </ul>
     </div>
 
@@ -38,8 +39,8 @@
 <% include ../views/common/footer.html %>
 <!-- build:js(.) scripts/oldieshim-fucai.js -->
 <!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.js"></script>
+<script src="../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../bower_components/json3/lib/json3.js"></script>
 <![endif]-->
 <!-- endbuild -->
 

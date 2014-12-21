@@ -35,6 +35,9 @@ body {
 .margin-left-lg {
   margin-left: 20px;
 }
+.margin-lg {
+  margin: 20px;
+}
 /**
 * 段落
 **/

@@ -6,7 +6,7 @@ define(['angular'], function (angular) {
    * register the interceptor as a service
    * 给 http 请求注册一个拦截器
    */
-  angular.module('lotteryAnalysesApp.services.lotteryHttpInterceptor',[])
+  angular.module('lotteryAnalysesApp.services.lotteryHttpInterceptor', [])
     .factory('lotteryHttpInterceptor', ['$q', function ($q) {
       return {
         // optional method
@@ -39,7 +39,7 @@ define(['angular'], function (angular) {
       $httpProvider.interceptors.push('lotteryHttpInterceptor');
       $httpProvider.defaults.transformRequest.push(function (data, headersGetter) {
         //发送请求的时候执行，在这里可以拦截发送数据，data指发送的数据
-        if(angular.element(document.body).attr('start-ajax-loading')){
+        if (angular.element(document.body).attr('start-ajax-loading')) {
           requestsNum++;//每发一次请求，增加一
           if (!angular.element.data(document.body, 'initAjaxLoading')) {
             angular.element('body').append('<div class="ajax-loading-backdrop" id="ajaxLoading"><div class="ajax-loading"></div></div>');
@@ -50,9 +50,9 @@ define(['angular'], function (angular) {
         return data;
       });
       $httpProvider.defaults.transformResponse.push(function (data, headersGetter) {
-        if(angular.element(document.body).attr('start-ajax-loading')){
+        if (angular.element(document.body).attr('start-ajax-loading')) {
           requestsNum--;//每次相应减一
-          if(requestsNum === 0){
+          if (requestsNum === 0) {
             angular.element('#ajaxLoading').hide();
           }
         }

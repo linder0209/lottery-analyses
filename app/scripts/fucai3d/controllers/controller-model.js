@@ -10,6 +10,8 @@ define(['angular'], function (angular) {
    */
   angular.module('lotteryAnalysesApp.controllers.ModelCtrl', [])
     .controller('ModelCtrl', function ($scope) {
-
+      $scope.createModel = function(type){
+         $scope.modelTmpl = '../views/fucai3d/templates/sum-model-tmpl.html';
+      };
     });
 });

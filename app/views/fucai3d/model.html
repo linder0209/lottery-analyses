@@ -1,0 +1,15 @@
+<div class="container-fluid lottery-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary" ng-click="startAnalyses('zx');">直选重复出现的几率</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">组选三重复出现的几率</button>
+      <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">组选六重复出现的几率</button>
+      <button type="button" class="btn btn-primary" ng-click="createModel('sum');">和值模型</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('interval');">组选六最大间隔</button>
+      <button type="button" class="btn btn-info" ng-click="startAnalyses('capRate');">各种投注中奖几率</button>
+    </div>
+  </div>
+
+  <div ng-include="modelTmpl" class="margin-top-hg"></div>
+</div>
+

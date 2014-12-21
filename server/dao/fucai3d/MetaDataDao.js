@@ -24,10 +24,10 @@ module.exports = metaDataDao;
  * @param callback {function}回调函数
  */
 MetaDataDao.prototype.saveAll = function (datas, callback) {
-  this.remove(function(err){
-    if(err){
+  this.remove(function (err) {
+    if (err) {
       return callback(err);
-    }else{
+    } else {
       MetaDataModel.create(datas, function (err, jellybean, snickers) {
         return callback(err);
       });
@@ -64,11 +64,83 @@ MetaDataDao.prototype.find = function (conditions, callback) {
  * @param callback {function} 回调函数
  */
 MetaDataDao.prototype.remove = function (conditions, callback) {
-  if(underscore.isFunction(conditions)){
+  if (underscore.isFunction(conditions)) {
     callback = conditions;
     conditions = {};
   }
   this.model.remove(conditions, function (err) {
     return callback(err);
   });
+};
+
+/**
+ * 直选重复出现的几率
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.zx = function (callback) {
+
+};
+/**
+ * 组选三重复出现的几率
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.zx3 = function (callback) {
+
+};
+/**
+ * 组选六重复出现的几率
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.zx6 = function (callback) {
+
+};
+/**
+ * 每个和值出现的几率
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.sum = function (year, callback) {
+  var model = this.model;
+  this.model.count(year ? {year: year} : {}, function (err, count) {
+    if (err === null) {
+      if (year) {
+        model.aggregate({$match: {year: year}}, {$group: {_id: '$sum', time: {$sum: 1}}},
+          {$sort: {_id: 1}}, function (err, docs) {
+            docs.forEach(function (doc) {
+              doc.probability = (doc.time / count * 100).toFixed(2) + '%';
+            });
+            callback(null, docs);
+          });
+      } else {
+        model.aggregate({$group: {_id: '$sum', time: {$sum: 1}}},
+          {$sort: {_id: 1}}, function (err, docs) {
+            docs.forEach(function (doc) {
+              doc.probability = (doc.time / count * 100).toFixed(2) + '%';
+            });
+            callback(null, docs);
+          });
+      }
+    } else {
+      callback(err);
+    }
+  });
+};
+/**
+ * 组选六最大间隔
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.interval = function (callback) {
+
+};
+/**
+ * 各种投注中奖几率
+ * @method
+ * @param callback {function} 回调函数
+ */
+MetaDataDao.prototype.capRate = function (callback) {
+
 };

@@ -1,8 +1,8 @@
 'use strict';
 var fs = require('fs');
 
-var commonMethod = require('./../../utils/commonMethod');
-var metaDataDao = require('./../../dao/fucai3d/MetaDataDao');
+var commonMethod = require('./../../../utils/commonMethod');
+var metaDataDao = require('./../../../dao/fucai3d/MetaDataDao');
 
 var fucai3d = {
   index: function (req, res) {

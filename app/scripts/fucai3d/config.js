@@ -16,7 +16,7 @@ require.config({
     'angular-scenario': '../../bower_components/angular-scenario/angular-scenario',
     'angular-touch': '../../bower_components/angular-touch/angular-touch',
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
-    'angular-bootstrap':  '../../bower_components/angular-bootstrap/ui-bootstrap-tpls'
+    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls'
   },
   shim: {
     angular: {
@@ -59,9 +59,7 @@ require.config({
   priority: [
     'angular'
   ],
-  packages: [
-
-  ]
+  packages: []
 });
 
 //http://code.angularjs.org/1.2.1/docs/guide/bootstrap#overview_deferred-bootstrap
@@ -81,12 +79,15 @@ require([
   'angular-touch',
   '../services/httpInterceptor',
   'services/service-import',
+  'services/service-analyses',
   'directives/directive-link-active'
-], function(jquery, angular, bootstrap, angularBootstrap, app, ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch) {
+], function (jquery, angular, bootstrap, angularBootstrap, app,
+             ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch,
+             httpInterceptor, serviceImport, analyses) {
   /* jshint ignore:start */
   var $html = angular.element(document.getElementsByTagName('html')[0]);
   /* jshint ignore:end */
-  angular.element().ready(function() {
+  angular.element().ready(function () {
     angular.resumeBootstrap([app.name]);
   });
 });
