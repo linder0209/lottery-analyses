@@ -21,6 +21,10 @@ define(['angular'], function (angular) {
           lotteryHttpService.post('fucai3d/analyses/sum', data).then(success);
         },
 
+        sumInterval: function (data, success) {
+          lotteryHttpService.post('fucai3d/analyses/sumInterval', data).then(success);
+        },
+
         interval: function (data, success) {
           lotteryHttpService.get('fucai3d/analyses/interval', data).then(success);
         },

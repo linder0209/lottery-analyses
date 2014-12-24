@@ -1,7 +1,5 @@
 'use strict';
-var fs = require('fs');
 
-var commonMethod = require('./../../../utils/commonMethod');
 var metaDataDao = require('./../../../dao/fucai3d/MetaDataDao');
 
 var analyses = {
@@ -59,6 +57,24 @@ var analyses = {
       }
     });
   },
+
+  sumInterval: function (req, res) {
+    var year =  req.body.year;
+    metaDataDao.sumInterval(year,function (err, docs, maxOmits) {
+      if (err) {
+        res.send({
+          success: false, errorMessage: err.message
+        });
+      } else {
+        res.send({
+          success: true,
+          items: docs,
+          maxOmits: maxOmits
+        });
+      }
+    });
+  },
+
   interval: function (req, res) {
     metaDataDao.zx(function (err, docs) {
       if (err) {
@@ -94,6 +110,7 @@ router.get('/zx', analyses.zx);
 router.get('/zx3', analyses.zx3);
 router.get('/zx6', analyses.zx6);
 router.post('/sum', analyses.sum);
+router.post('/sumInterval', analyses.sumInterval);
 router.get('/interval', analyses.interval);
 router.get('/capRate', analyses.capRate);
 

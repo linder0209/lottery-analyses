@@ -16,7 +16,8 @@ require.config({
     'angular-scenario': '../../bower_components/angular-scenario/angular-scenario',
     'angular-touch': '../../bower_components/angular-touch/angular-touch',
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
-    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls'
+    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls',
+    'lottery-ui-tab': '../common/lottery-ui-tab'
   },
   shim: {
     angular: {
@@ -54,6 +55,11 @@ require.config({
         'angular',
         'bootstrap'
       ]
+    },
+    'lottery-ui-tab': {
+      deps: [
+        'angular'
+      ]
     }
   },
   priority: [
@@ -70,6 +76,7 @@ require([
   'angular',
   'bootstrap',
   'angular-bootstrap',
+  'lottery-ui-tab',
   'app',
   'angular-route',
   'angular-cookies',
@@ -81,7 +88,7 @@ require([
   'services/service-import',
   'services/service-analyses',
   'directives/directive-link-active'
-], function (jquery, angular, bootstrap, angularBootstrap, app,
+], function (jquery, angular, bootstrap, angularBootstrap, lotteryUiTab, app,
              ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch,
              httpInterceptor, serviceImport, analyses) {
   /* jshint ignore:start */

@@ -128,6 +128,75 @@ MetaDataDao.prototype.sum = function (year, callback) {
     }
   });
 };
+
+/**
+ * 和值中奖间隔统计数据
+ * @param year
+ * @param callback
+ */
+MetaDataDao.prototype.sumInterval = function (year, callback) {
+  var model = this.model;
+  this.model.count(year ? {year: year} : {}, function (err, count) {
+    if (err === null) {
+      var omits = {},
+        maxOmits = [];
+
+      for (var i = 0; i <= 27; i++) {
+        omits[i + ''] = {
+          value: 0
+        };
+        maxOmits[i] = {
+          value: 0
+        };
+      }
+      model.find(year ? {year: year} : {}, {
+        _id: 1,
+        period: 1,
+        number: 1,
+        sum: 1
+      }, {sort: {period: 1}}, function (err, docs) {
+        if (err === null) {
+          var items = [];
+          docs.forEach(function (doc) {
+            var item = doc._doc;
+            var sum = item.sum;
+            /*jshint -W089*/
+            for (var o in omits) {
+              if (o === sum + '') {
+                if (maxOmits[o].value < omits[o + ''].value) {
+                  maxOmits[o].value = omits[o + ''].value;
+                }
+                omits[o + ''].value = 0;
+                item[o + ''] = {
+                  winning: true,
+                  omit: 0
+                };
+              } else {
+                omits[o + ''].value++;
+                item[o + ''] = {
+                  winning: false,
+                  omit: omits[o + ''].value
+                };
+              }
+            }
+            items.push(item);
+          });
+          maxOmits.forEach(function(item){
+            if(item.value === 0){
+              item.value = count;
+            }
+          });
+          callback(null, items, maxOmits);
+        } else {
+          callback(err);
+        }
+      });
+    } else {
+      callback(err);
+    }
+  });
+};
+
 /**
  * 组选六最大间隔
  * @method

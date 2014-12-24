@@ -12,7 +12,7 @@ define(['angular', 'controllers/controller-import', 'controllers/controller-mode
    *
    * Main module of the application.
    */
-  return angular.module('lotteryAnalysesApp', ['lotteryAnalysesApp.services.lotteryHttpInterceptor',
+  return angular.module('lotteryAnalysesApp', ['ui.bootstrap', 'lottery.ui.tab', 'lotteryAnalysesApp.services.lotteryHttpInterceptor',
     'lotteryAnalysesApp.services.importService','lotteryAnalysesApp.services.analysesService',
     'lotteryAnalysesApp.controllers.ImportCtrl','lotteryAnalysesApp.controllers.ModelCtrl',
     'lotteryAnalysesApp.controllers.StatisticsCtrl','lotteryAnalysesApp.controllers.AnalysesCtrl',
