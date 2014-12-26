@@ -10,15 +10,15 @@ define(['angular'], function (angular) {
    */
   angular.module('lotteryAnalysesApp.controllers.ModelCtrl', [])
     .controller('ModelCtrl', function ($scope, $compile, $lotteryTab) {
-      $scope.createModel = function(type){
-         $scope.modelTmpl = '../views/fucai3d/templates/sum-model-tmpl.html';
+      $scope.createModel = function (type) {
+        $scope.modelTmpl = '../views/fucai3d/templates/sum-model-tmpl.html';
       };
       var tabVariant = {
         num: 1
       };
 
-      $scope.addTab = function(type){
-        if(type === 'sum'){
+      $scope.addTab = function (type) {
+        if (type === 'sum') {
           var link = $compile(angular.element(angular.element(document.getElementById('tabHeader')).html()));
 
           //true参数表示新建一个完全隔离的scope,而不是继承的child scope
@@ -28,7 +28,7 @@ define(['angular'], function (angular) {
           tabScope.tabHeader = {
             num: tabVariant.num++,
             title: '和值',
-            close: function(){
+            close: function () {
               tabDomEl.remove();
               tab.closeTab();
             }
@@ -41,15 +41,27 @@ define(['angular'], function (angular) {
             controller: 'SumTabCtrl',
             container: $('.group-content')[0],
             scope: tabScope,
-            resolve: {
-
-            }
+            resolve: {}
           });
         }
       };
 
     })
     .controller('SumTabCtrl', function ($scope) {
-
+      $scope.numbers = {};
+      for (var i = 0; i < 27; i++) {
+        $scope.numbers[i + ''] = false;
+      }
+      $scope.selectNumber = function (e) {
+        var el = $(e.target);
+        if (el.hasClass('active')) {
+          el.removeClass('active');
+        } else {
+          el.addClass('active');
+        }
+        var uls = el.parent();
+        var index = uls.indexOf(el);
+        $scope.numbers[index + ''] = !!el.hasClass('active');
+      };
     });
 });

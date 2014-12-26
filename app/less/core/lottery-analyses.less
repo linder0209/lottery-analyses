@@ -67,7 +67,7 @@
       }
 
       &.tab-add {
-        &:first-child{
+        &:first-child {
           display: none;
         }
         > div {
@@ -84,8 +84,8 @@
         }
       }
 
-      &.active{
-        .tab{
+      &.active {
+        .tab {
           background-color: #fff;
           border-bottom-color: #fff;
           .num,
@@ -100,7 +100,7 @@
   .group-tab-add {
     position: absolute;
     top: -18px;
-    .glyphicon-plus{
+    .glyphicon-plus {
       color: #fff;
       background-color: @navbar-inverse-bg;
       border-radius: 50%;
@@ -113,15 +113,15 @@
       cursor: pointer;
       margin-top: 23px;
     }
-    .add-tabs{
-      >a{
+    .add-tabs {
+      > a {
         border: 1px solid @gray;
         padding: 2px 5px;
         color: @brand-primary;
         position: relative;
         white-space: nowrap;
         text-decoration: none;
-        &:hover{
+        &:hover {
           background-color: @brand-primary;
           color: #fff;
         }
@@ -134,5 +134,26 @@
     padding-top: 10px;
     background-color: #fff;
     min-height: 300px;
+  }
+}
+
+.number-list {
+  > li {
+    float: left;
+    border-radius: 50%;
+    border: 1px solid #6d9197;
+    color: #658b6f;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    &.active {
+      background-color: @gray;
+      color: #fff;
+    }
   }
 }

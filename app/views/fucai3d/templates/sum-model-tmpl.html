@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-offset-2 col-sm-8">
     <p class="text-info">玩法提示：所选号码与开奖号码的和数相同（顺序不限），奖金如下</p>
+
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -38,42 +39,64 @@
           <td>16</td>
           <td>15</td>
           <td>15</td>
-          <td><14/td>
+          <td>14</td>
         </tr>
         </tbody>
       </table>
     </div>
 
-    <ul>
-      <li>0</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-      <li>11</li>
-      <li>12</li>
-      <li>13</li>
-      <li>14</li>
-      <li>15</li>
-      <li>16</li>
-      <li>17</li>
-      <li>18</li>
-      <li>19</li>
-      <li>20</li>
-      <li>21</li>
-      <li>22</li>
-      <li>23</li>
-      <li>24</li>
-      <li>25</li>
-      <li>26</li>
-      <li>27</li>
+    <ul class="list-unstyled number-list clearfix" ng-click="selectNumber($event);">
+      <li ng-repeat="i in sumList" data-index="{{i}}">{{i}}</li>
     </ul>
+
+    <!--过滤条件-->
+    <hr/>
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <label>
+          过滤掉近期开奖（指和值和组三和组六）
+          <input type="text" name="filterRecent" ng-model="filterRecent"/>
+        </label>
+      </div>
+    </form>
+
+    <!--中奖率-->
+    <div class="lottery-box-layout">
+      中奖率：<span>{{winningRatePercent}}</span>
+      <a href="" ng-click="winningInfo();" class="margin-left-lg">详细信息</a>
+    </div>
+
+    <!--详细信息-->
+    <hr/>
+    <div class="lottery-box-layout">
+      <button class="btn btn-primary" ng-click="saveModel">保存</button>
+
+      <div class="table-responsive margin-top-lg">
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>期数</th>
+            <th>开奖号码</th>
+            <th>和值</th>
+            <th>奖金</th>
+            <th>回报率</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="data in historyDataRate">
+            <td>{{$index + 1}}</td>
+            <td>{{data.period}}</td>
+            <td>{{data.number}}</td>
+            <td>{{data.bonus}}</td>
+            <td>{{data.returns}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn btn-primary" ng-click="saveModel">保存</button>
+    </div>
   </div>
 </div>
 
