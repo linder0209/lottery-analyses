@@ -5,6 +5,7 @@
       <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">组选三重复出现的几率</button>
       <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">组选六重复出现的几率</button>
       <button type="button" class="btn btn-primary" ng-click="startAnalyses('sum');">每个和值出现的几率</button>
+      <button type="button" class="btn btn-primary" ng-click="startAnalyses('sumInterval');">和值中奖间隔统计表</button>
       <button type="button" class="btn btn-success" ng-click="startAnalyses('interval');">组选六最大间隔</button>
       <button type="button" class="btn btn-info" ng-click="startAnalyses('capRate');">各种投注中奖几率</button>
     </div>
@@ -13,7 +14,7 @@
   <div ng-if="analysesType=='sum'">
     <form class="form-inline margin-lg">
       <div class="form-group">
-        <select name="year" class="form-control" ng-model="analyses.year" ng-options="y for y in years"
+        <select name="year" class="form-control" ng-model="analyses.sumYear" ng-options="y for y in years"
                 ng-change="sumQuery();">
           <option value="">所有数据</option>
         </select>
@@ -40,6 +41,107 @@
           <td>{{item.probability}}</td>
         </tr>
         </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div ng-if="analysesType=='sumInterval'">
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <select name="year" class="form-control" ng-model="analyses.sumIntervalYear" ng-options="y for y in years"
+                ng-change="sumIntervalQuery();">
+          <option value="">所有数据</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th rowspan="2" class="text-center">序号</th>
+          <th rowspan="2" class="text-center">期号</th>
+          <th rowspan="2" class="text-center">开奖号码</th>
+          <th colspan="28" class="text-center">和值</th>
+        </tr>
+        <tr>
+          <th>0</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+          <th>11</th>
+          <th>12</th>
+          <th>13</th>
+          <th>14</th>
+          <th>15</th>
+          <th>16</th>
+          <th>17</th>
+          <th>18</th>
+          <th>19</th>
+          <th>20</th>
+          <th>21</th>
+          <th>22</th>
+          <th>23</th>
+          <th>24</th>
+          <th>25</th>
+          <th>26</th>
+          <th>27</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in sumIntervalDatas">
+          <td>{{$index + 1}}</td>
+          <td>{{item.period}}</td>
+          <td>{{item.number}}</td>
+          <td class="{{item['0'].winning?'text-red text-bold':'text-green'}}">{{item['0'].winning?'中奖':item['0'].omit}}</td>
+          <td class="{{item['1'].winning?'text-red text-bold':'text-green'}}">{{item['1'].winning?'中奖':item['1'].omit}}</td>
+          <td class="{{item['2'].winning?'text-red text-bold':'text-green'}}">{{item['2'].winning?'中奖':item['2'].omit}}</td>
+          <td class="{{item['3'].winning?'text-red text-bold':'text-green'}}">{{item['3'].winning?'中奖':item['3'].omit}}</td>
+          <td class="{{item['4'].winning?'text-red text-bold':'text-green'}}">{{item['4'].winning?'中奖':item['4'].omit}}</td>
+          <td class="{{item['5'].winning?'text-red text-bold':'text-green'}}">{{item['5'].winning?'中奖':item['5'].omit}}</td>
+
+          <td class="{{item['6'].winning?'text-red text-bold':'text-green'}}">{{item['6'].winning?'中奖':item['6'].omit}}</td>
+          <td class="{{item['7'].winning?'text-red text-bold':'text-green'}}">{{item['7'].winning?'中奖':item['7'].omit}}</td>
+          <td class="{{item['8'].winning?'text-red text-bold':'text-green'}}">{{item['8'].winning?'中奖':item['8'].omit}}</td>
+          <td class="{{item['9'].winning?'text-red text-bold':'text-green'}}">{{item['9'].winning?'中奖':item['9'].omit}}</td>
+          <td class="{{item['10'].winning?'text-red text-bold':'text-green'}}">{{item['10'].winning?'中奖':item['10'].omit}}</td>
+          <td class="{{item['11'].winning?'text-red text-bold':'text-green'}}">{{item['11'].winning?'中奖':item['11'].omit}}</td>
+
+          <td class="{{item['12'].winning?'text-red text-bold':'text-green'}}">{{item['12'].winning?'中奖':item['12'].omit}}</td>
+          <td class="{{item['13'].winning?'text-red text-bold':'text-green'}}">{{item['13'].winning?'中奖':item['13'].omit}}</td>
+          <td class="{{item['14'].winning?'text-red text-bold':'text-green'}}">{{item['14'].winning?'中奖':item['14'].omit}}</td>
+          <td class="{{item['15'].winning?'text-red text-bold':'text-green'}}">{{item['15'].winning?'中奖':item['15'].omit}}</td>
+          <td class="{{item['16'].winning?'text-red text-bold':'text-green'}}">{{item['16'].winning?'中奖':item['16'].omit}}</td>
+          <td class="{{item['17'].winning?'text-red text-bold':'text-green'}}">{{item['17'].winning?'中奖':item['17'].omit}}</td>
+
+          <td class="{{item['18'].winning?'text-red text-bold':'text-green'}}">{{item['18'].winning?'中奖':item['18'].omit}}</td>
+          <td class="{{item['19'].winning?'text-red text-bold':'text-green'}}">{{item['19'].winning?'中奖':item['19'].omit}}</td>
+          <td class="{{item['20'].winning?'text-red text-bold':'text-green'}}">{{item['20'].winning?'中奖':item['20'].omit}}</td>
+          <td class="{{item['21'].winning?'text-red text-bold':'text-green'}}">{{item['21'].winning?'中奖':item['21'].omit}}</td>
+          <td class="{{item['22'].winning?'text-red text-bold':'text-green'}}">{{item['22'].winning?'中奖':item['22'].omit}}</td>
+          <td class="{{item['23'].winning?'text-red text-bold':'text-green'}}">{{item['23'].winning?'中奖':item['23'].omit}}</td>
+
+          <td class="{{item['24'].winning?'text-red text-bold':'text-green'}}">{{item['24'].winning?'中奖':item['24'].omit}}</td>
+          <td class="{{item['25'].winning?'text-red text-bold':'text-green'}}">{{item['25'].winning?'中奖':item['25'].omit}}</td>
+          <td class="{{item['26'].winning?'text-red text-bold':'text-green'}}">{{item['26'].winning?'中奖':item['26'].omit}}</td>
+          <td class="{{item['27'].winning?'text-red text-bold':'text-green'}}">{{item['27'].winning?'中奖':item['27'].omit}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>最大遗漏</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th ng-repeat="o in maxOmits">{{o.value}}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

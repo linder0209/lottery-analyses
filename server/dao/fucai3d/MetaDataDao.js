@@ -128,6 +128,75 @@ MetaDataDao.prototype.sum = function (year, callback) {
     }
   });
 };
+
+/**
+ * 和值中奖间隔统计数据
+ * @param year
+ * @param callback
+ */
+MetaDataDao.prototype.sumInterval = function (year, callback) {
+  var model = this.model;
+  this.model.count(year ? {year: year} : {}, function (err, count) {
+    if (err === null) {
+      var omits = {},
+        maxOmits = [];
+
+      for (var i = 0; i <= 27; i++) {
+        omits[i + ''] = {
+          value: 0
+        };
+        maxOmits[i] = {
+          value: 0
+        };
+      }
+      model.find(year ? {year: year} : {}, {
+        _id: 1,
+        period: 1,
+        number: 1,
+        sum: 1
+      }, {sort: {period: 1}}, function (err, docs) {
+        if (err === null) {
+          var items = [];
+          docs.forEach(function (doc) {
+            var item = doc._doc;
+            var sum = item.sum;
+            /*jshint -W089*/
+            for (var o in omits) {
+              if (o === sum + '') {
+                if (maxOmits[o].value < omits[o + ''].value) {
+                  maxOmits[o].value = omits[o + ''].value;
+                }
+                omits[o + ''].value = 0;
+                item[o + ''] = {
+                  winning: true,
+                  omit: 0
+                };
+              } else {
+                omits[o + ''].value++;
+                item[o + ''] = {
+                  winning: false,
+                  omit: omits[o + ''].value
+                };
+              }
+            }
+            items.push(item);
+          });
+          maxOmits.forEach(function (item) {
+            if (item.value === 0) {
+              item.value = count;
+            }
+          });
+          callback(null, items, maxOmits);
+        } else {
+          callback(err);
+        }
+      });
+    } else {
+      callback(err);
+    }
+  });
+};
+
 /**
  * 组选六最大间隔
  * @method
@@ -144,3 +213,97 @@ MetaDataDao.prototype.interval = function (callback) {
 MetaDataDao.prototype.capRate = function (callback) {
 
 };
+
+MetaDataDao.prototype.winningRate = function (conditions, callback) {
+  var combine = conditions.combine;
+  var filterRecent = conditions.filterRecent;
+
+  this.find({}, {_id: 1, period: 1, number: 1, sum: 1}, {sort: {period: -1}, limit: 100}, function (err, docs) {
+    if (err) {
+      callback(err);
+    } else {
+      var winning = 0;
+      var winningRatePercent;
+      if (!filterRecent) {
+        docs.forEach(function (doc) {
+          var item = doc._doc;
+          var sum = item.sum;
+          if (combine.indexOf(sum) !== -1) {
+            winning++;
+          }
+        });
+        winningRatePercent = winning + '%';
+      }
+
+      callback(null, winningRatePercent);
+    }
+  });
+};
+
+
+MetaDataDao.prototype.winningInfo = function (conditions, callback) {
+  var combine = conditions.combine;
+  var filterRecent = conditions.filterRecent;
+  var recentPeriod = parseInt(conditions.recentPeriod);
+
+  this.find({}, {_id: 1, period: 1, number: 1, sum: 1}, {
+    sort: {period: -1},
+    limit: recentPeriod
+  }, function (err, docs) {
+    if (err) {
+      callback(err);
+    } else {
+      var historyDataRate = [];
+      if (!filterRecent) {
+        docs.forEach(function (doc) {
+          var item = doc._doc;
+          var sum = item.sum;
+          if (combine.indexOf(sum) !== -1) {
+            item.bonus = bonus[sum];
+            item.returns = (item.bonus / combine.length * 2 * 100) .toFixed(2) + '%';
+          }
+          historyDataRate.push(item);
+        });
+      }
+
+      callback(null, historyDataRate);
+    }
+  });
+};
+
+function bonus(sum) {
+  var bon = {
+    '0': 1024,
+    '1': 345,
+    '2': 172,
+    '3': 104,
+    '4': 69,
+    '5': 49,
+    '6': 37,
+    '7': 29,
+    '8': 23,
+    '9': 19,
+    '10': 16,
+    '11': 15,
+    '12': 15,
+    '13': 14,
+    '14': 14,
+    '15': 15,
+    '16': 15,
+    '17': 16,
+    '18': 19,
+    '19': 23,
+    '20': 29,
+    '21': 37,
+    '22': 49,
+    '23': 69,
+    '24': 104,
+    '25': 172,
+    '26': 345,
+    '27': 1024
+  };
+  return bon[sum];
+
+}
+
+

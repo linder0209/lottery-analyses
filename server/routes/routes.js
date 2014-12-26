@@ -3,6 +3,7 @@
 var index = require('./index');
 var fucai3d = require('./lottery/fucai3d/index');
 var fucai3dAnalyses = require('./lottery/fucai3d/analyses');
+var fucai3dModel =  require('./lottery/fucai3d/model');
 
 
 /**
@@ -20,4 +21,5 @@ module.exports = function (app) {
   app.use('/', index);
   app.use('/lottery/fucai3d', fucai3d);
   app.use('/lottery/fucai3d/analyses', fucai3dAnalyses);
+  app.use('/lottery/fucai3d/model', fucai3dModel);
 };

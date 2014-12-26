@@ -1,15 +1,46 @@
 <div class="container-fluid lottery-container">
   <div class="row">
-    <div class="col-sm-12">
-      <button type="button" class="btn btn-primary" ng-click="startAnalyses('zx');">直选重复出现的几率</button>
-      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">组选三重复出现的几率</button>
-      <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">组选六重复出现的几率</button>
-      <button type="button" class="btn btn-primary" ng-click="createModel('sum');">和值模型</button>
-      <button type="button" class="btn btn-success" ng-click="startAnalyses('interval');">组选六最大间隔</button>
-      <button type="button" class="btn btn-info" ng-click="startAnalyses('capRate');">各种投注中奖几率</button>
+    <div class="col-sm-offset-1 col-sm-10">
+      <div class="group-panel">
+        <!-- group tab start-->
+        <ul class="group-tab clearfix list-unstyled" id="tabHeaderContainer">
+
+        </ul>
+        <!-- group tab end-->
+
+        <div class="group-tab-add" style="left: 225px;" ng-mouseenter="showGroupTabs=true;" ng-mouseleave="showGroupTabs=false;">
+          <span class="glyphicon glyphicon-plus"></span>
+
+          <div class="add-tabs ng-hide" ng-show="showGroupTabs">
+            <a href="" style="left: 35px;top: -55px;" ng-click="addTab('sum')">和值</a>
+            <a href="" style="left: 9px;top: -29px;" ng-click="addTab('zx')">直选</a>
+            <a href="" style="left: -48px;top: -2px;" ng-click="addTab('zx3')">组选3</a>
+          </div>
+        </div>
+
+        <!-- group content start-->
+        <div class="group-content">
+
+        </div>
+        <!-- group content end-->
+      </div>
     </div>
   </div>
 
-  <div ng-include="modelTmpl" class="margin-top-hg"></div>
 </div>
+
+<script type="text/ng-template" id="tabHeader">
+  <li class="tab-add">
+    <div>
+      <span class="glyphicon glyphicon-plus"></span>
+    </div>
+  </li>
+  <li>
+    <div class="tab">
+      <span class="num">{{tabHeader.num}}</span>
+      <span class="title">{{tabHeader.title}}</span>
+    </div>
+    <a href="" class="close" ng-click="tabHeader.close()">&times;</a>
+  </li>
+</script>
 

@@ -23,6 +23,9 @@ body {
 .margin-top-md {
   margin-top: 10px;
 }
+.margin-top-lg {
+  margin-top: 20px;
+}
 .margin-top-vl {
   margin-top: 30px;
 }
@@ -44,6 +47,27 @@ body {
 .paragraph p {
   line-height: 2em;
   text-indent: 2em;
+}
+.text-vertical-top {
+  vertical-align: top;
+}
+.text-vertical-middle {
+  vertical-align: middle;
+}
+.text-vertical-bottom {
+  vertical-align: bottom;
+}
+/**
+ * 字体样式
+**/
+.text-red {
+  color: red;
+}
+.text-green {
+  color: green;
+}
+.text-bold {
+  font-weight: bold;
 }
 /**
  * ajax loading
@@ -195,6 +219,119 @@ body {
   border-radius: 5px;
   margin-bottom: 30px;
   padding: 10px 20px;
+}
+.group-panel {
+  position: relative;
+}
+.group-panel .group-tab {
+  margin-bottom: 0;
+}
+.group-panel .group-tab > li {
+  float: left;
+  position: relative;
+  top: 1px;
+}
+.group-panel .group-tab > li .tab {
+  padding: 0px 20px 0px 5px;
+  height: 50px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #6d9197;
+  border-radius: 3px 3px 0px 0px;
+  color: #6d9197;
+  cursor: pointer;
+}
+.group-panel .group-tab > li .tab .num {
+  margin-top: 3px;
+  font: bold 36px Tahoma, Geneva, sans-serif;
+  color: #c4cdc1;
+}
+.group-panel .group-tab > li .tab .title {
+  margin-top: 13px;
+  vertical-align: top;
+  display: inline-block;
+  font-size: 18px;
+  color: #99aead;
+  font-weight: bold;
+}
+.group-panel .group-tab > li .close {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  display: none;
+}
+.group-panel .group-tab > li.tab-add:first-child {
+  display: none;
+}
+.group-panel .group-tab > li.tab-add > div {
+  line-height: 48px;
+  color: #6d9197;
+  font-size: 20px;
+  padding: 0 5px;
+}
+.group-panel .group-tab > li:hover .close {
+  display: inline-block;
+}
+.group-panel .group-tab > li.active .tab {
+  background-color: #fff;
+  border-bottom-color: #fff;
+}
+.group-panel .group-tab > li.active .tab .num,
+.group-panel .group-tab > li.active .tab .title {
+  color: #658b6f;
+}
+.group-panel .group-tab-add {
+  position: absolute;
+  top: -18px;
+}
+.group-panel .group-tab-add .glyphicon-plus {
+  color: #fff;
+  background-color: #28363d;
+  border-radius: 50%;
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  padding: 0 5px;
+  line-height: 35px;
+  font-size: 26px;
+  cursor: pointer;
+  margin-top: 23px;
+}
+.group-panel .group-tab-add .add-tabs > a {
+  border: 1px solid #6d9197;
+  padding: 2px 5px;
+  color: #658b6f;
+  position: relative;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.group-panel .group-tab-add .add-tabs > a:hover {
+  background-color: #658b6f;
+  color: #fff;
+}
+.group-panel .group-content {
+  border: 1px solid #6d9197;
+  padding-top: 10px;
+  background-color: #fff;
+  min-height: 300px;
+}
+.number-list > li {
+  float: left;
+  border-radius: 50%;
+  border: 1px solid #6d9197;
+  color: #658b6f;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+.number-list > li.active {
+  background-color: #6d9197;
+  color: #fff;
 }
 .alert {
   padding-top: 10px;
