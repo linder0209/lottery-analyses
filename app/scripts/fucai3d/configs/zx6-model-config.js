@@ -5,19 +5,18 @@
 /*jshint unused: vars */
 require.config({
   paths: {
-    jquery: '../../bower_components/jquery/dist/jquery',
-    angular: '../../bower_components/angular/angular',
-    'angular-animate': '../../bower_components/angular-animate/angular-animate',
-    'angular-cookies': '../../bower_components/angular-cookies/angular-cookies',
-    'angular-mocks': '../../bower_components/angular-mocks/angular-mocks',
-    'angular-resource': '../../bower_components/angular-resource/angular-resource',
-    'angular-route': '../../bower_components/angular-route/angular-route',
-    'angular-sanitize': '../../bower_components/angular-sanitize/angular-sanitize',
-    'angular-scenario': '../../bower_components/angular-scenario/angular-scenario',
-    'angular-touch': '../../bower_components/angular-touch/angular-touch',
-    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
-    'angular-bootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls',
-    'lottery-ui-tab': '../common/lottery-ui-tab'
+    jquery: '../../../bower_components/jquery/dist/jquery',
+    angular: '../../../bower_components/angular/angular',
+    'angular-animate': '../../../bower_components/angular-animate/angular-animate',
+    'angular-cookies': '../../../bower_components/angular-cookies/angular-cookies',
+    'angular-mocks': '../../../bower_components/angular-mocks/angular-mocks',
+    'angular-resource': '../../../bower_components/angular-resource/angular-resource',
+    'angular-route': '../../../bower_components/angular-route/angular-route',
+    'angular-sanitize': '../../../bower_components/angular-sanitize/angular-sanitize',
+    'angular-scenario': '../../../bower_components/angular-scenario/angular-scenario',
+    'angular-touch': '../../../bower_components/angular-touch/angular-touch',
+    bootstrap: '../../../bower_components/bootstrap/dist/js/bootstrap',
+    'angular-bootstrap': '../../../bower_components/angular-bootstrap/ui-bootstrap-tpls'
   },
   shim: {
     angular: {
@@ -60,11 +59,6 @@ require.config({
         'angular',
         'bootstrap'
       ]
-    },
-    'lottery-ui-tab': {
-      deps: [
-        'angular'
-      ]
     }
   },
   priority: [
@@ -81,21 +75,19 @@ require([
   'angular',
   'bootstrap',
   'angular-bootstrap',
-  'lottery-ui-tab',
-  'app',
+  '../apps/zx6-model-app',
   'angular-route',
   'angular-cookies',
   'angular-sanitize',
   'angular-resource',
   'angular-animate',
   'angular-touch',
-  '../services/httpInterceptor',
-  'services/service-import',
-  'services/service-analyses',
-  'directives/directive-link-active'
-], function (jquery, angular, bootstrap, angularBootstrap, lotteryUiTab, app,
+  '../../services/httpInterceptor',
+  '../services/service-common',
+  '../services/service-zx6-model'
+], function (jquery, angular, bootstrap, angularBootstrap, app,
              ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch,
-             httpInterceptor, serviceImport, analyses) {
+             httpInterceptor, serviceCommon, serviceModel) {
   /* jshint ignore:start */
   var $html = angular.element(document.getElementsByTagName('html')[0]);
   /* jshint ignore:end */

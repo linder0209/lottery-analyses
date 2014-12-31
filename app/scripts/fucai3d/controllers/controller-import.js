@@ -9,7 +9,7 @@ define(['angular'], function (angular) {
    * Controller of the lotteryanalysesApp
    */
   angular.module('lotteryAnalysesApp.controllers.ImportCtrl', [])
-    .controller('ImportCtrl', function ($scope, importService, findConditions) {
+    .controller('ImportCtrl', function ($scope, $modal, importService, findConditions) {
       $scope.conditions = findConditions;
       $scope.fucai3d = {
         condition : findConditions[0]
@@ -47,6 +47,17 @@ define(['angular'], function (angular) {
             if (data.success === true) {
               $scope.items = data.items;
               $scope.$apply();
+              $modal.open({
+                templateUrl: '../views/templates/alert-modal.html',
+                controller: 'AlertModalCtrl',
+                resolve: {
+                  config: function () {
+                    return {
+                      modalContent: '导入数据成功！'
+                    };
+                  }
+                }
+              });
             }
           }
         });

@@ -31,7 +31,8 @@ var analyses = {
     });
   },
   zx6: function (req, res) {
-    metaDataDao.zx(function (err, docs) {
+    var year =  req.body.year;
+    metaDataDao.zx6(year,function (err, docs) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
@@ -60,7 +61,7 @@ var analyses = {
 
   sumInterval: function (req, res) {
     var year =  req.body.year;
-    metaDataDao.sumInterval(year,function (err, docs, maxOmits) {
+    metaDataDao.sumInterval(year,function (err, items, minOmits, maxOmits) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
@@ -68,22 +69,27 @@ var analyses = {
       } else {
         res.send({
           success: true,
-          items: docs,
+          items: items,
+          minOmits: minOmits,
           maxOmits: maxOmits
         });
       }
     });
   },
 
-  interval: function (req, res) {
-    metaDataDao.zx(function (err, docs) {
+  zx6Interval: function (req, res) {
+    var year =  req.body.year;
+    metaDataDao.zx6Interval(year,function (err, items, minOmits, maxOmits) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
         });
       } else {
         res.send({
-          success: true, items: docs
+          success: true,
+          items: items,
+          minOmits: minOmits,
+          maxOmits: maxOmits
         });
       }
     });
@@ -108,10 +114,10 @@ var router = express.Router();
 
 router.get('/zx', analyses.zx);
 router.get('/zx3', analyses.zx3);
-router.get('/zx6', analyses.zx6);
+router.post('/zx6', analyses.zx6);
 router.post('/sum', analyses.sum);
 router.post('/sumInterval', analyses.sumInterval);
-router.get('/interval', analyses.interval);
+router.post('/zx6Interval', analyses.zx6Interval);
 router.get('/capRate', analyses.capRate);
 
 /**

@@ -2,15 +2,46 @@
   <div class="row">
     <div class="col-sm-12">
       <button type="button" class="btn btn-primary" ng-click="startAnalyses('zx');">直选重复出现的几率</button>
-      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">组选三重复出现的几率</button>
-      <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">组选六重复出现的几率</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx3');">每个组选三出现的几率</button>
+      <button type="button" class="btn btn-info" ng-click="startAnalyses('zx6');">每个组选六出现的几率</button>
       <button type="button" class="btn btn-primary" ng-click="startAnalyses('sum');">每个和值出现的几率</button>
       <button type="button" class="btn btn-primary" ng-click="startAnalyses('sumInterval');">和值中奖间隔统计表</button>
-      <button type="button" class="btn btn-success" ng-click="startAnalyses('interval');">组选六最大间隔</button>
+      <button type="button" class="btn btn-success" ng-click="startAnalyses('zx6Interval');">组选六最大间隔</button>
       <button type="button" class="btn btn-info" ng-click="startAnalyses('capRate');">各种投注中奖几率</button>
     </div>
   </div>
 
+  <div ng-if="analysesType=='zx6'">
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <select name="year" class="form-control" ng-model="analyses.zx6Year" ng-options="y for y in years"
+                ng-change="zx6Query();">
+          <option value="">所有数据</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>组选6</th>
+          <th>出现的次数</th>
+          <th>出现的几率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in zx6Datas">
+          <td>{{$index + 1}}</td>
+          <td>{{item._id}}</td>
+          <td>{{item.time}}</td>
+          <td>{{item.probability}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <div ng-if="analysesType=='sum'">
     <form class="form-inline margin-lg">
       <div class="form-group">
@@ -136,6 +167,12 @@
         </tbody>
         <tfoot>
           <tr>
+            <th>最小遗漏</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th ng-repeat="o in minOmits">{{o.value}}</th>
+          </tr>
+          <tr>
             <th>最大遗漏</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
@@ -144,6 +181,51 @@
         </tfoot>
       </table>
     </div>
+  </div>
+
+  <div ng-if="analysesType=='zx6Interval'">
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <select name="year" class="form-control" ng-model="analyses.zx6IntervalYear" ng-options="y for y in years"
+                ng-change="zx6IntervalQuery();">
+          <option value="">所有数据</option>
+        </select>
+      </div>
+    </form>
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th rowspan="2" class="text-center">期号</th>
+        <th rowspan="2" class="text-center">开奖号码</th>
+        <th colspan="120" class="text-center">组六</th>
+      </tr>
+      <tr>
+        <th ng-repeat="combine in zx6Combine">{{combine}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in zx6IntervalDatas">
+        <td>{{item.period}}</td>
+        <td>{{item.number}}</td>
+        <td ng-repeat="combine in item.zx6Combine" class="{{combine.winning?'text-red text-bold':'text-green'}}">
+          {{combine.winning?'中奖':combine.omit}}
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>最小遗漏</th>
+        <th>&nbsp;</th>
+        <th ng-repeat="o in minOmits">{{o.value}}</th>
+      </tr>
+      <tr>
+        <th>最大遗漏</th>
+        <th>&nbsp;</th>
+        <th ng-repeat="o in maxOmits">{{o.value}}</th>
+      </tr>
+      </tfoot>
+    </table>
   </div>
 </div>
 

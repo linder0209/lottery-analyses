@@ -1,52 +1,16 @@
 <div class="row">
   <div class="col-sm-offset-2 col-sm-8">
-    <p class="text-info">玩法提示：所选号码与开奖号码的和数相同（顺序不限），奖金如下</p>
-
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-        <tr>
-          <th>和数</th>
-          <th>0或27</th>
-          <th>1或26</th>
-          <th>2或25</th>
-          <th>3或24</th>
-          <th>4或23</th>
-          <th>5或22</th>
-          <th>6或21</th>
-          <th>7或20</th>
-          <th>8或19</th>
-          <th>9或18</th>
-          <th>10或17</th>
-          <th>11或16</th>
-          <th>12或15</th>
-          <th>13或14</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>奖金(元)</td>
-          <td>1024</td>
-          <td>345</td>
-          <td>172</td>
-          <td>104</td>
-          <td>69</td>
-          <td>49</td>
-          <td>37</td>
-          <td>29</td>
-          <td>23</td>
-          <td>19</td>
-          <td>16</td>
-          <td>15</td>
-          <td>15</td>
-          <td>14</td>
-        </tr>
-        </tbody>
-      </table>
+    <p class="text-info">
+      玩法提示：当期开奖号码的三位数各不相同，且投注号码与当期开奖号码相同（顺序不限），即中奖。奖金为固定奖金 173元
+    </p>
+    <hr/>
+    <h3>选择要投注的组合（至少选择三个）</h3>
+    <div alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+      {{alert.message}}
     </div>
 
     <ul class="list-unstyled number-list clearfix" ng-click="selectNumber($event);">
-      <li ng-repeat="i in sumList" data-index="{{i}}">{{i}}</li>
+      <li ng-repeat="i in zx6List" data-index="{{i}}">{{i}}</li>
     </ul>
 
     <!--过滤条件-->
@@ -54,8 +18,8 @@
     <form class="form-inline margin-lg">
       <div class="form-group">
         <label>
-          过滤掉近期开奖（指和值和组三和组六）
-          <input type="text" name="filterRecent" ng-model="filterRecent" ng-change="winningRate()"/>
+          过滤掉近期组六开奖
+          <input type="text" name="filterRecent" ng-model="fucai3d.filterRecent" ng-change="winningRate()"/>
         </label>
       </div>
     </form>
@@ -87,7 +51,8 @@
               <th>序号</th>
               <th>期数</th>
               <th>开奖号码</th>
-              <th>和值</th>
+              <th>号码形态</th>
+              <th>历史投入</th>
               <th>奖金</th>
               <th>回报率</th>
             </tr>
@@ -97,7 +62,8 @@
               <td>{{$index + 1}}</td>
               <td>{{data.period}}</td>
               <td>{{data.number}}</td>
-              <td>{{data.sum}}</td>
+              <td>{{data.shape}}</td>
+              <td>{{data.investment}}</td>
               <td ng-class="{'text-red': !!data.bonus, 'text-bold': !!data.bonus}">{{data.bonus || 0}}</td>
               <td ng-class="{'text-red': !!data.returns, 'text-bold': !!data.returns}">{{data.returns || '0%'}}</td>
             </tr>

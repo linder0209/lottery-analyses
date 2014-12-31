@@ -37,6 +37,7 @@ var fucai3d = {
                 period: period,
                 year: period.length === 4 ? '200' + period[0] : '20' + period.substring(0, 2),
                 number: number.join(),
+                combine: number.sort().join(),
                 type: commonMethod.fucai3dType(number),
                 sum: sum,
                 size: sum >= 8 ? '小' : '大'

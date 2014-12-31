@@ -12,7 +12,8 @@ var schema = new Schema({
   period: { type: String },
   year: { type: String},
   number: { type: String },
-  type: { type: String },//类型，组三或组六
+  combine: { type: String },//排序后的组合
+  type: { type: String },//类型，组三或组六，值为： 组三 或 组六
   sum: { type: Number },//和值
   size: { type: String }//大小
 });
