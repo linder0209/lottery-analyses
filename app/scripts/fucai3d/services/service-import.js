@@ -15,71 +15,83 @@ define(['angular'], function (angular) {
       };
     }])
     .constant('findConditions', [{//查询条件
-      byYear: true,
+      byPeriod: true,
       period: 30,
       label: '近30期'
     },{
-      byYear: true,
+      byPeriod: true,
       period: 50,
       label: '近50期'
     },{
-      byYear: true,
+      byPeriod: true,
       period: 100,
       label: '近100期'
     },{
       byPeriod: true,
+      period: 300,
+      label: '近300期'
+    },{
+      byPeriod: true,
+      period: 500,
+      label: '近500期'
+    },{
+      byPeriod: true,
+      period: 1000,
+      label: '近1000期'
+    },{
+      byYear: true,
       year: '2014',
       label: '2014年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2013',
       label: '2013年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2013',
       label: '2013年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2012',
       label: '2012年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2011',
       label: '2011年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2010',
       label: '2010年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2009',
       label: '2009年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2008',
       label: '2008年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2007',
       label: '2007年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2006',
       label: '2006年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2005',
       label: '2005年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2004',
       label: '2004年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2003',
       label: '2003年'
     },{
-      byPeriod: true,
+      byYear: true,
       year: '2002',
       label: '2002年'
     }]);

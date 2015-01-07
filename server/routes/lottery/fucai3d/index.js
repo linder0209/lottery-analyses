@@ -40,7 +40,7 @@ var fucai3d = {
                 combine: number.sort().join(),
                 type: commonMethod.fucai3dType(number),
                 sum: sum,
-                size: sum >= 8 ? '小' : '大'
+                size: sum >= 19 ? '大' : sum <= 8 ? '小' : '中'
               };
             });
             //console.info(datas);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><%= title %></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- build:css(.) styles/vendor-fucai.css -->
+  <link rel="stylesheet" href="../../styles/spring-tones/bootstrap/css/bootstrap.css"/>
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/fucai.css -->
+  <link rel="stylesheet" href="../../styles/spring-tones/lottery-analyses.css">
+  <!-- endbuild -->
+</head>
+
+<body ng-app="lotteryAnalysesApp" start-ajax-loading="true" ng-controller="CommonCtrl"
+  ng-init="combineModelId = '<%=locals.combineModelId%>'">
+
+<div class="container-fluid lottery-container">
+  <div ng-include="'../../views/zucai/templates/model-details-tmpl.html'"  ng-controller="ModelDetailsCtrl"></div>
+</div>
+
+<!-- build:js(.) scripts/oldieshim-fucai.js -->
+<!--[if lt IE 9]>
+<script src="../../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../../bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<script src="../../bower_components/requirejs/require.js" data-main="../../scripts/zucai/configs/model-details-config.js"></script>
+</body>
+</html>
+

@@ -41,7 +41,7 @@
         <td>{{item.number}}</td>
         <td>{{item.type}}</td>
         <td>{{item.sum}}</td>
-        <td>{{item.size}}</td>
+        <td ng-class="{'text-red': item.size == '大' || item.size == '小'}">{{item.size}}</td>
       </tr>
       </tbody>
     </table>

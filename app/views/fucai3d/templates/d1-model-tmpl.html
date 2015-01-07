@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-sm-offset-2 col-sm-8">
+    <h3>玩法提示</h3>
+    <p class="text-info">
+      1D：至少选择1个号码，投注号码与开奖号码中对应位置的号码相同即中 10元。
+    </p>
+
+    <p class="text-info">
+      猜1D：至少选择1个号码，投注号码与开奖号码中任意位置的号码相同即中 2元，二个位置相同 12元，三个位置相同 230元。
+    </p>
+    <hr/>
+    <h3>选择要投注的组合</h3>
+    <ul class="nav nav-tabs lottery-nav-tabs">
+      <li ng-class="{active: fucai3d.bet1d}"><a ng-href="" ng-click="fucai3d.bet1d=true;">1D</a></li>
+      <li ng-class="{active: !fucai3d.bet1d}"><a ng-href="" ng-click="fucai3d.bet1d=false;">猜1D</a></li>
+    </ul>
+
+    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet1d === true">
+      <h4>百位</h4>
+      <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('Hundreds', $event);">
+        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+      </ul>
+
+      <h4>十位</h4>
+      <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('Decade', $event);">
+        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+      </ul>
+
+      <h4>个位</h4>
+      <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('SingleDigits', $event);">
+        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+      </ul>
+    </div>
+
+    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet1d !== true">
+      <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('', $event);">
+        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+      </ul>
+    </div>
+
+    <!--过滤条件-->
+    <hr/>
+    <form class="form-inline margin-lg">
+      <div class="form-group">
+        <label>
+          过滤掉近期组六开奖
+          <input type="text" name="filterRecent" ng-model="fucai3d.filterRecent" ng-change="winningRate()"/>
+        </label>
+      </div>
+    </form>
+
+    <!--中奖率-->
+    <div class="lottery-box-layout">
+      中奖率：{{winningRatePercent.toFixed(2)}}%，
+      总回报率：{{returnsPercent.toFixed(2)}}%
+      <a href="" ng-click="winningInfo();" class="margin-left-lg">详细信息</a>
+    </div>
+
+    <!--详细信息-->
+    <div class="ng-hide" ng-show="showWinningInfo">
+      <hr/>
+      <div class="lottery-box-layout form-inline">
+        <label>
+          中奖率：{{winningRatePercent.toFixed(2)}}%，
+          总回报率：{{returnsPercent.toFixed(2)}}%
+        </label>
+        <select name="recentPeriod" class="form-control margin-left-hg" ng-model="fucai3d.recentPeriod" ng-options="c.label for c in recentPeriods"
+                ng-change="winningInfo();">
+        </select>
+        <button class="btn btn-primary margin-left-lg" ng-click="saveModel">保存</button>
+
+        <div class="table-responsive margin-top-lg">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+              <th>序号</th>
+              <th>期数</th>
+              <th>开奖号码</th>
+              <th>历史投入</th>
+              <th>奖金</th>
+              <th>回报率</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="data in historyDataRate">
+              <td>{{$index + 1}}</td>
+              <td>{{data.period}}</td>
+              <td>{{data.number}}</td>
+              <td>{{data.investment}}</td>
+              <td ng-class="{'text-red': !!data.bonus, 'text-bold': !!data.bonus}">{{data.bonus || 0}}</td>
+              <td ng-class="{'text-red': data.returns > 100, 'text-bold': data.returns > 100}">{{(data.returns == null ? 0 : data.returns.toFixed(2)) + '%'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button class="btn btn-primary" ng-click="saveModel">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+

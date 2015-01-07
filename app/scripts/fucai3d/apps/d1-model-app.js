@@ -1,6 +1,6 @@
 /*jshint unused: vars */
-define(['angular', '../../controllers/controller-common','../controllers/controller-zx6-model']/*deps*/,
-  function (angular, Zx6ModelCtrl)/*invoke*/ {
+define(['angular', '../../controllers/controller-common','../controllers/controller-d1-model']/*deps*/,
+  function (angular, D1ModelCtrl)/*invoke*/ {
     'use strict';
 
     /**
@@ -13,8 +13,8 @@ define(['angular', '../../controllers/controller-common','../controllers/control
      */
     return angular.module('lotteryAnalysesApp', ['ui.bootstrap', 'lotteryAnalysesApp.services.lotteryHttpInterceptor',
       'lotteryAnalysesApp.services.commonService',
-      'lotteryAnalysesApp.services.zx6ModelService',
+      'lotteryAnalysesApp.services.d1ModelService',
       'lotteryAnalysesApp.controllers.CommonCtrl',
-      'lotteryAnalysesApp.controllers.Zx6ModelCtrl',/*angJSDeps*/
+      'lotteryAnalysesApp.controllers.D1ModelCtrl',/*angJSDeps*/
       'ngCookies', 'ngResource', 'ngSanitize', 'ngRoute', 'ngAnimate', 'ngTouch']);
   });

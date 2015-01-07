@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <button type="button" class="btn btn-primary ng-hide" ng-show="!model.showForm" ng-click="createModel();">创建组合模型
+    </button>
+    <div alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+      {{alert.message}}
+    </div>
+    <form class="form-horizontal lottery-box-layout ng-hide" ng-show="model.showForm">
+      <div class="form-group">
+        <h3 class="col-sm-offset-4 col-sm-4 text-center">模型表单</h3>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">模型名称</label>
+
+        <div class="col-sm-7">
+          <input type="text" class="form-control" id="name" ng-model="model.name" placeholder="请输入模型名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">选择模型组合</label>
+
+        <div class="col-sm-7">
+          <label class="checkbox-inline" ng-repeat="field in favoriteModelList">
+            <input type="checkbox" ng-model="field.value"  ng-change="selectModel(field);">
+            <a href="{{field.link}}" target="_blank" popover="{{field.remark}}"
+               popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
+              {{field.name}}，单倍金额 <span class="text-red text-bold">{{field.singleAmount}}</span> 元
+            </a>
+            <a class="glyphicon glyphicon-pencil" href="" style="font-size: 12px;" ng-click="editFavoriteModel(field);"></a>
+            <a href="" class="glyphicon glyphicon-remove" style="font-size: 12px;" ng-click="removeFavoriteModel(field)"></a>
+          </label>
+          <label class="checkbox-inline">
+            <a href="" ng-click="addFavoriteModel();">收藏新的模型</a>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">每期模型投入</label>
+
+        <div class="col-sm-7">
+          <dl class="dl-horizontal zucai-dl-horizontal">
+            <dt>模型名称</dt>
+            <dd>每期参考投入金额</dd>
+          </dl>
+          <dl class="dl-horizontal zucai-dl-horizontal" ng-repeat="model in selectedModel">
+            <dt>{{model.name}}，单倍金额 <span class="text-red text-bold">{{model.singleAmount}}</span> 元</dt>
+            <dd><input type="text" class="form-control" ng-model="model.invest"/></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">盈利方式</label>
+
+        <div class="col-sm-7">
+          <select class="form-control" ng-model="model.type">
+            <option value="1">进取型单倍模式</option>
+            <option value="2">稳健性倍投模式</option>
+            <option value="3">激进型级数模式</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-7">
+          <button type="submit" class="btn btn-primary" ng-click="saveModel();">保存</button>
+          <button type="button" class="btn btn-default margin-left-md" ng-click="cancelCreateModel();">取消</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive margin-top-lg">
+      <table class="table table-bordered table-striped table-hover table-center">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>模型名称</th>
+          <th>模型组合</th>
+          <th>执行期数</th>
+          <th>历史投入</th>
+          <th>历史回报</th>
+          <th>历史盈利</th>
+          <th>回报率</th>
+          <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in modelList" ng-class="{'text-red': item.returns > 100, 'text-bold':  item.returns > 100}">
+          <td>{{$index + 1}}</td>
+          <td>
+            <span ng-show="!item.editing" class="ng-hide">{{item.name}}</span>
+            <input type="text" class="form-control" ng-model="item.name" ng-show="item.editing" class="ng-hide"/>
+          </td>
+          <td style="padding-left: 0;padding-right: 0;">
+            <dl class="dl-horizontal zucai-dl-horizontal" ng-repeat="combine in item.combine">
+              <dt>{{combine.name}}</dt>
+              <dd popover="每期参考投入金额"
+                   popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
+                <span ng-show="!item.editing" class="ng-hide">{{combine.invest}}</span>
+                <input type="text" class="form-control ng-hide" ng-model="combine.invest" ng-show="item.editing" style="width:100px;"/>
+              </dd>
+            </dl>
+          </td>
+          <td>{{item.periods}}</td>
+          <td>{{item.investment}}</td>
+          <td>{{item.bonus}}</td>
+          <td>{{item.bonus - item.investment}}</td>
+          <td>{{item.returns.toFixed(2) + '%'}}</td>
+          <td>
+            <a ng-href="/lottery/zucai/{{item._id}}" target="_blank">详情</a>
+            <a class="ng-hide" href="" ng-click="editModel(item);" ng-show="!item.editing">编辑</a>
+            <a class="ng-hide" href="" ng-click="updateModel(item);" ng-show="item.editing">修改保存</a>
+            <a class="ng-hide" href="" ng-click="cancelEditModel(item);" ng-show="item.editing">取消修改</a>
+            <a href="" ng-click="removeModel(item);">删除</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="favoriteModelContent.html">
+  <form class="form-horizontal" name="favoriteModelForm">
+    <div class="modal-header">
+      <button type="button" class="close" ng-click="cancel()" title="Close">&times;</button>
+      <h4 class="modal-title">添加收藏模型</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="favoriteModelName" class="col-sm-2 control-label">模型名称</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="favoriteModelName" name="favoriteModelName"  ng-model="favoriteModel.name"  maxlength="300">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="singleAmount" class="col-sm-2 control-label">模型单倍金额</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="singleAmount" name="singleAmount"  ng-model="favoriteModel.singleAmount"  maxlength="300">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="favoriteModelLink" class="col-sm-2 control-label">模型链接</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="favoriteModelLink" name="favoriteModelLink" ng-model="favoriteModel.link" maxlength="300">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="favoriteModelLink" class="col-sm-2 control-label">备注</label>
+
+        <div class="col-sm-10">
+          <textarea class="form-control" style="height:100px;width:100%" ng-model="favoriteModel.remark" ></textarea>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" ng-disabled="favoriteModelForm.$pristine" ng-click="saveFavoriteModel();">保存</button>
+      <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+    </div>
+  </form>
+</script>

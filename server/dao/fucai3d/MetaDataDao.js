@@ -46,15 +46,15 @@ MetaDataDao.prototype.saveAll = function (datas, callback) {
  */
 MetaDataDao.prototype.find = function (conditions, callback) {
   if (conditions.byYear) {
-    return this.model.find({}, {}, {limit: conditions.period, sort: {period: -1}}, function (err, docs) {
+    return this.model.find({year: conditions.year}, {}, {sort: {period: -1}}, function (err, docs) {
       callback(err, docs);
     });
   } else if (conditions.byPeriod) {
-    return this.model.find({year: conditions.year}, {}, {sort: {period: 1}}, function (err, docs) {
+    return this.model.find({}, {}, {limit: conditions.period, sort: {year: -1, period: -1}}, function (err, docs) {
       callback(err, docs);
     });
   } else {
-    return this.model.find({}, {}, {sort: {period: 1}}, function (err, docs) {
+    return this.model.find({}, {}, {sort: {year: -1, period: -1}}, function (err, docs) {
       callback(err, docs);
     });
   }
@@ -255,7 +255,7 @@ MetaDataDao.prototype.zx6Interval = function (year, callback) {
   }
 
   var conditions = {};
-  if(year){
+  if (year) {
     conditions = {year: {$in: year.split(',')}};
   }
   this.model.find(conditions, {
@@ -421,13 +421,13 @@ MetaDataDao.prototype.saveModel = function (data, callback) {
 MetaDataDao.prototype.winningRateZx6 = function (conditions, callback) {
   var combine = conditions.combine;
   var filterRecent = conditions.filterRecent;
-  filterRecent = filterRecent ? parseInt(filterRecent): 0;
+  filterRecent = filterRecent ? parseInt(filterRecent) : 0;
   if (!combine || combine.length < 3) {
     return callback(new Error('请至少选择三个'));
   }
   var zx6Combine = commonMethod.subZx6Combine(combine);
   //过滤掉顺子号
-  zx6Combine = commonMethod.filterCombine(zx6Combine,[3]);
+  zx6Combine = commonMethod.filterCombine(zx6Combine, [3]);
   //默认统计100期数据
   var period = 100;
   period += filterRecent;
@@ -454,11 +454,11 @@ MetaDataDao.prototype.winningRateZx6 = function (conditions, callback) {
         //先过滤掉历史数据
         for (var i = index + 1; i < index + 1 + filterRecent; i++) {
           var k = _zx6Combine.indexOf(docs[i]._doc.combine);
-          if ( k !== -1) {
+          if (k !== -1) {
             _zx6Combine[k] = false;
           }
         }
-        _zx6Combine = _zx6Combine.filter(function(item){
+        _zx6Combine = _zx6Combine.filter(function (item) {
           return item !== false;
         });
         investment += _zx6Combine.length * 2;
@@ -502,6 +502,10 @@ MetaDataDao.prototype.winningInfoZx6 = function (conditions, callback) {
       var investment = 0;//投入
       var bonus = 0;//回报
 
+      var zx6Combine = commonMethod.subZx6Combine(combine);
+      //过滤掉顺子号
+      zx6Combine = commonMethod.filterCombine(zx6Combine, [3]);
+
       _docs.forEach(function (doc, index) {
         var item = doc._doc;
         var comb = item.combine;
@@ -511,11 +515,11 @@ MetaDataDao.prototype.winningInfoZx6 = function (conditions, callback) {
         //先过滤掉历史数据
         for (var i = index + 1; i < index + 1 + filterRecent; i++) {
           var k = _zx6Combine.indexOf(docs[i]._doc.combine);
-          if ( k !== -1) {
+          if (k !== -1) {
             _zx6Combine[k] = false;
           }
         }
-        _zx6Combine = _zx6Combine.filter(function(item){
+        _zx6Combine = _zx6Combine.filter(function (item) {
           return item !== false;
         });
         investment += _zx6Combine.length * 2;
@@ -541,11 +545,7 @@ MetaDataDao.prototype.winningInfoZx6 = function (conditions, callback) {
     }
   }
 
-  filterRecent = filterRecent ? parseInt(filterRecent): 0;
-  var zx6Combine = commonMethod.subZx6Combine(combine);
-  //过滤掉顺子号
-  zx6Combine = commonMethod.filterCombine(zx6Combine,[3]);
-
+  filterRecent = filterRecent ? parseInt(filterRecent) : 0;
   var condition = {};
   var options = {};
   var model = this.model;
@@ -563,7 +563,7 @@ MetaDataDao.prototype.winningInfoZx6 = function (conditions, callback) {
           function (err, docs) {
             processData(err, docs, count);
           });
-      }else{
+      } else {
         callback(err);
       }
     });
@@ -590,4 +590,323 @@ MetaDataDao.prototype.saveModelZx6 = function (data, callback) {
 };
 
 
+//创建1d、猜1d模型
+MetaDataDao.prototype.winningRateD1 = function (conditions, callback) {
+  var combine = conditions.combine;
+  var type = conditions.type;
+  var filterRecent = conditions.filterRecent;
+  filterRecent = filterRecent ? parseInt(filterRecent) : 0;
+  //默认统计100期数据
+  var period = 100;
+  period += filterRecent;
 
+  this.model.find({}, {_id: 1, period: 1, number: 1}, {
+    sort: {year: -1, period: -1},
+    limit: period
+  }, function (err, docs) {
+    if (err) {
+      callback(err);
+    } else {
+      var _docs = underscore.clone(docs).slice(0, 100);
+
+      var winning = 0;
+      var winningRatePercent;
+      var returnsPercent;
+      var investment = 0;//总投入
+      var bonus = 0;//总回报
+      var invest = 0;//每次投入
+      var bonu = 0;//每次回报
+
+      _docs.forEach(function (doc, index) {
+        var item = doc._doc;
+        var number = item.number.split(',');
+        var _combine = [];
+        var i, j, k;
+        var hisNum;
+
+        for (i = 0; i < 3; i++) {
+          _combine.push(underscore.clone(combine[i]));
+        }
+
+        if (type === 'bet1d') {
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine[j].indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[j][k] = false;
+              }
+            }
+          }
+
+          for (j = 0; j < 3; j++) {
+            /*jshint -W083*/
+            _combine[j] = _combine[j].filter(function (item) {
+              return item !== false;
+            });
+          }
+          invest = underscore.flatten(_combine).length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          for (j = 0; j < 3; j++) {
+            if (_combine[j].indexOf(number[j] - 0) !== -1) {
+              bonu += 10;
+            }
+          }
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }else{
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine.indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[k] = false;
+              }
+            }
+          }
+
+          _combine = _combine.filter(function (item) {
+            return item !== false;
+          });
+          invest = _combine.length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          number = number.sort();
+          var shape = commonMethod.getShape(item.number);
+          if(shape === 1){//三个号一样
+            if (_combine.indexOf(number[0] - 0) !== -1) {
+              bonu = 320;
+            }
+          }else if(shape === 2) {//两个号一样
+            if(number[0] === number[1]){
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[2] - 0) !== -1) {
+                bonu += 2;
+              }
+            }else if(number[1] === number[2]){
+              if (_combine.indexOf(number[1] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }else{
+            for (j = 0; j < 3; j++) {
+              if (_combine.indexOf(number[j] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }
+
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }
+      });
+      winningRatePercent = winning;
+      returnsPercent = bonus === 0 ? 0 : bonus / investment * 100;
+
+      callback(null, {
+        winningRatePercent: winningRatePercent,
+        returnsPercent: returnsPercent
+      });
+    }
+  });
+};
+
+
+MetaDataDao.prototype.winningInfoD1 = function (conditions, callback) {
+  var combine = conditions.combine;
+  var type = conditions.type;
+  var filterRecent = conditions.filterRecent;
+  var recentPeriod = conditions.recentPeriod;
+
+  function processData(err, docs, periods) {
+    if (err) {
+      callback(err);
+    } else {
+      var _docs = underscore.clone(docs).slice(0, periods);
+
+      var winning = 0;
+      var winningRatePercent;
+      var returnsPercent;
+      var historyDataRate = [];
+      var investment = 0;//总投入
+      var bonus = 0;//总回报
+      var invest = 0;//每次投入
+      var bonu = 0;//每次回报
+
+
+      _docs.forEach(function (doc, index) {
+        var item = doc._doc;
+        var number = item.number.split(',');
+        var _combine = [];
+        var i, j, k;
+        var hisNum;
+
+        for (i = 0; i < 3; i++) {
+          _combine.push(underscore.clone(combine[i]));
+        }
+
+        if (type === 'bet1d') {
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine[j].indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[j][k] = false;
+              }
+            }
+          }
+
+          for (j = 0; j < 3; j++) {
+            /*jshint -W083*/
+            _combine[j] = _combine[j].filter(function (item) {
+              return item !== false;
+            });
+          }
+          invest = underscore.flatten(_combine).length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          for (j = 0; j < 3; j++) {
+            if (_combine[j].indexOf(number[j] - 0) !== -1) {
+              bonu += 10;
+            }
+          }
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }else{
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine.indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[k] = false;
+              }
+            }
+          }
+
+          _combine = _combine.filter(function (item) {
+            return item !== false;
+          });
+          invest = _combine.length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          number = number.sort();
+          var shape = commonMethod.getShape(item.number);
+          if(shape === 1){//三个号一样
+            if (_combine.indexOf(number[0] - 0) !== -1) {
+              bonu = 320;
+            }
+          }else if(shape === 2) {//两个号一样
+            if(number[0] === number[1]){
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[2] - 0) !== -1) {
+                bonu += 2;
+              }
+            }else if(number[1] === number[2]){
+              if (_combine.indexOf(number[1] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }else{
+            for (j = 0; j < 3; j++) {
+              if (_combine.indexOf(number[j] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }
+
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }
+
+        item.investment = invest;
+        item.bonus = bonu;
+        item.returns = bonu / invest * 100;
+        historyDataRate.push(item);
+      });
+
+      winningRatePercent = winning / periods * 100;
+      returnsPercent = bonus === 0 ? 0 : (bonus / investment * 100);
+
+      callback(null, {
+        winningRatePercent: winningRatePercent,
+        returnsPercent: returnsPercent,
+        historyDataRate: historyDataRate
+      });
+    }
+  }
+
+  filterRecent = filterRecent ? parseInt(filterRecent) : 0;
+
+  var condition = {};
+  var options = {};
+  var model = this.model;
+
+  if (recentPeriod.byYear) {
+    condition = {year: recentPeriod.year};
+    this.model.count(condition, function (err, count) {
+      if (err === null) {
+        condition = {year: {$in: [recentPeriod.year, recentPeriod.year - 1 + '']}};
+        options = {
+          sort: {year: -1, period: -1},
+          limit: count + filterRecent
+        };
+        model.find(condition, {_id: 1, period: 1, number: 1}, options,
+          function (err, docs) {
+            processData(err, docs, count);
+          });
+      } else {
+        callback(err);
+      }
+    });
+  } else if (recentPeriod.byPeriod) {
+    options = {
+      sort: {year: -1, period: -1},
+      limit: recentPeriod.period + filterRecent
+    };
+
+    model.find({}, {_id: 1, period: 1, number: 1}, options,
+      function (err, docs) {
+        processData(err, docs, recentPeriod.period);
+      });
+
+  }
+
+};
+
+MetaDataDao.prototype.saveModelD1 = function (data, callback) {
+  var entity = new ProfitModel(data);
+  entity.save(function (err, product, numberAffected) {
+    callback(err);
+  });
+};

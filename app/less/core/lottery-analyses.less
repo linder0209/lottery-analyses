@@ -4,6 +4,9 @@
 
 .lottery-nav-tabs {
   border-color: @gray;
+  > li > a{
+    cursor: pointer;
+  }
   > li > a:hover {
     border-color: @gray-lighter @gray-lighter @gray;
   }
@@ -155,5 +158,33 @@
       background-color: @gray;
       color: #fff;
     }
+  }
+}
+.zucai-dl-horizontal{
+  padding: 7px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid @gray-dark;
+  &:last-child{
+    border-bottom: 0 none;
+    margin-bottom: 0;
+  }
+  dt{
+    text-align: left;
+  }
+  @media (min-width: 768px) {
+    dt {
+      width: 260px;
+    }
+    dd {
+      margin-left: 280px;
+    }
+  }
+}
+
+.table-center{
+  > thead > tr > th,
+  > tbody > tr > td,{
+    vertical-align: middle;
+    text-align: center;
   }
 }

@@ -63,7 +63,8 @@ body {
 /**
  * 字体样式
 **/
-.text-red {
+.text-red,
+.text-red td {
   color: red;
 }
 .text-green {
@@ -71,6 +72,9 @@ body {
 }
 .text-bold {
   font-weight: bold;
+}
+.text-info {
+  color: #5bc0de;
 }
 /**
  * ajax loading
@@ -98,6 +102,31 @@ body {
   border-radius: 5px;
   opacity: 0.8;
   filter: alpha(opacity=80);
+}
+/**
+ * 折叠，展开
+**/
+.lottery-collapsing {
+  position: relative;
+}
+.lottery-collapsing:before,
+.lottery-collapsing:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  margin-left: -1.5em;
+  border-width: 1em 3em;
+  border-style: solid;
+  border-color: #2f575d transparent transparent;
+  font-size: 12px;
+  cursor: pointer;
+}
+.lottery-collapsing.extend:before,
+.lottery-collapsing.extend:after {
+  top: -19px;
+  border-color: transparent transparent #2f575d transparent;
 }
 /**
  * 页面头部样式
@@ -205,6 +234,9 @@ body {
 }
 .lottery-nav-tabs {
   border-color: #6d9197;
+}
+.lottery-nav-tabs > li > a {
+  cursor: pointer;
 }
 .lottery-nav-tabs > li > a:hover {
   border-color: #c4cdc1 #c4cdc1 #6d9197;
@@ -336,6 +368,31 @@ body {
   background-color: #6d9197;
   color: #fff;
 }
+.zucai-dl-horizontal {
+  padding: 7px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #2f575d;
+}
+.zucai-dl-horizontal:last-child {
+  border-bottom: 0 none;
+  margin-bottom: 0;
+}
+.zucai-dl-horizontal dt {
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .zucai-dl-horizontal dt {
+    width: 260px;
+  }
+  .zucai-dl-horizontal dd {
+    margin-left: 280px;
+  }
+}
+.table-center > thead > tr > th,
+.table-center > tbody > tr > td {
+  vertical-align: middle;
+  text-align: center;
+}
 .alert {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -346,6 +403,9 @@ input[type="checkbox"] {
 }
 input[type="file"] {
   display: inline;
+}
+button.btn {
+  margin-top: 5px;
 }
 /**
  * 以下是一些通用的Angular 动画 css

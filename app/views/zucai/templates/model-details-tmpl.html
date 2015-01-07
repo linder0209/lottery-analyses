@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-4">
+    <div alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+      {{alert.message}}
+    </div>
+  </div>
+  <div class="col-sm-offset-1 col-sm-10">
+    <button class="btn btn-primary" ng-click="bet.showForm=true;">新的投注</button>
+
+    <form class="form-horizontal lottery-box-layout ng-hide margin-top-lg" ng-show="bet.showForm">
+      <div class="form-group">
+        <h3 class="col-sm-offset-4 col-sm-4 text-center">投注表单</h3>
+      </div>
+      <dl class="dl-horizontal zucai-dl-horizontal">
+        <dt>收藏模型名称</dt>
+        <dd>投注金额</dd>
+      </dl>
+      <dl class="dl-horizontal zucai-dl-horizontal" ng-repeat="model in modelMeta.combine">
+        <dt>{{model.name}}</dt>
+        <dd popover="每期参考投入金额"
+        popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
+          <input type="text" class="form-control" ng-model="model.invest" style="width: 50%;"/>
+        </dd>
+      </dl>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-7">
+          <button type="submit" class="btn btn-primary" ng-click="saveBet();">保存</button>
+          <button type="button" class="btn btn-default" ng-click="cancelSaveBet();">取消</button>
+        </div>
+      </div>
+    </form>
+
+    <h2 class="margin-top-lg"><span class="text-bold">{{modelMeta.name}}</span> 投注记录</h2>
+    <div class="lottery-box-layout" ng-repeat="bet in betList">
+      <div class="lottery-collapsing"></div>
+      <h4>第{{bet.period}}期  {{bet.createdDate}}</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover table-center">
+          <thead>
+          <tr>
+            <th rowspan="3">次数</th>
+            <th rowspan="3">投注时间</th>
+            <th colspan="{{bet.combine.length * 2}}">模型组合</th>
+            <th rowspan="3">历史投入</th>
+            <th rowspan="3">历史回报</th>
+            <th rowspan="3">回报率</th>
+            <th rowspan="3">是否结束</th>
+            <th rowspan="3">&nbsp;</th>
+          </tr>
+          <tr>
+            <th colspan="2" ng-repeat="combine in bet.combine">模型名称：{{combine.name}}</th>
+          </tr>
+          <tr>
+            <th ng-repeat="header in bet.combineHeader">{{header.name}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="times in bet.times" ng-class="{'text-red': times.returns > 100, 'text-bold':  bet.returns > 100}">
+            <td>第{{times.time}}次</td>
+            <td>{{times.createdDate}}</td>
+            <td ng-repeat="content in times.combineContent">
+              <input type="text" ng-model="content.value" style="width:80px;"/>
+            </td>
+            <td>{{times.historyInvest}}</td>
+            <td>{{times.historyBonus}}</td>
+            <td>{{times.returns.toFixed(2) + '%'}}</td>
+            <td ng-if="$index == 0" rowspan="{{bet.times.length}}">
+               <button class="btn btn-info btn-sm" ng-if="!bet.isEnd" ng-click="endBet(bet);">结束</button>
+              {{bet.isEnd?'是':''}}</td>
+            <td>
+              <div ng-if="!bet.isEnd">
+                <button class="btn btn-info btn-sm" ng-click="updateHistroyItem(bet, times);">修改</button>
+                <button class="btn btn-info btn-sm" ng-click="deleteHistroyItem(bet, times);">删除</button>
+              </div>
+            </td>
+          </tr>
+          <tr ng-class="{'text-red': bet.returns > 100, 'text-bold':  bet.returns > 100}">
+            <td colspan="{{bet.combine.length * 2 + 2}}" style="text-align: right;" class="text-bold text-info">合计</td>
+            <td class="text-bold text-info">{{bet.historyInvest}}</td>
+            <td class="text-bold text-info">{{bet.historyBonus}}</td>
+            <td class="text-bold text-info">{{bet.returns.toFixed(2) + '%'}}</td>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr ng-if="!bet.isEnd">
+            <td colspan="2">添加新的投注</td>
+            <td ng-repeat="formData in bet.formData">
+              <input type="text" ng-if="$even" ng-model="formData.invest" style="width:80px;"/>
+            </td>
+            <td colspan="5" style="text-align: left;">
+              <botton class="btn btn-info btn-sm" ng-click="addInvestItem(bet);">保存</botton>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
