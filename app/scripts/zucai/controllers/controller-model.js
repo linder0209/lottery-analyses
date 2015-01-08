@@ -23,6 +23,17 @@ define(['angular'], function (angular) {
       modelService.modelList(function (data) {
         if (data.success === true) {
           $scope.modelList = data.items;
+          var profitStat = {
+            investment: 0,
+            bonus: 0
+          };
+          data.items.forEach(function (item) {
+            profitStat.investment += item.investment;
+            profitStat.bonus += item.bonus;
+          });
+          profitStat.profit = (profitStat.bonus - profitStat.investment).toFixed(2);
+          profitStat.rateOfReturn = (profitStat.bonus / profitStat.investment * 100).toFixed(2) + '%';
+          $scope.profitStat = profitStat;
         }
       });
 
@@ -84,12 +95,12 @@ define(['angular'], function (angular) {
         });
       };
 
-      $scope.cancelCreateModel = function(){
+      $scope.cancelCreateModel = function () {
         $scope.model.showForm = false;
         //清空表单
         $scope.model.name = '';
         $scope.model.type = '2';
-        $scope.favoriteModelList.forEach(function(item){
+        $scope.favoriteModelList.forEach(function (item) {
           item.value = false;
         });
         $scope.selectedModel.length = 0;
@@ -124,7 +135,7 @@ define(['angular'], function (angular) {
 
       $scope.editModel = function (item) {
         //确保只能修改一条数据
-        if($scope.editing){
+        if ($scope.editing) {
           return;
         }
         $scope.editing = true;
@@ -134,7 +145,7 @@ define(['angular'], function (angular) {
       };
 
       $scope.updateModel = function (item) {
-        item.combine.forEach(function(it){
+        item.combine.forEach(function (it) {
           it.invest = parseFloat(it.invest);
         });
 
@@ -172,7 +183,7 @@ define(['angular'], function (angular) {
         });
       };
 
-      $scope.editFavoriteModel = function(field){
+      $scope.editFavoriteModel = function (field) {
         $modal.open({
           backdrop: 'static',// 设置为 static 表示当鼠标点击页面其他地方，modal不会关闭
           //keyboard: false,// 设为false，按 esc键不会关闭 modal
@@ -242,14 +253,14 @@ define(['angular'], function (angular) {
         link: '',
         remark: ''
       };
-      if(formData.favoriteModel){
+      if (formData.favoriteModel) {
         $scope.favoriteModel = formData.favoriteModel;
       }
 
       $scope.saveFavoriteModel = function () {
         modelService.saveFavoriteModel($scope.favoriteModel, function (data) {
           if (data.success === true) {
-            if(!$scope.favoriteModel._id){//添加
+            if (!$scope.favoriteModel._id) {//添加
               data.item.value = false;//初始化属性value，用来操作组合模型
               $scope.items.push(data.item);
             }

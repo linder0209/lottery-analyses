@@ -43,6 +43,7 @@
             <th colspan="{{bet.combine.length * 2}}">模型组合</th>
             <th rowspan="3">历史投入</th>
             <th rowspan="3">历史回报</th>
+            <th rowspan="3">历史盈利</th>
             <th rowspan="3">回报率</th>
             <th rowspan="3">是否结束</th>
             <th rowspan="3">&nbsp;</th>
@@ -63,6 +64,7 @@
             </td>
             <td>{{times.historyInvest}}</td>
             <td>{{times.historyBonus}}</td>
+            <td>{{(times.historyBonus-times.historyInvest).toFixed(2)}}</td>
             <td>{{times.returns.toFixed(2) + '%'}}</td>
             <td ng-if="$index == 0" rowspan="{{bet.times.length}}">
                <button class="btn btn-info btn-sm" ng-if="!bet.isEnd" ng-click="endBet(bet);">结束</button>
@@ -78,6 +80,7 @@
             <td colspan="{{bet.combine.length * 2 + 2}}" style="text-align: right;" class="text-bold text-info">合计</td>
             <td class="text-bold text-info">{{bet.historyInvest}}</td>
             <td class="text-bold text-info">{{bet.historyBonus}}</td>
+            <td class="text-bold text-info">{{(bet.historyBonus-bet.historyInvest).toFixed(2)}}</td>
             <td class="text-bold text-info">{{bet.returns.toFixed(2) + '%'}}</td>
             <td colspan="2">&nbsp;</td>
           </tr>
@@ -86,7 +89,7 @@
             <td ng-repeat="formData in bet.formData">
               <input type="text" ng-if="$even" ng-model="formData.invest" style="width:80px;"/>
             </td>
-            <td colspan="5" style="text-align: left;">
+            <td colspan="6" style="text-align: left;">
               <botton class="btn btn-info btn-sm" ng-click="addInvestItem(bet);">保存</botton>
             </td>
           </tr>

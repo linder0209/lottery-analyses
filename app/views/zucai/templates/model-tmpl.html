@@ -68,6 +68,29 @@
       </div>
     </form>
 
+    <div class="lottery-box-layout margin-top-lg">
+      <h3>整体盈利情况</h3>
+      <dl class="dl-horizontal">
+        <dt>购买：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.investment}} 元
+        </dd>
+        <dt>奖金：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.bonus}} 元
+        </dd>
+        <dt>盈利：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.profit}} 元
+        </dd>
+        <dt>回报率：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.rateOfReturn}}
+        </dd>
+
+      </dl>
+    </div>
+
     <div class="table-responsive margin-top-lg">
       <table class="table table-bordered table-striped table-hover table-center">
         <thead>
@@ -103,7 +126,7 @@
           <td>{{item.periods}}</td>
           <td>{{item.investment}}</td>
           <td>{{item.bonus}}</td>
-          <td>{{item.bonus - item.investment}}</td>
+          <td>{{(item.bonus - item.investment).toFixed(2)}}</td>
           <td>{{item.returns.toFixed(2) + '%'}}</td>
           <td>
             <a ng-href="/lottery/zucai/{{item._id}}" target="_blank">详情</a>
