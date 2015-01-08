@@ -61,6 +61,18 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-sm-3 control-label">实战模型</label>
+
+        <div class="col-sm-7">
+          <label class="radio-inline">
+            <input type="radio" name="isAction"  ng-model="model.isAction" ng-value="true"> 是
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="isAction"  ng-model="model.isAction" ng-value="false"> 否
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
         <div class="col-sm-offset-3 col-sm-7">
           <button type="submit" class="btn btn-primary" ng-click="saveModel();">保存</button>
           <button type="button" class="btn btn-default margin-left-md" ng-click="cancelCreateModel();">取消</button>
@@ -69,25 +81,24 @@
     </form>
 
     <div class="lottery-box-layout margin-top-lg">
-      <h3>整体盈利情况</h3>
+      <h3>整体盈利情况（只计算实战模型，不包括测试模型）</h3>
       <dl class="dl-horizontal">
         <dt>购买：</dt>
         <dd class="text-red text-bold">
-          {{profitStat.investment}} 元
+          {{profitStat.investment.toFixed(2)}} 元
         </dd>
         <dt>奖金：</dt>
         <dd class="text-red text-bold">
-          {{profitStat.bonus}} 元
+          {{profitStat.bonus.toFixed(2)}} 元
         </dd>
         <dt>盈利：</dt>
         <dd class="text-red text-bold">
-          {{profitStat.profit}} 元
+          {{profitStat.profit.toFixed(2)}} 元
         </dd>
         <dt>回报率：</dt>
         <dd class="text-red text-bold">
           {{profitStat.rateOfReturn}}
         </dd>
-
       </dl>
     </div>
 
@@ -98,6 +109,7 @@
           <th>序号</th>
           <th>模型名称</th>
           <th>模型组合</th>
+          <th>实战模型</th>
           <th>执行期数</th>
           <th>历史投入</th>
           <th>历史回报</th>
@@ -115,7 +127,7 @@
           </td>
           <td style="padding-left: 0;padding-right: 0;">
             <dl class="dl-horizontal zucai-dl-horizontal" ng-repeat="combine in item.combine">
-              <dt>{{combine.name}}</dt>
+              <dt><a href="{{combine.link}}" target="_blank">{{combine.name}}</a></dt>
               <dd popover="每期参考投入金额"
                    popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
                 <span ng-show="!item.editing" class="ng-hide">{{combine.invest}}</span>
@@ -123,9 +135,20 @@
               </dd>
             </dl>
           </td>
-          <td>{{item.periods}}</td>
-          <td>{{item.investment}}</td>
-          <td>{{item.bonus}}</td>
+          <td>
+            <span ng-show="!item.editing" class="ng-hide">{{item.isAction?'是':'否'}}</span>
+            <div class="ng-hide" ng-show="item.editing">
+              <label>
+                <input type="radio" name="isAction"  ng-model="item.isAction" ng-value="true"> 是
+              </label>
+              <label>
+                <input type="radio" name="isAction"  ng-model="item.isAction" ng-value="false"> 否
+              </label>
+            </div>
+          </td>
+          <td>{{item.periods.toFixed(2)}}</td>
+          <td>{{item.investment.toFixed(2)}}</td>
+          <td>{{item.bonus.toFixed(2)}}</td>
           <td>{{(item.bonus - item.investment).toFixed(2)}}</td>
           <td>{{item.returns.toFixed(2) + '%'}}</td>
           <td>

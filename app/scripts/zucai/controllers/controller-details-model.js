@@ -13,6 +13,10 @@ define(['angular'], function (angular) {
       $scope.bet = {
         showForm: false
       };
+      $scope.profitStat = {
+        investment: 0,
+        bonus: 0
+      };
       //这里回头改为分页显示
       modelDetailsService.betRecord($scope.combineModelId, function (data) {
         if (data.success === true) {
@@ -24,6 +28,8 @@ define(['angular'], function (angular) {
             commonMethod.convertBetData(item);
           });
           $scope.betList = data.betList;
+          //计算盈利情况
+          commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
         }else{
           $scope.$parent.alerts = [
             {type: 'danger', message: data.errorMessage}
@@ -46,6 +52,8 @@ define(['angular'], function (angular) {
           if (data.success === true) {
             commonMethod.convertBetData(data.betItem);
             $scope.betList.unshift(data.betItem);
+            //计算盈利情况
+            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
             $scope.cancelSaveBet();
           }
         });
@@ -74,6 +82,8 @@ define(['angular'], function (angular) {
           if (data.success === true) {
             bet.times.push(data.time);
             commonMethod.convertBetData(bet);
+            //计算盈利情况
+            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
           }
         });
       };
@@ -94,6 +104,8 @@ define(['angular'], function (angular) {
               item.bonus = combine[index].bonus;
             });
             commonMethod.convertBetData(bet);
+            //计算盈利情况
+            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
           }
         });
       };

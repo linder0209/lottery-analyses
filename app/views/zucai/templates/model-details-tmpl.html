@@ -30,6 +30,29 @@
       </div>
     </form>
 
+    <div class="lottery-box-layout margin-top-lg">
+      <h3>该模型盈利情况</h3>
+      <dl class="dl-horizontal">
+        <dt>购买：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.investment.toFixed(2)}} 元
+        </dd>
+        <dt>奖金：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.bonus.toFixed(2)}} 元
+        </dd>
+        <dt>盈利：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.profit.toFixed(2)}} 元
+        </dd>
+        <dt>回报率：</dt>
+        <dd class="text-red text-bold">
+          {{profitStat.rateOfReturn}}
+        </dd>
+
+      </dl>
+    </div>
+
     <h2 class="margin-top-lg"><span class="text-bold">{{modelMeta.name}}</span> 投注记录</h2>
     <div class="lottery-box-layout" ng-repeat="bet in betList">
       <div class="lottery-collapsing"></div>
@@ -62,8 +85,8 @@
             <td ng-repeat="content in times.combineContent">
               <input type="text" ng-model="content.value" style="width:80px;"/>
             </td>
-            <td>{{times.historyInvest}}</td>
-            <td>{{times.historyBonus}}</td>
+            <td>{{times.historyInvest.toFixed(2)}}</td>
+            <td>{{times.historyBonus.toFixed(2)}}</td>
             <td>{{(times.historyBonus-times.historyInvest).toFixed(2)}}</td>
             <td>{{times.returns.toFixed(2) + '%'}}</td>
             <td ng-if="$index == 0" rowspan="{{bet.times.length}}">
@@ -78,8 +101,8 @@
           </tr>
           <tr ng-class="{'text-red': bet.returns > 100, 'text-bold':  bet.returns > 100}">
             <td colspan="{{bet.combine.length * 2 + 2}}" style="text-align: right;" class="text-bold text-info">合计</td>
-            <td class="text-bold text-info">{{bet.historyInvest}}</td>
-            <td class="text-bold text-info">{{bet.historyBonus}}</td>
+            <td class="text-bold text-info">{{bet.historyInvest.toFixed(2)}}</td>
+            <td class="text-bold text-info">{{bet.historyBonus.toFixed(2)}}</td>
             <td class="text-bold text-info">{{(bet.historyBonus-bet.historyInvest).toFixed(2)}}</td>
             <td class="text-bold text-info">{{bet.returns.toFixed(2) + '%'}}</td>
             <td colspan="2">&nbsp;</td>

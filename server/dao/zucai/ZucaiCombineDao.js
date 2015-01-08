@@ -142,16 +142,22 @@ ZucaiCombineDao.prototype.modelList = function (callback) {
     var betsMap = {};
     if (zucaiBets && zucaiBets.length > 0) {
       zucaiBets.forEach(function (item) {
-        betsMap[item._doc.modelId] = item._doc.times;
+        if(betsMap[item._doc.modelId]){
+          betsMap[item._doc.modelId].push(item._doc.times);
+        }else{
+          betsMap[item._doc.modelId] = [item._doc.times];
+        }
       });
     }
     modelItems.forEach(function (item) {
       var times = betsMap[item._id.toString()];
       if (times) {
-        times.forEach(function (it) {
-          it.combine.forEach(function (subIt) {
-            item.investment += subIt.invest || 0;
-            item.bonus += subIt.bonus || 0;
+        times.forEach(function (subItem) {
+          subItem.forEach(function(it){
+            it.combine.forEach(function (subIt) {
+              item.investment += subIt.invest || 0;
+              item.bonus += subIt.bonus || 0;
+            });
           });
         });
       }
@@ -401,8 +407,9 @@ ZucaiCombineDao.prototype.endBet = function (_id, callback) {
               bonus += it.bonus;
             });
           });
+
           model.update({_id: modelId}, {
-            $set: {
+            $inc: {
               investment: investment,
               bonus: bonus
             }

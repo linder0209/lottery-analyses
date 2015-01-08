@@ -63,6 +63,9 @@ http://winner.okooo.com/model/info?mid=1416929053982
 http://888.qq.com/v1.0/blog/famous.shtml
 
 
+专买单关1-平均优化（每个单场选择赔率最大的2个来投资）
+专买单关2-平均优化 （每个单场选择赔率最小的2个来投资）
+
 
 
 

@@ -68,11 +68,26 @@ define(['angular'], function (angular) {
               item.historyInvest += subIt.invest;
               item.historyBonus += subIt.bonus || 0;
             });
+
             //历史回报
             it.returns = it.historyBonus / it.historyInvest * 100;
           });
           //历史总回报
           item.returns = item.historyBonus / item.historyInvest * 100;
+        },
+
+        /**
+         * 计算该模型盈利情况
+         * @param betList
+         * @param profitStat
+         */
+        calculateProfitStat: function (betList, profitStat) {
+          betList.forEach(function (item) {
+            profitStat.investment += item.historyInvest;
+            profitStat.bonus += item.historyBonus;
+          });
+          profitStat.profit = profitStat.bonus - profitStat.investment;
+          profitStat.rateOfReturn = (profitStat.bonus / profitStat.investment * 100).toFixed(2) + '%';
         }
       };
     });

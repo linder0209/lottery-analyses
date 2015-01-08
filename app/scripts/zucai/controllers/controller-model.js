@@ -13,7 +13,8 @@ define(['angular'], function (angular) {
       $scope.model = {
         showForm: false,
         name: '',
-        type: '2'
+        type: '2',
+        isAction: true
       };
 
       $scope.modelList = [];//创建的模型列表
@@ -28,11 +29,13 @@ define(['angular'], function (angular) {
             bonus: 0
           };
           data.items.forEach(function (item) {
-            profitStat.investment += item.investment;
-            profitStat.bonus += item.bonus;
+            if (item.isAction) {
+              profitStat.investment += item.investment;
+              profitStat.bonus += item.bonus;
+            }
           });
           profitStat.profit = (profitStat.bonus - profitStat.investment).toFixed(2);
-          profitStat.rateOfReturn = (profitStat.bonus / profitStat.investment * 100).toFixed(2) + '%';
+          profitStat.rateOfReturn = profitStat.investment === 0 ? '0.00%' : (profitStat.bonus / profitStat.investment * 100).toFixed(2) + '%';
           $scope.profitStat = profitStat;
         }
       });
@@ -74,10 +77,12 @@ define(['angular'], function (angular) {
         var params = {
           name: $scope.model.name,
           type: $scope.model.type,
+          isAction: $scope.model.isAction,
           combine: $scope.selectedModel.map(function (item) {
             return {
               _id: item._id,
               name: item.name,
+              link: item.link,
               invest: parseFloat(item.invest)
             };
           })
