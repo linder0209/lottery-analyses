@@ -12,7 +12,7 @@ var schema = new Schema({
   modelId: {type: String},
   period: {type: Number},
   //模型组合
-  //数据模型 [{name:'单关配1号',_id:'54aa5ef90158f7d83bbe7d89', invest: 50, }]
+  //数据模型 [{name:'单关配1号',"link" : "http://winner.okooo.com/model/info?mid=1416369356868",_id:'54aa5ef90158f7d83bbe7d89', invest: 50, }]
   combine: {type: Array},
   //投注次数，记录每次投注的信息，包括投注金额，中奖金额等信息，其中time为唯一性，通过time来查找数据
   //数据模型为：[{time: 1, createdDate: new Date, combine: [{invest: 50, bonus: 200, _id:'54aa5ef90158f7d83bbe7d89'}}]]

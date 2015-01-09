@@ -44,6 +44,7 @@ define(['angular'], function (angular) {
             return {
               _id: item._id,
               name: item.name,
+              link: item.link,
               invest: parseFloat(item.invest)
             };
           })
@@ -55,6 +56,17 @@ define(['angular'], function (angular) {
             //计算盈利情况
             commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
             $scope.cancelSaveBet();
+          }
+        });
+      };
+
+      $scope.deleteBet = function (bet) {
+        modelDetailsService.deleteBet(bet._id, function (data) {
+          if (data.success === true) {
+            var index = $scope.betList.indexOf(bet);
+            $scope.betList.splice(index, 1);
+            //计算盈利情况
+            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
           }
         });
       };
@@ -115,6 +127,10 @@ define(['angular'], function (angular) {
           if (data.success === true) {
             var index = bet.times.indexOf(times);
             bet.times.splice(index, 1);
+
+            commonMethod.convertBetData(bet);
+            //计算盈利情况
+            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
           }
         });
       };

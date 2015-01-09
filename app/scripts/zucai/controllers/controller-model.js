@@ -34,7 +34,7 @@ define(['angular'], function (angular) {
               profitStat.bonus += item.bonus;
             }
           });
-          profitStat.profit = (profitStat.bonus - profitStat.investment).toFixed(2);
+          profitStat.profit = profitStat.bonus - profitStat.investment;
           profitStat.rateOfReturn = profitStat.investment === 0 ? '0.00%' : (profitStat.bonus / profitStat.investment * 100).toFixed(2) + '%';
           $scope.profitStat = profitStat;
         }
@@ -178,6 +178,7 @@ define(['angular'], function (angular) {
           //keyboard: false,// 设为false，按 esc键不会关闭 modal
           templateUrl: 'favoriteModelContent.html',
           controller: 'FavoriteModelCtrl',
+          size: 'lg',
           resolve: {// 传递数据
             formData: function () {
               return {
@@ -256,10 +257,18 @@ define(['angular'], function (angular) {
         name: '',
         singleAmount: '0',
         link: '',
-        remark: ''
+        remark: '',
+        automatic: true,//自动模型或手动模型
+        fixed: true,//固定模型
+        owns: false//自己创建的模型
       };
+      $scope.modelTitle = '添加';
       if (formData.favoriteModel) {
         $scope.favoriteModel = formData.favoriteModel;
+      }
+
+      if($scope.favoriteModel._id){
+        $scope.modelTitle = '修改';
       }
 
       $scope.saveFavoriteModel = function () {

@@ -9,10 +9,13 @@ var Schema = mongoose.Schema;
  * @type {Schema}
  */
 var schema = new Schema({
-  name: { type: String },
-  link: { type: String},
-  singleAmount: { type: String},//模型单倍金额
-  remark: { type: String }
+  name: {type: String},
+  link: {type: String},
+  singleAmount: {type: String},//模型单倍金额
+  automatic: {type: Boolean, default: true},//自动模型或手动模型
+  fixed: {type: Boolean, default: true},//固定模型
+  owns: {type: Boolean, default: false},//自己创建的模型
+  remark: {type: String}
 });
 
 /**

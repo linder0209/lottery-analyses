@@ -12,6 +12,10 @@ define(['angular'], function (angular) {
           lotteryHttpService.post('saveBet', data).then(success);
         },
 
+        deleteBet: function (_id, success) {
+          lotteryHttpService.post('deleteBet', {_id: _id}).then(success);
+        },
+
         addInvestItem: function (data, success) {
           lotteryHttpService.post('addInvestItem', data).then(success);
         },
@@ -82,6 +86,8 @@ define(['angular'], function (angular) {
          * @param profitStat
          */
         calculateProfitStat: function (betList, profitStat) {
+          profitStat.investment = 0;
+          profitStat.bonus = 0;
           betList.forEach(function (item) {
             profitStat.investment += item.historyInvest;
             profitStat.bonus += item.historyBonus;

@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
  */
 var schema = new Schema({
   name: {type: String},
-  combine: {type: Array},//数据模型为 {"invest":50,"name":"单关配1号","_id":"54aa5ef90158f7d83bbe7d89"}
+  combine: {type: Array},//数据模型为 {"invest":50,"name":"单关配1号","link":"", "_id":"54aa5ef90158f7d83bbe7d89"}
   type: {type: String},
   investment: {type: Number, default: 0},
   bonus: {type: Number, default: 0},

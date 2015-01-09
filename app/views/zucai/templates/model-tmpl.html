@@ -20,7 +20,8 @@
         <label class="col-sm-3 control-label">选择模型组合</label>
 
         <div class="col-sm-7">
-          <label class="checkbox-inline" ng-repeat="field in favoriteModelList">
+          <label class="checkbox-inline" style="margin-left: 10px;" ng-repeat="field in favoriteModelList">
+            <span style="margin-right: 20px;">{{$index + 1}}、</span>
             <input type="checkbox" ng-model="field.value"  ng-change="selectModel(field);">
             <a href="{{field.link}}" target="_blank" popover="{{field.remark}}"
                popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
@@ -146,7 +147,7 @@
               </label>
             </div>
           </td>
-          <td>{{item.periods.toFixed(2)}}</td>
+          <td>{{item.periods}}</td>
           <td>{{item.investment.toFixed(2)}}</td>
           <td>{{item.bonus.toFixed(2)}}</td>
           <td>{{(item.bonus - item.investment).toFixed(2)}}</td>
@@ -169,37 +170,74 @@
   <form class="form-horizontal" name="favoriteModelForm">
     <div class="modal-header">
       <button type="button" class="close" ng-click="cancel()" title="Close">&times;</button>
-      <h4 class="modal-title">添加收藏模型</h4>
+      <h4 class="modal-title">{{modelTitle}}收藏模型</h4>
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label for="favoriteModelName" class="col-sm-2 control-label">模型名称</label>
+        <label for="favoriteModelName" class="col-sm-3 control-label">模型名称</label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input type="text" class="form-control" id="favoriteModelName" name="favoriteModelName"  ng-model="favoriteModel.name"  maxlength="300">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="singleAmount" class="col-sm-2 control-label">模型单倍金额</label>
+        <label for="singleAmount" class="col-sm-3 control-label">模型单倍金额</label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input type="text" class="form-control" id="singleAmount" name="singleAmount"  ng-model="favoriteModel.singleAmount"  maxlength="300">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="favoriteModelLink" class="col-sm-2 control-label">模型链接</label>
+        <label for="favoriteModelLink" class="col-sm-3 control-label">模型链接</label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <input type="text" class="form-control" id="favoriteModelLink" name="favoriteModelLink" ng-model="favoriteModel.link" maxlength="300">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="favoriteModelLink" class="col-sm-2 control-label">备注</label>
+        <label class="col-sm-3 control-label">模型类型</label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
+          <label>
+            <input type="radio" name="automatic"  ng-model="favoriteModel.automatic" ng-value="true"> 自动模型
+          </label>
+          <label>
+            <input type="radio" name="automatic"  ng-model="favoriteModel.automatic" ng-value="false"> 手动模型
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">模型投注金额类型</label>
+
+        <div class="col-sm-8">
+          <label>
+            <input type="radio" name="fixed"  ng-model="favoriteModel.fixed" ng-value="true"> 固定金额
+          </label>
+          <label>
+            <input type="radio" name="fixed"  ng-model="favoriteModel.fixed" ng-value="false"> 不固定金额
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">是否为自己创建的模型</label>
+        <div class="col-sm-8">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="owns" ng-model="favoriteModel.owns">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="favoriteModelLink" class="col-sm-3 control-label">备注</label>
+
+        <div class="col-sm-8">
           <textarea class="form-control" style="height:100px;width:100%" ng-model="favoriteModel.remark" ></textarea>
         </div>
       </div>

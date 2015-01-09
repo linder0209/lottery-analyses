@@ -56,7 +56,10 @@
     <h2 class="margin-top-lg"><span class="text-bold">{{modelMeta.name}}</span> 投注记录</h2>
     <div class="lottery-box-layout" ng-repeat="bet in betList">
       <div class="lottery-collapsing"></div>
-      <h4>第{{bet.period}}期  {{bet.createdDate}}</h4>
+      <h4>
+        第{{bet.period}}期  {{bet.createdDate}}
+        <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="bet.times.length === 0" ng-click="deleteBet(bet);">删除该期投注</button>
+      </h4>
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover table-center">
           <thead>
@@ -72,7 +75,9 @@
             <th rowspan="3">&nbsp;</th>
           </tr>
           <tr>
-            <th colspan="2" ng-repeat="combine in bet.combine">模型名称：{{combine.name}}</th>
+            <th colspan="2" ng-repeat="combine in bet.combine">模型名称：
+              <a href="{{combine.link}}" target="_blank">{{combine.name}}</a>
+            </th>
           </tr>
           <tr>
             <th ng-repeat="header in bet.combineHeader">{{header.name}}</th>
@@ -122,3 +127,4 @@
     </div>
   </div>
 </div>
+

@@ -39,15 +39,7 @@ ZucaiCombineDao.prototype.saveFavoriteModel = function (data, callback) {
       if (err) {
         return callback(err);
       } else {
-        var _doc = product._doc;
-        var doc = {
-          _id: _doc._id,
-          name: _doc.name,
-          singleAmount: _doc.singleAmount,
-          link: _doc.link,
-          remark: _doc.remark
-        };
-        return callback(err, doc);
+        return callback(err, product._doc);
       }
     });
   }
@@ -58,7 +50,7 @@ ZucaiCombineDao.prototype.saveFavoriteModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.favoriteModelList = function (callback) {
-  ZucaiFavoriteModel.find({}, {_id: 1, name: 1, singleAmount: 1, link: 1, remark: 1}, function (err, docs) {
+  ZucaiFavoriteModel.find({}, {},{sort:{_id: 1}}, function (err, docs) {
     return callback(err, docs);
   });
 };
@@ -240,6 +232,7 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
         combine: data.combine.map(function (item) {
           return {
             name: item.name,
+            link: item.link,
             invest: item.invest,
             _id: item._id
           };
@@ -249,6 +242,7 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
           createdDate: new Date(),
           combine: data.combine.map(function (item) {
             delete item.name;
+            delete item.link;
             return item;
           })
         }]
@@ -269,6 +263,18 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
     }
   });
 };
+
+/**
+ * 删除投注记录
+ * @param _id
+ * @param callback
+ */
+ZucaiCombineDao.prototype.deleteBet = function (_id, callback) {
+  ZucaiBetModel.remove({_id: _id}, function (err) {
+    return callback(err);
+  });
+};
+
 
 /**
  * 添加投注记录
