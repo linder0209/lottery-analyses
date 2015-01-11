@@ -15,6 +15,7 @@ var schema = new Schema({
   automatic: {type: Boolean, default: true},//自动模型或手动模型
   fixed: {type: Boolean, default: true},//固定模型
   owns: {type: Boolean, default: false},//自己创建的模型
+  choosed: {type: Boolean, default: true},//必选投注模型
   remark: {type: String}
 });
 

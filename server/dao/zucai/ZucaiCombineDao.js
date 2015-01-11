@@ -50,7 +50,7 @@ ZucaiCombineDao.prototype.saveFavoriteModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.favoriteModelList = function (callback) {
-  ZucaiFavoriteModel.find({}, {},{sort:{_id: 1}}, function (err, docs) {
+  ZucaiFavoriteModel.find({}, {},{sort:{choosed:-1, _id: 1}}, function (err, docs) {
     return callback(err, docs);
   });
 };

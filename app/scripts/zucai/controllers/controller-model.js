@@ -260,7 +260,8 @@ define(['angular'], function (angular) {
         remark: '',
         automatic: true,//自动模型或手动模型
         fixed: true,//固定模型
-        owns: false//自己创建的模型
+        owns: false,//自己创建的模型
+        choosed: true//此模型为必选投注模型
       };
       $scope.modelTitle = '添加';
       if (formData.favoriteModel) {

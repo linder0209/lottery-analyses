@@ -23,7 +23,7 @@
           <label class="checkbox-inline" style="margin-left: 10px;" ng-repeat="field in favoriteModelList">
             <span style="margin-right: 20px;">{{$index + 1}}、</span>
             <input type="checkbox" ng-model="field.value"  ng-change="selectModel(field);">
-            <a href="{{field.link}}" target="_blank" popover="{{field.remark}}"
+            <a href="{{field.link}}" target="_blank" popover="{{field.remark + (field.choosed?'（必选投注模型':'')}}"
                popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
               {{field.name}}，单倍金额 <span class="text-red text-bold">{{field.singleAmount}}</span> 元
             </a>
@@ -229,6 +229,17 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" name="owns" ng-model="favoriteModel.owns">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">此模型为必选投注模型</label>
+        <div class="col-sm-8">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="choosed" ng-model="favoriteModel.choosed">
             </label>
           </div>
         </div>
