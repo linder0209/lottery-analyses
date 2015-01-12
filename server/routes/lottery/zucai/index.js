@@ -100,7 +100,23 @@ var zucai = {
 
   removeModel: function (req, res) {
     var id = req.body._id;
-    zucaiCombineDao.removeModel(id, function (err, items) {
+    zucaiCombineDao.removeModel(id, function (err) {
+      if (err) {
+        res.send({
+          success: false, errorMessage: err.message
+        });
+      } else {
+        res.send({
+          success: true
+        });
+      }
+    });
+  },
+
+  updateModelStatus: function (req, res) {
+    var id = req.body._id;
+    var status = req.body.status;
+    zucaiCombineDao.updateModelStatus(id, status, function (err) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
@@ -248,6 +264,7 @@ router.post('/saveModel', zucai.saveModel);
 router.post('/updateModel', zucai.updateModel);
 router.get('/modelList', zucai.modelList);
 router.post('/removeModel', zucai.removeModel);
+router.post('/updateModelStatus', zucai.updateModelStatus);
 router.get('/:id', zucai.modelDetails);
 router.get('/betRecord/:modelId', zucai.betRecord);
 router.post('/saveBet', zucai.saveBet);

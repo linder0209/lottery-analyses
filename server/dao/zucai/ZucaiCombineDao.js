@@ -50,7 +50,7 @@ ZucaiCombineDao.prototype.saveFavoriteModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.favoriteModelList = function (callback) {
-  ZucaiFavoriteModel.find({}, {},{sort:{choosed:-1, _id: 1}}, function (err, docs) {
+  ZucaiFavoriteModel.find({}, {}, {sort: {choosed: -1, _id: 1}}, function (err, docs) {
     return callback(err, docs);
   });
 };
@@ -61,17 +61,21 @@ ZucaiCombineDao.prototype.favoriteModelList = function (callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.removeFavoriteModel = function (_id, callback) {
-  this.model.count({combine: {$elemMatch: {_id: _id}}}, function (err, count) {
-    if (err) {
-      return callback(err);
-    } else if (count > 0) {
-      return callback(new Error('-1'));
-    } else {
-      ZucaiFavoriteModel.remove({_id: _id}, function (err) {
-        return callback(err);
-      });
-    }
+  //不再限制删除
+  ZucaiFavoriteModel.remove({_id: _id}, function (err) {
+    return callback(err);
   });
+  //this.model.count({combine: {$elemMatch: {_id: _id}}}, function (err, count) {
+  //  if (err) {
+  //    return callback(err);
+  //  } else if (count > 0) {
+  //    return callback(new Error('-1'));
+  //  } else {
+  //    ZucaiFavoriteModel.remove({_id: _id}, function (err) {
+  //      return callback(err);
+  //    });
+  //  }
+  //});
 };
 
 /**
@@ -108,7 +112,7 @@ ZucaiCombineDao.prototype.updateModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.modelList = function (callback) {
-  var promise = this.model.find({}, {}).exec();
+  var promise = this.model.find({}, {}, {sort: {status: -1}}).exec();
   var modelItems = [];
   promise.then(function (zucaiCombines) {
     modelItems = zucaiCombines.map(function (item) {
@@ -134,9 +138,9 @@ ZucaiCombineDao.prototype.modelList = function (callback) {
     var betsMap = {};
     if (zucaiBets && zucaiBets.length > 0) {
       zucaiBets.forEach(function (item) {
-        if(betsMap[item._doc.modelId]){
+        if (betsMap[item._doc.modelId]) {
           betsMap[item._doc.modelId].push(item._doc.times);
-        }else{
+        } else {
           betsMap[item._doc.modelId] = [item._doc.times];
         }
       });
@@ -145,7 +149,7 @@ ZucaiCombineDao.prototype.modelList = function (callback) {
       var times = betsMap[item._id.toString()];
       if (times) {
         times.forEach(function (subItem) {
-          subItem.forEach(function(it){
+          subItem.forEach(function (it) {
             it.combine.forEach(function (subIt) {
               item.investment += subIt.invest || 0;
               item.bonus += subIt.bonus || 0;
@@ -180,6 +184,23 @@ ZucaiCombineDao.prototype.removeModel = function (_id, callback) {
     }
   });
 };
+
+/**
+ * 修改模型状态，停止或激活
+ * @param _id
+ * @param status
+ * @param callback
+ */
+ZucaiCombineDao.prototype.updateModelStatus = function (_id, status, callback) {
+  this.model.update({_id: _id}, {
+    $set: {
+      status: status
+    }
+  }, function (err, numberAffected, rawResponse) {
+    return callback(err);
+  });
+};
+
 
 /**
  * 根据模型id查看其投注记录

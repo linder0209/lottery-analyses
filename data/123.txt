@@ -1,11 +1,14 @@
-2 元模型   改为 参考 盈利计划模式2 来投注  http://winner.okooo.com/model/info?mid=1417149108623
+2 元模型   改为 参考 金碧辉煌-1 来投注  http://winner.okooo.com/model/info?mid=1416202218152
+           当期没有的话，自己选择来投注
 
 4 元模型   4元小模型
 
 
 
 
+投资原则：
 
+第一次没有盈利，第二次加倍，依此类推
 
 
 
@@ -88,6 +91,60 @@ mongodump -h localhost:27017 -d lottery-analyses -o D:\gitworkspace\lottery-anal
 导入
 mongorestore -h localhost -db lottery-analyses D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses
 
+
+
+
+
+
+
+
+
+
+
+
+
+情深深雨蒙蒙
+http://winner.okooo.com/model/info?mid=1414658432567
+
+
+
+如梦令2
+
+http://winner.okooo.com/model/info?mid=1412087052208
+
+
+
+发财8元模型
+
+http://winner.okooo.com/model/info?mid=1415763508963
+
+
+
+情深深雨蒙蒙、如梦令2 与发财8元模型 组合
+
+
+
+518我要发
+
+http://winner.okooo.com/model/info?mid=1413005107843
+
+
+1注—自挣薪
+
+http://winner.okooo.com/model/info?mid=1417610401791
+
+
+单关配1号
+
+http://winner.okooo.com/model/info?mid=1416148306762
+
+
+盈利计划模式2
+
+http://winner.okooo.com/model/info?mid=1417149108623
+
+
+518我要发、1注—自挣薪、单关配1号与盈利计划模式2组合投注，整体实现盈利
 
 
 

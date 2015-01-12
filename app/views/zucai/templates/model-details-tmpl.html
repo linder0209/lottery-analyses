@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="col-sm-offset-1 col-sm-10">
-    <button class="btn btn-primary" ng-click="bet.showForm=true;">新的投注</button>
+    <button class="btn btn-primary ng-hide" ng-click="bet.showForm=true;" ng-show="modelMeta.status">新的投注</button>
 
     <form class="form-horizontal lottery-box-layout ng-hide margin-top-lg" ng-show="bet.showForm">
       <div class="form-group">
@@ -112,7 +112,7 @@
             <td class="text-bold text-info">{{bet.returns.toFixed(2) + '%'}}</td>
             <td colspan="2">&nbsp;</td>
           </tr>
-          <tr ng-if="!bet.isEnd">
+          <tr ng-if="!bet.isEnd && modelMeta.status">
             <td colspan="2">添加新的投注</td>
             <td ng-repeat="formData in bet.formData">
               <input type="text" ng-if="$even" ng-model="formData.invest" style="width:80px;"/>

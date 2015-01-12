@@ -94,6 +94,7 @@ define(['angular'], function (angular) {
             params.investment = 0;
             params.bonus = 0;
             params.returns = 0;
+            params.status = true;
             $scope.modelList.push(params);
             $scope.cancelCreateModel();
           }
@@ -169,6 +170,32 @@ define(['angular'], function (angular) {
         item.name = $scope.editModelData.name;
         item.combine.forEach(function (it, index) {
           it.invest = $scope.editModelData.combine[index].invest;
+        });
+      };
+
+      $scope.updateModelStatus = function (item) {
+        var modalInstance = $modal.open({
+          backdrop: 'static',
+          templateUrl: '../../views/templates/confirm-modal.html',
+          controller: 'ConfirmModalCtrl',
+          resolve: {
+            config: function () {
+              return {
+                modalContent: '确认要' + (item.status ? '停止' : '激活') + '该模型吗？'
+              };
+            }
+          }
+        });
+        /**
+         * 点击ok和cancel执行的回调
+         * modalInstance.result.then(function () {}, function () {});
+         */
+        modalInstance.result.then(function () {
+          modelService.updateModelStatus({_id: item._id, status: !item.status}, function (data) {
+            if (data.success === true) {
+              item.status = !item.status;
+            }
+          });
         });
       };
 
@@ -268,7 +295,7 @@ define(['angular'], function (angular) {
         $scope.favoriteModel = formData.favoriteModel;
       }
 
-      if($scope.favoriteModel._id){
+      if ($scope.favoriteModel._id) {
         $scope.modelTitle = '修改';
       }
 

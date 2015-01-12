@@ -13,6 +13,9 @@ define(['angular'], function (angular) {
         removeModel: function (data, success) {
           lotteryHttpService.post('removeModel', data).then(success);
         },
+        updateModelStatus: function (data, success) {
+          lotteryHttpService.post('updateModelStatus', data).then(success);
+        },
         saveFavoriteModel: function (data, success) {
           lotteryHttpService.post('saveFavoriteModel', data).then(success);
         },

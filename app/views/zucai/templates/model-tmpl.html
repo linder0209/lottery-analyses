@@ -23,7 +23,7 @@
           <label class="checkbox-inline" style="margin-left: 10px;" ng-repeat="field in favoriteModelList">
             <span style="margin-right: 20px;">{{$index + 1}}、</span>
             <input type="checkbox" ng-model="field.value"  ng-change="selectModel(field);">
-            <a href="{{field.link}}" target="_blank" popover="{{field.remark + (field.choosed?'（必选投注模型':'')}}"
+            <a href="{{field.link}}" target="_blank" popover="{{field.remark + (field.choosed?'（必选投注模型）':'')}}"
                popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
               {{field.name}}，单倍金额 <span class="text-red text-bold">{{field.singleAmount}}</span> 元
             </a>
@@ -154,10 +154,11 @@
           <td>{{item.returns.toFixed(2) + '%'}}</td>
           <td>
             <a ng-href="/lottery/zucai/{{item._id}}" target="_blank">详情</a>
-            <a class="ng-hide" href="" ng-click="editModel(item);" ng-show="!item.editing">编辑</a>
+            <a class="ng-hide" href="" ng-click="editModel(item);" ng-show="!item.editing && item.status">编辑</a>
             <a class="ng-hide" href="" ng-click="updateModel(item);" ng-show="item.editing">修改保存</a>
             <a class="ng-hide" href="" ng-click="cancelEditModel(item);" ng-show="item.editing">取消修改</a>
             <a href="" ng-click="removeModel(item);">删除</a>
+            <a href="" ng-click="updateModelStatus(item);">{{item.status? '停止':'激活'}}</a>
           </td>
         </tr>
         </tbody>

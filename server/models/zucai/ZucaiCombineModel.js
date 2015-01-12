@@ -14,7 +14,8 @@ var schema = new Schema({
   type: {type: String},
   investment: {type: Number, default: 0},
   bonus: {type: Number, default: 0},
-  isAction: {type: Boolean, default: true}//是否为实战模型，默认为是
+  isAction: {type: Boolean, default: true},//是否为实战模型，默认为是
+  status: {type: Boolean, default: true}//状态，false 为停止状态，true 为激活状态
 });
 
 /**
