@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <h3>选取赔率最小的两注来投注</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover table-center">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>最小赔率</th>
+          <th>中间赔率</th>
+          <th>最大赔率</th>
+          <th>比赛结果</th>
+          <th>历史投入</th>
+          <th>历史回报</th>
+          <th>历史盈利</th>
+          <th>回报率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in modelMin" ng-class="{'text-red': item[5] > 4, 'text-bold':  item[5] > 4}">
+          <td>{{$index + 1}}</td>
+          <td>{{item[0]}}</td>
+          <td>{{item[1]}}</td>
+          <td>{{item[2]}}</td>
+          <td>{{item[3]}}</td>
+          <td>{{item[4]}}</td>
+          <td>{{item[5]}}</td>
+          <td>{{(item[5]-item[4]).toFixed(2)}}</td>
+          <td>{{(item[5]/item[4]*100).toFixed(2)+'%'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

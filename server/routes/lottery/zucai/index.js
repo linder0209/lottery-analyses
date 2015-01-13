@@ -1,6 +1,8 @@
 'use strict';
 
-var zucaiCombineDao = require('./../../../dao/zucai/ZucaiCombineDao');
+var zucaiCombineDao = require('../../../dao/zucai/ZucaiCombineDao');
+
+var Profit100 = require('../../../utils/Profit100');
 
 var zucai = {
   model: function (req, res) {
@@ -100,7 +102,7 @@ var zucai = {
 
   removeModel: function (req, res) {
     var id = req.body._id;
-    zucaiCombineDao.removeModel(id, function (err) {
+    zucaiCombineDao.removeModel(id, function (err, items) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
@@ -115,8 +117,7 @@ var zucai = {
 
   updateModelStatus: function (req, res) {
     var id = req.body._id;
-    var status = req.body.status;
-    zucaiCombineDao.updateModelStatus(id, status, function (err) {
+    zucaiCombineDao.removeModel(id, function (err, items) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message
@@ -248,13 +249,22 @@ var zucai = {
   },
 
   profit100Data: function (req, res) {
-
+    var historyData = Profit100.generateHistoryData();
+    var modelData = Profit100.generateMode1(historyData);
+    res.send({
+      success: true,
+      modelData: modelData
+    });
   }
 
 };
 
 var express = require('express');
 var router = express.Router();
+
+//创建100%中奖模型
+router.get('/profit100', zucai.profit100);
+router.get('/profit100Data', zucai.profit100Data);
 
 router.get('/model', zucai.model);
 router.post('/saveFavoriteModel', zucai.saveFavoriteModel);
@@ -273,10 +283,6 @@ router.post('/addInvestItem', zucai.addInvestItem);
 router.post('/updateHistroyItem', zucai.updateHistroyItem);
 router.post('/deleteHistroyItem', zucai.deleteHistroyItem);
 router.post('/endBet', zucai.endBet);
-
-//创建100%中奖模型
-router.get('/profit100', zucai.profit100);
-router.get('/profit100Data', zucai.profit100Data);
 
 /**
  * 足彩投注

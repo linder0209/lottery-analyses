@@ -14,16 +14,20 @@ var Profit100 = {
    * @param options 参数，包括 oddsRange 赔率范围 和 period 期数
    */
   generateHistoryData: function (options) {
-    var oddsRange = options.oddsRange || [1.5, 4];
-    var period = options.period || 100;
+    options = options || {
+      oddsRange: [1.5, 4],
+      period: 100
+    };
+    var oddsRange = options.oddsRange;
+    var period = options.period;
 
     var historyData = [];
     for (var i = 0; i < period; i++) {
-      var num1 = math.round(math.random(oddsRange[0], oddsRange[1]));
-      var num2 = math.round(math.random(oddsRange[0], oddsRange[1]));
-      var num3 = math.round(math.random(oddsRange[0], oddsRange[1]));
+      var num1 = math.round(math.random(oddsRange[0], oddsRange[1]),2);
+      var num2 = math.round(math.random(oddsRange[0], oddsRange[1]),2);
+      var num3 = math.round(math.random(oddsRange[0], oddsRange[1]),2);
       var win = math.random(3);
-      win = win <= 1 ? 0 : win <= 2 ? 1 : 3;//胜平否
+      win = win <= 1 ? 0 : win <= 2 ? 1 : 3;//赔率大小胜，0表示赔率小的胜，1表示赔率中间的胜，3表示赔率大的胜
       var num = math.sort([num1, num2, num3]);
       num1 = num[0];
       num2 = num[1];
@@ -44,17 +48,17 @@ var Profit100 = {
    * @param historyData 历史数据
    */
   generateMode1: function (historyData) {
-    var model1 = [];
-    var model2 = [];
+    var modelMin = [];
+    var modelMax = [];
     historyData.forEach(function (item) {
       var bonus1 = item.win === 0 ? item.oddsMin * 2 : item.win === 1 ? item.oddsMed * 2 : 0;
       var bonus2 = item.win === 0 ? 0 : item.win === 1 ? item.oddsMed * 2 : item.oddsMax * 2;
-      model1.push([item.oddsMin, item.oddsMed, 4, bonus1]);
-      model1.push([item.oddsMed, item.oddsMax, 4, bonus2]);
+      modelMin.push([item.oddsMin, item.oddsMed, item.oddsMax, item.win, 4, bonus1]);
+      modelMax.push([item.oddsMin, item.oddsMed, item.oddsMax, item.win, 4, bonus2]);
     });
     return {
-      model1: model1,
-      model2: model2
+      modelMin: modelMin,
+      modelMax: modelMax
     };
   }
 };

@@ -1,6 +1,5 @@
 'use strict';
 
-//福彩3d分析页面
 
 /*jshint unused: vars */
 require.config({

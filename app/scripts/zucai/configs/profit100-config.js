@@ -74,7 +74,7 @@ require([
   'angular',
   'bootstrap',
   'angular-bootstrap',
-  '../apps/model-details-app',
+  '../apps/profit100-app',
   'angular-route',
   'angular-cookies',
   'angular-sanitize',
@@ -82,7 +82,7 @@ require([
   'angular-animate',
   'angular-touch',
   '../../services/httpInterceptor',
-  '../services/service-details-model'
+  '../services/service-profit100'
 ], function (jquery, angular, bootstrap, angularBootstrap, app,
              ngRoutes, ngCookies, ngSanitize, ngResource, ngAnimate, ngTouch,
              httpInterceptor, serviceModel) {
