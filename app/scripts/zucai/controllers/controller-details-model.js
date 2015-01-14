@@ -61,13 +61,31 @@ define(['angular'], function (angular) {
       };
 
       $scope.deleteBet = function (bet) {
-        modelDetailsService.deleteBet(bet._id, function (data) {
-          if (data.success === true) {
-            var index = $scope.betList.indexOf(bet);
-            $scope.betList.splice(index, 1);
-            //计算盈利情况
-            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
+        var modalInstance = $modal.open({
+          backdrop: 'static',
+          templateUrl: '../../views/templates/confirm-modal.html',
+          controller: 'ConfirmModalCtrl',
+          resolve: {
+            config: function () {
+              return {
+                modalContent: '确认要删除该期投注吗？'
+              };
+            }
           }
+        });
+        /**
+         * 点击ok和cancel执行的回调
+         * modalInstance.result.then(function () {}, function () {});
+         */
+        modalInstance.result.then(function () {
+          modelDetailsService.deleteBet(bet._id, function (data) {
+            if (data.success === true) {
+              var index = $scope.betList.indexOf(bet);
+              $scope.betList.splice(index, 1);
+              //计算盈利情况
+              commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
+            }
+          });
         });
       };
 
@@ -123,15 +141,33 @@ define(['angular'], function (angular) {
       };
 
       $scope.deleteHistroyItem = function (bet, times) {
-        modelDetailsService.deleteHistroyItem({_id: bet._id, time: times.time}, function (data) {
-          if (data.success === true) {
-            var index = bet.times.indexOf(times);
-            bet.times.splice(index, 1);
-
-            commonMethod.convertBetData(bet);
-            //计算盈利情况
-            commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
+        var modalInstance = $modal.open({
+          backdrop: 'static',
+          templateUrl: '../../views/templates/confirm-modal.html',
+          controller: 'ConfirmModalCtrl',
+          resolve: {
+            config: function () {
+              return {
+                modalContent: '确认要删除历史投资记录吗？'
+              };
+            }
           }
+        });
+        /**
+         * 点击ok和cancel执行的回调
+         * modalInstance.result.then(function () {}, function () {});
+         */
+        modalInstance.result.then(function () {
+          modelDetailsService.deleteHistroyItem({_id: bet._id, time: times.time}, function (data) {
+            if (data.success === true) {
+              var index = bet.times.indexOf(times);
+              bet.times.splice(index, 1);
+
+              commonMethod.convertBetData(bet);
+              //计算盈利情况
+              commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
+            }
+          });
         });
       };
 

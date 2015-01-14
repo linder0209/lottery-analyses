@@ -117,7 +117,8 @@ var zucai = {
 
   updateModelStatus: function (req, res) {
     var id = req.body._id;
-    zucaiCombineDao.removeModel(id, function (err, items) {
+    var status = req.body.status;
+    zucaiCombineDao.updateModelStatus(id, status, function (err) {
       if (err) {
         res.send({
           success: false, errorMessage: err.message

@@ -76,35 +76,6 @@ http://888.qq.com/v1.0/blog/famous.shtml
 
 
 
-
-
-
-
-
-
-
-
-导入导出数据
-
-
-导出
-mongodump -h localhost:27017 -d lottery-analyses -o D:\gitworkspace\lottery-analyses\data\mongodb
-
-导入
-mongorestore -h localhost -db lottery-analyses D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses
-
-
-
-
-
-
-
-
-
-
-
-
-
 情深深雨蒙蒙
 http://winner.okooo.com/model/info?mid=1414658432567
 
@@ -178,9 +149,64 @@ http://winner.okooo.com/model/info?mid=1416876164780
 
 
 
+博道-捞金鱼 与 好梦321 与 北国风光-2元小模 组合投注  32 
+
+http://winner.okooo.com/model/info?mid=1417350736799
+
+running 0、running 2、running 16 与 瞎猫单场终极版-2 组合  20 
+
+http://winner.okooo.com/model/info?mid=1417846437491
+
+足球宝(10 X1)、红透半边天 V2.7 与4元精选模组合 投注  20 
+http://winner.okooo.com/model/info?mid=1418894948723
+
+
+天天-四元-稳定元素 V5  好奇号搏热 与 凌晨零点 组合  20 
+http://winner.okooo.com/model/info?mid=1414589224995
+
+（不再组合，应该把天天-四元-稳定元素 V5去掉）
+
+
+46700
 
 
 
+
+
+手动模型
+
+running0 running2 running 16
+
+红透半边天 V2.7
+
+单关配1号
+
+皇冠165号
+
+空翻*达人0
+
+4元精选模
+
+北国风光-2元小模
+
+平分秋色-4元小模型
+
+
+2015-01-14 共24个模型，分成8组
+
+其中 10个为手动模型（手动模型需要注意一天投几次的情况）
+
+
+
+
+导入导出数据
+
+
+导出
+mongodump -h localhost:27017 -d lottery-analyses -o D:\gitworkspace\lottery-analyses\data\mongodb
+
+导入
+mongorestore -h localhost -db lottery-analyses D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses
 
 
 
