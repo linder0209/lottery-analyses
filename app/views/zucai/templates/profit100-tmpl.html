@@ -1,5 +1,33 @@
 <div class="row">
   <div class="col-sm-offset-1 col-sm-10">
+    <h3>组合投注</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover table-center">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>投注期数</th>
+          <th>历史投入</th>
+          <th>历史回报</th>
+          <th>历史盈利</th>
+          <th>回报率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in modelCombine" ng-class="{'text-red': item.bonus > item.invest, 'text-bold':  item.bonus > item.invest}">
+          <td>{{$index + 1}}</td>
+          <td>{{item.index}}，共 {{item.periods}} 期</td>
+          <td>{{item.invest.toFixed(2)}}</td>
+          <td>{{item.bonus.toFixed(2)}}</td>
+          <td>{{(item.bonus-item.invest).toFixed(2)}}</td>
+          <td>{{(item.bonus/item.invest*100).toFixed(2)+'%'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr/>
+
     <h3>选取赔率最小的两注来投注</h3>
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover table-center">
@@ -17,16 +45,50 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in modelMin" ng-class="{'text-red': item[5] > 4, 'text-bold':  item[5] > 4}">
+        <tr ng-repeat="item in modelMin" ng-class="{'text-red': item.bonus > 4, 'text-bold':  item.bonus > 4}">
           <td>{{$index + 1}}</td>
-          <td>{{item[0]}}</td>
-          <td>{{item[1]}}</td>
-          <td>{{item[2]}}</td>
-          <td>{{item[3]}}</td>
-          <td>{{item[4]}}</td>
-          <td>{{item[5]}}</td>
-          <td>{{(item[5]-item[4]).toFixed(2)}}</td>
-          <td>{{(item[5]/item[4]*100).toFixed(2)+'%'}}</td>
+          <td>{{item.oddsMin}}</td>
+          <td>{{item.oddsMed}}</td>
+          <td>{{item.oddsMax}}</td>
+          <td>{{item.win}}</td>
+          <td>{{item.invest}}</td>
+          <td>{{item.bonus}}</td>
+          <td>{{(item.bonus-item.invest).toFixed(2)}}</td>
+          <td>{{(item.bonus/item.invest*100).toFixed(2)+'%'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr/>
+
+    <h3>选取赔率最大的两注来投注</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover table-center">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>最小赔率</th>
+          <th>中间赔率</th>
+          <th>最大赔率</th>
+          <th>比赛结果</th>
+          <th>历史投入</th>
+          <th>历史回报</th>
+          <th>历史盈利</th>
+          <th>回报率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in modelMax" ng-class="{'text-red': item.bonus > 4, 'text-bold':  item.bonus > 4}">
+          <td>{{$index + 1}}</td>
+          <td>{{item.oddsMin}}</td>
+          <td>{{item.oddsMed}}</td>
+          <td>{{item.oddsMax}}</td>
+          <td>{{item.win}}</td>
+          <td>{{item.invest}}</td>
+          <td>{{item.bonus}}</td>
+          <td>{{(item.bonus-item.invest).toFixed(2)}}</td>
+          <td>{{(item.bonus/item.invest*100).toFixed(2)+'%'}}</td>
         </tr>
         </tbody>
       </table>

@@ -53,8 +53,22 @@ var Profit100 = {
     historyData.forEach(function (item) {
       var bonus1 = item.win === 0 ? item.oddsMin * 2 : item.win === 1 ? item.oddsMed * 2 : 0;
       var bonus2 = item.win === 0 ? 0 : item.win === 1 ? item.oddsMed * 2 : item.oddsMax * 2;
-      modelMin.push([item.oddsMin, item.oddsMed, item.oddsMax, item.win, 4, bonus1]);
-      modelMax.push([item.oddsMin, item.oddsMed, item.oddsMax, item.win, 4, bonus2]);
+      modelMin.push({
+        oddsMin: item.oddsMin,
+        oddsMed: item.oddsMed,
+        oddsMax: item.oddsMax,
+        win: item.win,
+        invest: 4,
+        bonus: bonus1
+      });
+      modelMax.push({
+        oddsMin: item.oddsMin,
+        oddsMed: item.oddsMed,
+        oddsMax: item.oddsMax,
+        win: item.win,
+        invest: 4,
+        bonus: bonus2
+      });
     });
     return {
       modelMin: modelMin,
