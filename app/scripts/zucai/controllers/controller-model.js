@@ -155,7 +155,13 @@ define(['angular'], function (angular) {
           it.invest = parseFloat(it.invest);
         });
 
-        modelService.updateModel(item, function (data) {
+        var _item = {
+          _id: item._id,
+          name: item.name,
+          isAction: item.isAction,
+          combine: item.combine
+        };
+        modelService.updateModel(_item, function (data) {
           if (data.success === true) {
             item.editing = false;
             $scope.editing = false;

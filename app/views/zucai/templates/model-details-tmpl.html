@@ -86,7 +86,10 @@
           <tbody>
           <tr ng-repeat="times in bet.times" ng-class="{'text-red': times.returns > 100, 'text-bold':  bet.returns > 100}">
             <td>第{{times.time}}次</td>
-            <td>{{times.createdDate}}</td>
+            <td>
+              <input type="text" class="form-control" datepicker-popup="''yyyy-MM-dd''" ng-model="times.betDate"
+                     is-open="times.opened" ng-click="openDatePicker($event,times);" style="width:100px;"/>
+            </td>
             <td ng-repeat="content in times.combineContent">
               <input type="text" ng-model="content.value" style="width:80px;"/>
             </td>

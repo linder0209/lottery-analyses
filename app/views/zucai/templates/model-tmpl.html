@@ -123,7 +123,7 @@
         <tr ng-repeat="item in modelList" ng-class="{'text-red': item.returns > 100, 'text-bold':  item.returns > 100}">
           <td>{{$index + 1}}</td>
           <td>
-            <span ng-show="!item.editing" class="ng-hide">{{item.name}}</span>
+            <a ng-show="!item.editing" class="ng-hide" ng-href="/lottery/zucai/{{item._id}}" target="_blank">{{item.name}}</a>
             <input type="text" class="form-control" ng-model="item.name" ng-show="item.editing" class="ng-hide"/>
           </td>
           <td style="padding-left: 0;padding-right: 0;">
@@ -153,7 +153,6 @@
           <td>{{(item.bonus - item.investment).toFixed(2)}}</td>
           <td>{{item.returns.toFixed(2) + '%'}}</td>
           <td>
-            <a ng-href="/lottery/zucai/{{item._id}}" target="_blank">详情</a>
             <a class="ng-hide" href="" ng-click="editModel(item);" ng-show="!item.editing && item.status">编辑</a>
             <a class="ng-hide" href="" ng-click="updateModel(item);" ng-show="item.editing">修改保存</a>
             <a class="ng-hide" href="" ng-click="cancelEditModel(item);" ng-show="item.editing">取消修改</a>

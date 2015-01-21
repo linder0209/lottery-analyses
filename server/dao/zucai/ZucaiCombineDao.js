@@ -102,7 +102,7 @@ ZucaiCombineDao.prototype.saveModel = function (data, callback) {
 ZucaiCombineDao.prototype.updateModel = function (data, callback) {
   var _id = data._id;
   delete data._id;
-  this.model.update({_id: _id}, data, function (err, numberAffected, rawResponse) {
+  this.model.update({_id: _id}, {$set: data}, function (err, numberAffected, rawResponse) {
     return callback(err);
   });
 };
@@ -224,7 +224,7 @@ ZucaiCombineDao.prototype.betRecord = function (modelId, callback) {
             var doc = item._doc;
             doc.createdDate = moment(doc.createdDate).format('YYYY年MM月DD');
             doc.times.forEach(function (it) {
-              it.createdDate = moment(it.createdDate).format('YYYY年MM月DD');
+              it.betDate = it.betDate || moment(it.createdDate).format('YYYY-MM-DD');
             });
             return doc;
           });
@@ -246,10 +246,11 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
     if (err) {
       return callback(err);
     } else {
+      var createDate = new Date();
       var entity = new ZucaiBetModel({
         modelId: modelId,
         period: doc ? doc._doc.period + 1 : 1,
-        createdDate: new Date(),
+        createdDate: createDate,
         combine: data.combine.map(function (item) {
           return {
             name: item.name,
@@ -260,7 +261,8 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
         }),
         times: [{
           time: 1,
-          createdDate: new Date(),
+          createdDate: createDate,
+          betDate: moment(createDate).format('YYYY-MM-DD'),
           combine: data.combine.map(function (item) {
             delete item.name;
             delete item.link;
@@ -275,9 +277,6 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
         } else {
           var doc = product._doc;
           doc.createdDate = moment(product._doc.createdDate).format('YYYY年MM月DD');
-          doc.times.forEach(function (it) {
-            it.createdDate = moment(it.createdDate).format('YYYY年MM月DD');
-          });
           return callback(err, doc);
         }
       });
@@ -353,7 +352,7 @@ ZucaiCombineDao.prototype.updateHistroyItem = function (data, callback) {
 
       if (i !== -1) {
         times[i].combine = data.combine;
-
+        times[i].betDate = data.betDate;
         ZucaiBetModel.update({_id: _id}, {
           $set: {
             times: times,

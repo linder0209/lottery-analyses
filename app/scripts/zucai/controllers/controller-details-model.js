@@ -9,7 +9,7 @@ define(['angular'], function (angular) {
    * Controller of the lotteryanalysesApp
    */
   angular.module('lotteryAnalysesApp.controllers.ModelDetailsCtrl', [])
-    .controller('ModelDetailsCtrl', function ($scope, $timeout, $modal, modelDetailsService, commonMethod) {
+    .controller('ModelDetailsCtrl', function ($scope, $timeout, $modal,$filter, modelDetailsService, commonMethod) {
       $scope.bet = {
         showForm: false
       };
@@ -127,7 +127,7 @@ define(['angular'], function (angular) {
             bonus: parseFloat(times.combineContent[index * 2 + 1].value)
           });
         });
-        modelDetailsService.updateHistroyItem({_id: bet._id, time: times.time, combine: combine}, function (data) {
+        modelDetailsService.updateHistroyItem({_id: bet._id, time: times.time, combine: combine, betDate: $filter('date')(times.betDate, 'yyyy-MM-dd')}, function (data) {
           if (data.success === true) {
             times.combine.forEach(function (item, index) {
               item.invest = combine[index].invest;
@@ -191,6 +191,12 @@ define(['angular'], function (angular) {
             }
           });
         });
+      };
+
+      $scope.openDatePicker = function($event,times) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        times.opened = true;
       };
 
       $(document).on('click','.lottery-collapsing',function(e){
