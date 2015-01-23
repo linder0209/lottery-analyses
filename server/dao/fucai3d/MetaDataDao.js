@@ -913,7 +913,7 @@ MetaDataDao.prototype.saveModelD1 = function (data, callback) {
 
 
 //创建2d、猜2d模型
-MetaDataDao.prototype.winningRateD2 = function (data, callback) {
+MetaDataDao.prototype.winningRateD2 = function (conditions, callback) {
   var combine = conditions.combine;
   var type = conditions.type;
   var filterRecent = conditions.filterRecent;
@@ -950,7 +950,7 @@ MetaDataDao.prototype.winningRateD2 = function (data, callback) {
           _combine.push(underscore.clone(combine[i]));
         }
 
-        if (type === 'bet1d') {
+        if (type === 'bet2d') {
           //先过滤掉历史数据
           for (i = index + 1; i < index + 1 + filterRecent; i++) {
             hisNum = docs[i]._doc.number.split(',');
@@ -977,6 +977,7 @@ MetaDataDao.prototype.winningRateD2 = function (data, callback) {
               bonu += 10;
             }
           }
+
           if (bonu > invest) {
             winning++;
           }

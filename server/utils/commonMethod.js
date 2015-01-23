@@ -140,6 +140,18 @@ var commonMethod = {
       shape = 4;
     }
     return alias ? shapeAlias[shape] : shape;
+  },
+
+  /**
+   * 根据选择的 combine 返回2D组合
+   * @param combine
+   * @param type 1表示百位加十位，2表示百位加个位，3表示十位加个位，undefined表示返回所有组合
+   */
+  get2DCombine: function(combine, type){
+    var D2Combine = [];
+    combine.forEach(function(item){
+
+    });
   }
 };
 

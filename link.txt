@@ -1,16 +1,16 @@
-1¡¢´´½¨ºÍÖµÄ£ÐÍ
+ï»¿1ã€åˆ›å»ºå’Œå€¼æ¨¡åž‹
 
 http://localhost:9000/lottery/fucai3d/summodel
 
-2¡¢´´½¨×éÑ¡6Ä£ÐÍ
+2ã€åˆ›å»ºç»„é€‰6æ¨¡åž‹
 
 http://localhost:9000/lottery/fucai3d/zx6model
 
 
-3¡¢´´½¨D1Ä£ÐÍ
+3ã€åˆ›å»ºD1æ¨¡åž‹
 
 http://localhost:9000/lottery/fucai3d/d1model
 
-4¡¢´´½¨D2Ä£ÐÍ
+4ã€åˆ›å»ºD2æ¨¡åž‹
 
 http://localhost:9000/lottery/fucai3d/d2model
