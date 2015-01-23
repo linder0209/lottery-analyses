@@ -2,39 +2,39 @@
   <div class="col-sm-offset-2 col-sm-8">
     <h3>玩法提示</h3>
     <p class="text-info">
-      1D：至少选择1个号码，投注号码与开奖号码中对应位置的号码相同即中 10元。
+      2D：百、十、个的任意两位号码组合均为一注，单注2元；如开奖号码与投注号码的位置和号码均相同则中奖，奖金 104元。
     </p>
 
     <p class="text-info">
-      猜1D：至少选择1个号码，投注号码与开奖号码中任意位置的号码相同即中 2元，二个位置相同 12元，三个位置相同 230元。
+      猜2D：若当期开奖号码中包含投注的两个号码即中奖。投注为两同号即中 37；两不同号即中 19元。
     </p>
     <hr/>
     <h3>选择要投注的组合</h3>
     <ul class="nav nav-tabs lottery-nav-tabs">
-      <li ng-class="{active: fucai3d.bet1d}"><a ng-href="" ng-click="fucai3d.bet1d=true;">1D</a></li>
-      <li ng-class="{active: !fucai3d.bet1d}"><a ng-href="" ng-click="fucai3d.bet1d=false;">猜1D</a></li>
+      <li ng-class="{active: fucai3d.bet2d}"><a ng-href="" ng-click="fucai3d.bet2d=true;">2D</a></li>
+      <li ng-class="{active: !fucai3d.bet2d}"><a ng-href="" ng-click="fucai3d.bet2d=false;">猜2D</a></li>
     </ul>
 
-    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet1d === true">
+    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet2d === true">
       <h4>百位</h4>
       <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('Hundreds', $event);">
-        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+        <li ng-repeat="i in d2List" data-index="{{i}}">{{i}}</li>
       </ul>
 
       <h4>十位</h4>
       <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('Decade', $event);">
-        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+        <li ng-repeat="i in d2List" data-index="{{i}}">{{i}}</li>
       </ul>
 
       <h4>个位</h4>
       <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('SingleDigits', $event);">
-        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+        <li ng-repeat="i in d2List" data-index="{{i}}">{{i}}</li>
       </ul>
     </div>
 
-    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet1d !== true">
+    <div class="ng-hide margin-top-md" ng-show="fucai3d.bet2d !== true">
       <ul class="list-unstyled number-list clearfix" ng-click="selectNumber('', $event);">
-        <li ng-repeat="i in d1List" data-index="{{i}}">{{i}}</li>
+        <li ng-repeat="i in d2List" data-index="{{i}}">{{i}}</li>
       </ul>
     </div>
 

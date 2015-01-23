@@ -304,6 +304,7 @@ ZucaiCombineDao.prototype.deleteBet = function (_id, callback) {
 ZucaiCombineDao.prototype.addInvestItem = function (data, callback) {
   var _id = data._id;
   delete data._id;
+  var createdDate = new Date();
   ZucaiBetModel.findOne({_id: _id}, {_id: 1, times: 1}, function (err, doc) {
     if (err) {
       return callback(err);
@@ -311,7 +312,8 @@ ZucaiCombineDao.prototype.addInvestItem = function (data, callback) {
       var times = doc._doc.times;
       var time = {
         time: times.length > 0 ? (times[times.length - 1].time + 1) : 1,
-        createdDate: new Date(),
+        createdDate: createdDate,
+        betDate: moment(createdDate).format('YYYY-MM-DD'),
         combine: data.combine
       };
       times.push(time);
@@ -322,7 +324,6 @@ ZucaiCombineDao.prototype.addInvestItem = function (data, callback) {
           updatedDate: new Date()
         }
       }, function (err, numberAffected, rawResponse) {
-        time.createdDate = moment(time.createdDate).format('YYYY年MM月DD');
         return callback(null, time);
       });
     }

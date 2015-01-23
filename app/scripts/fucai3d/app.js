@@ -1,7 +1,7 @@
 /*jshint unused: vars */
 define(['angular', 'controllers/controller-import', 'controllers/controller-model',
-    'controllers/controller-statistics','controllers/controller-analyses', 'controllers/controller-main']/*deps*/,
-  function (angular, ImportCtrl, ModelCtrl,StatisticsCtrl, AnalysesCtrl, MainCtrl)/*invoke*/ {
+    'controllers/controller-statistics','controllers/controller-analyses', '../controllers/controller-main']/*deps*/,
+  function (angular, ImportCtrl, ModelCtrl, StatisticsCtrl, AnalysesCtrl, MainCtrl)/*invoke*/ {
   'use strict';
 
   /**

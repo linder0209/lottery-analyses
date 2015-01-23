@@ -910,3 +910,149 @@ MetaDataDao.prototype.saveModelD1 = function (data, callback) {
     callback(err);
   });
 };
+
+
+//创建2d、猜2d模型
+MetaDataDao.prototype.winningRateD2 = function (data, callback) {
+  var combine = conditions.combine;
+  var type = conditions.type;
+  var filterRecent = conditions.filterRecent;
+  filterRecent = filterRecent ? parseInt(filterRecent) : 0;
+  //默认统计100期数据
+  var period = 100;
+  period += filterRecent;
+
+  this.model.find({}, {_id: 1, period: 1, number: 1}, {
+    sort: {year: -1, period: -1},
+    limit: period
+  }, function (err, docs) {
+    if (err) {
+      callback(err);
+    } else {
+      var _docs = underscore.clone(docs).slice(0, 100);
+
+      var winning = 0;
+      var winningRatePercent;
+      var returnsPercent;
+      var investment = 0;//总投入
+      var bonus = 0;//总回报
+      var invest = 0;//每次投入
+      var bonu = 0;//每次回报
+
+      _docs.forEach(function (doc, index) {
+        var item = doc._doc;
+        var number = item.number.split(',');
+        var _combine = [];
+        var i, j, k;
+        var hisNum;
+
+        for (i = 0; i < 3; i++) {
+          _combine.push(underscore.clone(combine[i]));
+        }
+
+        if (type === 'bet1d') {
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine[j].indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[j][k] = false;
+              }
+            }
+          }
+
+          for (j = 0; j < 3; j++) {
+            /*jshint -W083*/
+            _combine[j] = _combine[j].filter(function (item) {
+              return item !== false;
+            });
+          }
+          invest = underscore.flatten(_combine).length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          for (j = 0; j < 3; j++) {
+            if (_combine[j].indexOf(number[j] - 0) !== -1) {
+              bonu += 10;
+            }
+          }
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }else{
+          //先过滤掉历史数据
+          for (i = index + 1; i < index + 1 + filterRecent; i++) {
+            hisNum = docs[i]._doc.number.split(',');
+            for (j = 0; j < 3; j++) {
+              k = _combine.indexOf(hisNum[j] - 0);
+              if (k !== -1) {
+                _combine[k] = false;
+              }
+            }
+          }
+
+          _combine = _combine.filter(function (item) {
+            return item !== false;
+          });
+          invest = _combine.length * 2;//投入
+
+          //比较本期是否中奖
+          bonu = 0;
+          number = number.sort();
+          var shape = commonMethod.getShape(item.number);
+          if(shape === 1){//三个号一样
+            if (_combine.indexOf(number[0] - 0) !== -1) {
+              bonu = 320;
+            }
+          }else if(shape === 2) {//两个号一样
+            if(number[0] === number[1]){
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[2] - 0) !== -1) {
+                bonu += 2;
+              }
+            }else if(number[1] === number[2]){
+              if (_combine.indexOf(number[1] - 0) !== -1) {
+                bonu += 12;
+              }
+              if (_combine.indexOf(number[0] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }else{
+            for (j = 0; j < 3; j++) {
+              if (_combine.indexOf(number[j] - 0) !== -1) {
+                bonu += 2;
+              }
+            }
+          }
+
+          if (bonu > invest) {
+            winning++;
+          }
+          investment += invest;//总投入
+          bonus += bonu;//总回报
+        }
+      });
+      winningRatePercent = winning;
+      returnsPercent = bonus === 0 ? 0 : bonus / investment * 100;
+
+      callback(null, {
+        winningRatePercent: winningRatePercent,
+        returnsPercent: returnsPercent
+      });
+    }
+  });
+};
+
+MetaDataDao.prototype.winningInfoD2 = function (data, callback) {
+
+};
+
+MetaDataDao.prototype.saveModelD2 = function (data, callback) {
+
+};

@@ -1,0 +1,16 @@
+1、创建和值模型
+
+http://localhost:9000/lottery/fucai3d/summodel
+
+2、创建组选6模型
+
+http://localhost:9000/lottery/fucai3d/zx6model
+
+
+3、创建D1模型
+
+http://localhost:9000/lottery/fucai3d/d1model
+
+4、创建D2模型
+
+http://localhost:9000/lottery/fucai3d/d2model

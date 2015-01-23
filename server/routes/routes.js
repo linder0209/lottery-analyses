@@ -6,6 +6,7 @@ var fucai3dAnalyses = require('./lottery/fucai3d/analyses');
 var fucai3dSumModel =  require('./lottery/fucai3d/sum-model');
 var fucai3dZx6Model =  require('./lottery/fucai3d/zx6-model');
 var fucai3dD1Model =  require('./lottery/fucai3d/d1-model');
+var fucai3dD2Model =  require('./lottery/fucai3d/d2-model');
 var zucai = require('./lottery/zucai/index');
 
 
@@ -27,6 +28,7 @@ module.exports = function (app) {
   app.use('/lottery/fucai3d/summodel', fucai3dSumModel);
   app.use('/lottery/fucai3d/zx6model', fucai3dZx6Model);
   app.use('/lottery/fucai3d/d1model', fucai3dD1Model);
+  app.use('/lottery/fucai3d/d2model', fucai3dD2Model);
   app.use('/lottery/zucai', zucai);
 
 };
