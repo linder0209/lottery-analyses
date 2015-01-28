@@ -245,6 +245,21 @@ var zucai = {
     });
   },
 
+  restartBet: function (req, res) {
+    var _id = req.body._id;
+    zucaiCombineDao.restartBet(_id, function (err) {
+      if (err) {
+        res.send({
+          success: false, errorMessage: err.message
+        });
+      } else {
+        res.send({
+          success: true
+        });
+      }
+    });
+  },
+
   profit100: function (req, res) {
     res.render('lottery/zucai/profit100', {title: '分析100%盈利模型'});
   },
@@ -284,6 +299,7 @@ router.post('/addInvestItem', zucai.addInvestItem);
 router.post('/updateHistroyItem', zucai.updateHistroyItem);
 router.post('/deleteHistroyItem', zucai.deleteHistroyItem);
 router.post('/endBet', zucai.endBet);
+router.post('/restartBet', zucai.restartBet);
 
 /**
  * 足彩投注

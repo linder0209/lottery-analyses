@@ -29,8 +29,10 @@ define(['angular'], function (angular) {
         },
         endBet: function (data, success) {
           lotteryHttpService.post('endBet', data).then(success);
+        },
+        restartBet: function (data, success) {
+          lotteryHttpService.post('restartBet', data).then(success);
         }
-
       };
     }])
     .factory('commonMethod', function (lotteryHttpService) {

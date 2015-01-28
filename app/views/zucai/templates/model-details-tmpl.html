@@ -99,7 +99,9 @@
             <td>{{times.returns.toFixed(2) + '%'}}</td>
             <td ng-if="$index == 0" rowspan="{{bet.times.length}}">
                <button class="btn btn-info btn-sm" ng-if="!bet.isEnd" ng-click="endBet(bet);">结束</button>
-              {{bet.isEnd?'是':''}}</td>
+              <span style="vertical-align: middle;margin-right: 5px;">{{bet.isEnd?'是':''}}</span>
+              <button class="btn btn-info btn-sm" ng-if="bet.isEnd" ng-click="restartBet(bet);">重新开始</button>
+            </td>
             <td>
               <div ng-if="!bet.isEnd">
                 <button class="btn btn-info btn-sm" ng-click="updateHistroyItem(bet, times);">修改</button>

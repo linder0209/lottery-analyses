@@ -112,7 +112,7 @@ ZucaiCombineDao.prototype.updateModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.modelList = function (callback) {
-  var promise = this.model.find({}, {}, {sort: {status: -1}}).exec();
+  var promise = this.model.find({}, {}, {sort: {status: -1, id: -1}}).exec();
   var modelItems = [];
   promise.then(function (zucaiCombines) {
     modelItems = zucaiCombines.map(function (item) {
@@ -451,7 +451,54 @@ ZucaiCombineDao.prototype.endBet = function (_id, callback) {
       return callback(err);
     }
   });
+};
 
+
+/**
+ * 重新开始投注
+ * @param _id
+ * @param callback
+ */
+ZucaiCombineDao.prototype.restartBet = function (_id, callback) {
+  var model = this.model;
+
+  ZucaiBetModel.update({_id: _id}, {
+    $set: {
+      isEnd: false,
+      updatedDate: new Date()
+    }
+  }, function (err, numberAffected, rawResponse) {
+    if (err === null) {
+      //修改该模型历史投入和历史回报
+      ZucaiBetModel.findOne({_id: _id}, {modelId: 1, times: 1}, function (err, doc) {
+        if (err === null) {
+          var modelId = doc._doc.modelId;
+          var times = doc._doc.times;
+          var investment = 0;
+          var bonus = 0;
+          times.forEach(function (item) {
+            item.combine.forEach(function (it) {
+              investment += it.invest;
+              bonus += it.bonus;
+            });
+          });
+
+          model.update({_id: modelId}, {
+            $inc: {
+              investment: -investment,
+              bonus: -bonus
+            }
+          }, function (err, numberAffected, rawResponse) {
+            return callback(err);
+          });
+        } else {
+          return callback(err);
+        }
+      });
+    } else {
+      return callback(err);
+    }
+  });
 };
 
 

@@ -193,6 +193,30 @@ define(['angular'], function (angular) {
         });
       };
 
+
+      $scope.restartBet = function(bet){
+        var modalInstance = $modal.open({
+          backdrop: 'static',
+          templateUrl: '../../views/templates/confirm-modal.html',
+          controller: 'ConfirmModalCtrl',
+          resolve: {
+            config: function () {
+              return {
+                modalContent: '确认要重新开始投注吗？'
+              };
+            }
+          }
+        });
+        modalInstance.result.then(function () {
+          modelDetailsService.restartBet({_id: bet._id}, function (data) {
+            if (data.success === true) {
+              bet.isEnd = false;
+            }
+          });
+        });
+      };
+
+
       $scope.openDatePicker = function($event,times) {
         $event.preventDefault();
         $event.stopPropagation();
