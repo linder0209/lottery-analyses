@@ -110,7 +110,10 @@
             </td>
           </tr>
           <tr ng-class="{'text-red': bet.returns > 100, 'text-bold':  bet.returns > 100}">
-            <td colspan="{{bet.combine.length * 2 + 2}}" style="text-align: right;" class="text-bold text-info">合计</td>
+            <td colspan="2" style="text-align: right;" class="text-bold text-info">合计</td>
+            <td class="text-bold text-info" ng-repeat="subTotal in bet.combineSubTotal" style="white-space: nowrap;">
+              {{subTotal.value.toFixed(2)}} <br/> {{$index%2==0?'': '(盈利：' + (subTotal.value-bet.combineSubTotal[$index-1].value).toFixed(2) + ')'}}
+            </td>
             <td class="text-bold text-info">{{bet.historyInvest.toFixed(2)}}</td>
             <td class="text-bold text-info">{{bet.historyBonus.toFixed(2)}}</td>
             <td class="text-bold text-info">{{(bet.historyBonus-bet.historyInvest).toFixed(2)}}</td>

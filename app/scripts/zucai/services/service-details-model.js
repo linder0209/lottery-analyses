@@ -59,13 +59,16 @@ define(['angular'], function (angular) {
           //历史总回报
           item.historyBonus = 0;
 
+          //历史每个模型投入和回报合计
+          item.combineSubTotal = [];
+
           item.times.forEach(function (it) {
             it.combineContent = [];
             //历史投入
             it.historyInvest = 0;
             //历史回报
             it.historyBonus = 0;
-            it.combine.forEach(function (subIt) {
+            it.combine.forEach(function (subIt, index) {
               it.combineContent.push({value: subIt.invest, id: 'content-' + uniqueKeys++},
                 {value: subIt.bonus, id: 'content-' + uniqueKeys++});
               it.historyInvest += subIt.invest;
@@ -73,6 +76,18 @@ define(['angular'], function (angular) {
 
               item.historyInvest += subIt.invest;
               item.historyBonus += subIt.bonus || 0;
+              if (item.combineSubTotal[index * 2] === undefined) {
+                item.combineSubTotal[index * 2] = {
+                  value: 0
+                };
+              }
+              if (item.combineSubTotal[index * 2 + 1] === undefined) {
+                item.combineSubTotal[index * 2 + 1]  = {
+                  value: 0
+                };
+              }
+              item.combineSubTotal[index * 2].value += subIt.invest || 0;
+              item.combineSubTotal[index * 2 + 1].value += subIt.bonus || 0;
             });
 
             //历史回报
