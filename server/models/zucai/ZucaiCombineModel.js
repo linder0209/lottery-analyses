@@ -15,7 +15,8 @@ var schema = new Schema({
   investment: {type: Number, default: 0},
   bonus: {type: Number, default: 0},
   isAction: {type: Boolean, default: true},//是否为实战模型，默认为是
-  status: {type: Boolean, default: true}//状态，false 为停止状态，true 为激活状态
+  status: {type: Boolean, default: true},//状态，false 为停止状态，true 为激活状态
+  sequence : {type: Number, default: 0}//排序，序号大的排在第一位
 });
 
 /**

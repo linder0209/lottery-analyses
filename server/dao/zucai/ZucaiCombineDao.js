@@ -112,10 +112,11 @@ ZucaiCombineDao.prototype.updateModel = function (data, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.modelList = function (callback) {
-  var promise = this.model.find({}, {}, {sort: {status: -1, id: -1}}).exec();
+  var promise = this.model.find({}, {}, {sort: {status: -1, sequence: -1}}).exec();
   var modelItems = [];
   promise.then(function (zucaiCombines) {
     modelItems = zucaiCombines.map(function (item) {
+      item._doc.sequence = item._doc.sequence || 0;
       return item._doc;
     });
 
@@ -500,6 +501,24 @@ ZucaiCombineDao.prototype.restartBet = function (_id, callback) {
     }
   });
 };
+
+/**
+ * 排序
+ * @param _id
+ * @param desc
+ * @param callback
+ */
+ZucaiCombineDao.prototype.sequence = function (_id, desc, callback) {
+  this.model.update({_id: _id}, {
+    $inc: {
+      sequence: desc ? 1 : -1
+    }
+  }, function (err, numberAffected, rawResponse) {
+    return callback(err);
+  });
+
+};
+
 
 
 

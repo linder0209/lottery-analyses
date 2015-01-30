@@ -205,6 +205,30 @@ define(['angular'], function (angular) {
         });
       };
 
+      /**
+       * 排序
+       * @param desc true 为升序，false为降序
+       */
+      $scope.sequence = function (item, desc) {
+        item.sequence = item.sequence + (desc ? 1 : -1);
+        var params = {
+          _id: item._id,
+          desc: desc
+        };
+        modelService.sequence(params, function (data) {
+          if (data.success === true) {
+            //重新排序
+            $scope.modelList.sort(function (current, next) {
+              if (current.status === false) {
+                return -1;
+              } else {
+                return next.sequence > current.sequence ? 1 : -1;
+              }
+            });
+          }
+        });
+      };
+
       $scope.addFavoriteModel = function () {
         $modal.open({
           backdrop: 'static',// 设置为 static 表示当鼠标点击页面其他地方，modal不会关闭

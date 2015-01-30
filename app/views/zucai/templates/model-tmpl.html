@@ -108,6 +108,7 @@
         <thead>
         <tr>
           <th>序号</th>
+          <th>排序</th>
           <th>模型名称</th>
           <th>模型组合</th>
           <th>实战模型</th>
@@ -122,6 +123,10 @@
         <tbody>
         <tr ng-repeat="item in modelList" ng-class="{'text-red': item.returns > 100, 'text-bold':  item.returns > 100}">
           <td>{{$index + 1}}</td>
+          <td style="width:100px;">
+            <a href="" ng-click="sequence(item,true);"><span class="glyphicon glyphicon-arrow-up"></span></a>
+            <a class="margin-left-sm" href="" ng-click="sequence(item,false);"><span class="glyphicon glyphicon-arrow-down"></span></a>
+          </td>
           <td>
             <a ng-show="!item.editing" class="ng-hide" ng-href="/lottery/zucai/{{item._id}}" target="_blank">{{item.name}}</a>
             <input type="text" class="form-control" ng-model="item.name" ng-show="item.editing" class="ng-hide"/>

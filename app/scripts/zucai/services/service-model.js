@@ -27,6 +27,9 @@ define(['angular'], function (angular) {
         },
         modelList: function (success) {
           lotteryHttpService.get('modelList', null).then(success);
+        },
+        sequence: function (data, success) {
+          lotteryHttpService.post('sequence', data).then(success);
         }
       };
     }]);
