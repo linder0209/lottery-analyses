@@ -220,9 +220,17 @@ define(['angular'], function (angular) {
             //重新排序
             $scope.modelList.sort(function (current, next) {
               if (current.status === false) {
-                return -1;
+			    if(next.status === false){
+				   return next.sequence > current.sequence ? 1 : -1;
+				}else{
+				  return -1;
+				}
               } else {
-                return next.sequence > current.sequence ? 1 : -1;
+			    if(next.status === true){
+				   return next.sequence > current.sequence ? 1 : -1;
+				}else{
+				  return 1;
+				}
               }
             });
           }
