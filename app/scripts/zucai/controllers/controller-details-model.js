@@ -9,7 +9,7 @@ define(['angular'], function (angular) {
    * Controller of the lotteryanalysesApp
    */
   angular.module('lotteryAnalysesApp.controllers.ModelDetailsCtrl', [])
-    .controller('ModelDetailsCtrl', function ($scope, $timeout, $modal,$filter, modelDetailsService, commonMethod) {
+    .controller('ModelDetailsCtrl', function ($scope, $timeout, $modal, $filter, modelDetailsService, commonMethod) {
       $scope.bet = {
         showForm: false
       };
@@ -30,7 +30,7 @@ define(['angular'], function (angular) {
           $scope.betList = data.betList;
           //计算盈利情况
           commonMethod.calculateProfitStat($scope.betList, $scope.profitStat);
-        }else{
+        } else {
           $scope.$parent.alerts = [
             {type: 'danger', message: data.errorMessage}
           ];
@@ -45,7 +45,8 @@ define(['angular'], function (angular) {
               _id: item._id,
               name: item.name,
               link: item.link,
-              invest: parseFloat(item.invest)
+              invest: parseFloat(item.invest),
+              betLink: item.betLink
             };
           })
         };
@@ -127,7 +128,12 @@ define(['angular'], function (angular) {
             bonus: parseFloat(times.combineContent[index * 2 + 1].value)
           });
         });
-        modelDetailsService.updateHistroyItem({_id: bet._id, time: times.time, combine: combine, betDate: $filter('date')(times.betDate, 'yyyy-MM-dd')}, function (data) {
+        modelDetailsService.updateHistroyItem({
+          _id: bet._id,
+          time: times.time,
+          combine: combine,
+          betDate: $filter('date')(times.betDate, 'yyyy-MM-dd')
+        }, function (data) {
           if (data.success === true) {
             times.combine.forEach(function (item, index) {
               item.invest = combine[index].invest;
@@ -171,7 +177,7 @@ define(['angular'], function (angular) {
         });
       };
 
-      $scope.endBet = function(bet){
+      $scope.endBet = function (bet) {
         var modalInstance = $modal.open({
           backdrop: 'static',
           templateUrl: '../../views/templates/confirm-modal.html',
@@ -194,7 +200,7 @@ define(['angular'], function (angular) {
       };
 
 
-      $scope.restartBet = function(bet){
+      $scope.restartBet = function (bet) {
         var modalInstance = $modal.open({
           backdrop: 'static',
           templateUrl: '../../views/templates/confirm-modal.html',
@@ -216,14 +222,46 @@ define(['angular'], function (angular) {
         });
       };
 
+      //修改投注 Link
+      $scope.editBetLink = function (combines, combine) {
+        var editing;
+        combines.forEach(function (item) {
+          if (item.editing === true) {
+            editing = true;
+            return;
+          }
+        });
+        if (editing === true) {
+          return;
+        }
+        combine.editing = true;
+      };
 
-      $scope.openDatePicker = function($event,times) {
+      $scope.updateBetLink = function (betId, combine) {
+        modelDetailsService.updateBetLink({
+          betId: betId,
+          combine: {
+            _id: combine._id,
+            betLink: combine.betLink
+          }
+        }, function (data) {
+          if (data.success === true) {
+            combine.editing = false;
+          }
+        });
+      };
+
+      $scope.cancelBetLink = function (combine) {
+        combine.editing = false;
+      };
+
+      $scope.openDatePicker = function ($event, times) {
         $event.preventDefault();
         $event.stopPropagation();
         times.opened = true;
       };
 
-      $(document).on('click','.lottery-collapsing',function(e){
+      $(document).on('click', '.lottery-collapsing', function (e) {
         var $el = $(e.currentTarget);
         $el.toggleClass('extend');
         $el.siblings().toggle();

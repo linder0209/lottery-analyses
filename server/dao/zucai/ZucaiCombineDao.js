@@ -209,7 +209,7 @@ ZucaiCombineDao.prototype.updateModelStatus = function (_id, status, callback) {
  * @param callback
  */
 ZucaiCombineDao.prototype.betRecord = function (modelId, callback) {
-  this.model.findOne({_id: modelId}, {}, function (err, doc) {
+  this.model.findOne({_id: modelId}, {_id: 1, name: 1, combine: 1, status: 1}, function (err, doc) {
     if (err) {
       return callback(err);
     } else {
@@ -254,10 +254,11 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
         createdDate: createDate,
         combine: data.combine.map(function (item) {
           return {
+            _id: item._id,
             name: item.name,
             link: item.link,
             invest: item.invest,
-            _id: item._id
+            betLink: item.betLink
           };
         }),
         times: [{
@@ -267,6 +268,7 @@ ZucaiCombineDao.prototype.saveBet = function (data, callback) {
           combine: data.combine.map(function (item) {
             delete item.name;
             delete item.link;
+            delete item.betLink;
             return item;
           })
         }]
@@ -518,6 +520,37 @@ ZucaiCombineDao.prototype.sequence = function (_id, desc, callback) {
   });
 
 };
+
+/**
+ * 修改投注link
+ * @param data
+ * @param callback
+ */
+ZucaiCombineDao.prototype.updateBetLink = function (data, callback) {
+  var betId = data.betId;
+  var combine = data.combine;
+
+  ZucaiBetModel.findOne({_id: betId}, {_id: 1, combine: 1}, function (err, doc) {
+    if (err) {
+      return callback(err);
+    } else {
+      var _combine = doc._doc.combine;
+      _combine.forEach(function (item) {
+        if (item._id === combine._id) {
+          item.betLink = combine.betLink;
+          return;
+        }
+      });
+
+      ZucaiBetModel.update({_id: betId}, {$set: {combine: _combine}}, function (err, numberAffected, rawResponse) {
+        return callback(err);
+      });
+
+    }
+  });
+
+};
+
 
 
 

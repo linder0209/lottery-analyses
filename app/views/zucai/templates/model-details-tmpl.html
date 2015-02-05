@@ -13,13 +13,17 @@
       </div>
       <dl class="dl-horizontal zucai-dl-horizontal">
         <dt>收藏模型名称</dt>
-        <dd>投注金额</dd>
+        <dd class="clearfix">
+          <div class="pull-left" style="width: 40%;"> 投注金额 </div>
+          <div class="pull-left margin-left-lg" style="width: 40%;">投注链接</div>
+        </dd>
       </dl>
       <dl class="dl-horizontal zucai-dl-horizontal" ng-repeat="model in modelMeta.combine">
         <dt>{{model.name}}</dt>
-        <dd popover="每期参考投入金额"
-        popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top">
-          <input type="text" class="form-control" ng-model="model.invest" style="width: 50%;"/>
+        <dd class="clearfix">
+          <input type="text" class="form-control pull-left" ng-model="model.invest" style="width: 40%;"
+                 popover="每期参考投入金额" popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="top"/>
+          <input type="text" class="form-control pull-left margin-left-lg" ng-model="model.betLink" style="width: 40%;"/>
         </dd>
       </dl>
       <div class="form-group">
@@ -54,11 +58,31 @@
     </div>
 
     <h2 class="margin-top-lg"><span class="text-bold">{{modelMeta.name}}</span> 投注记录</h2>
+
     <div class="lottery-box-layout" ng-repeat="bet in betList">
       <div class="lottery-collapsing"></div>
       <h4>
-        第{{bet.period}}期  {{bet.createdDate}}
-        <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="bet.times.length === 0" ng-click="deleteBet(bet);">删除该期投注</button>
+        第{{bet.period}}期 {{bet.createdDate}}
+        <span ng-repeat="combine in bet.combine" class="margin-left-md">
+
+          <a class="ng-hide" href="{{combine.betLink}}" target="_blank" ng-show="!combine.editing">查看 <strong>{{combine.name}}</strong> 投注详情</a>
+
+          <input type="text" name="betLink" ng-model="combine.betLink" ng-show="combine.editing" style="font-size: 12px;padding: 5px;width:400px;">
+
+          <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="!combine.editing"
+                  ng-click="editBetLink(bet.combine,combine);">编辑
+          </button>
+          <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="combine.editing"
+                  ng-click="updateBetLink(bet._id, combine);">修改
+          </button>
+          <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="combine.editing"
+                  ng-click="cancelBetLink(combine);">取消
+          </button>
+        </span>
+
+        <button class="btn btn-info btn-sm margin-left-md" style="margin-top: 0;" ng-if="bet.times.length === 0"
+                ng-click="deleteBet(bet);">删除该期投注
+        </button>
       </h4>
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover table-center">
@@ -84,7 +108,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="times in bet.times" ng-class="{'text-red': times.returns > 100, 'text-bold':  bet.returns > 100}">
+          <tr ng-repeat="times in bet.times"
+              ng-class="{'text-red': times.returns > 100, 'text-bold':  bet.returns > 100}">
             <td>第{{times.time}}次</td>
             <td>
               <input type="text" class="form-control" datepicker-popup="''yyyy-MM-dd''" ng-model="times.betDate"
@@ -98,7 +123,7 @@
             <td>{{(times.historyBonus-times.historyInvest).toFixed(2)}}</td>
             <td>{{times.returns.toFixed(2) + '%'}}</td>
             <td ng-if="$index == 0" rowspan="{{bet.times.length}}">
-               <button class="btn btn-info btn-sm" ng-if="!bet.isEnd" ng-click="endBet(bet);">结束</button>
+              <button class="btn btn-info btn-sm" ng-if="!bet.isEnd" ng-click="endBet(bet);">结束</button>
               <span style="vertical-align: middle;margin-right: 5px;">{{bet.isEnd?'是':''}}</span>
               <button class="btn btn-info btn-sm" ng-if="bet.isEnd" ng-click="restartBet(bet);">重新开始</button>
             </td>
@@ -112,7 +137,8 @@
           <tr ng-class="{'text-red': bet.returns > 100, 'text-bold':  bet.returns > 100}">
             <td colspan="2" style="text-align: right;" class="text-bold text-info">合计</td>
             <td class="text-bold text-info" ng-repeat="subTotal in bet.combineSubTotal" style="white-space: nowrap;">
-              {{subTotal.value.toFixed(2)}} <br/> {{$index%2==0?'': '(盈利：' + (subTotal.value-bet.combineSubTotal[$index-1].value).toFixed(2) + ')'}}
+              {{subTotal.value.toFixed(2)}} <br/> {{$index%2==0?'': '(盈利：' +
+              (subTotal.value-bet.combineSubTotal[$index-1].value).toFixed(2) + ')'}}
             </td>
             <td class="text-bold text-info">{{bet.historyInvest.toFixed(2)}}</td>
             <td class="text-bold text-info">{{bet.historyBonus.toFixed(2)}}</td>

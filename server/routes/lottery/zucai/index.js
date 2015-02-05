@@ -276,6 +276,21 @@ var zucai = {
     });
   },
 
+  updateBetLink: function (req, res) {
+    var data = req.body;
+    zucaiCombineDao.updateBetLink(data, function (err) {
+      if (err) {
+        res.send({
+          success: false, errorMessage: err.message
+        });
+      } else {
+        res.send({
+          success: true
+        });
+      }
+    });
+  },
+
   profit100: function (req, res) {
     res.render('lottery/zucai/profit100', {title: '分析100%盈利模型'});
   },
@@ -317,6 +332,7 @@ router.post('/deleteHistroyItem', zucai.deleteHistroyItem);
 router.post('/endBet', zucai.endBet);
 router.post('/restartBet', zucai.restartBet);
 router.post('/sequence', zucai.sequence);
+router.post('/updateBetLink', zucai.updateBetLink);
 
 
 /**

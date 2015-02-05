@@ -18,6 +18,7 @@ var schema = new Schema({
   //数据模型为：[{time: 1, createdDate: new Date, betDate: '2015-01-21', combine: [{invest: 50, bonus: 200, _id:'54aa5ef90158f7d83bbe7d89'}}]]
   times: {type: Array},
   isEnd: {type: Boolean, default: false},
+  link: {type: String},// 对应投注记录链接
   createdDate: { type: Date, default: Date.now },
   updatedDate: { type: Date, default: Date.now }
 });

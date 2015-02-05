@@ -32,6 +32,9 @@ define(['angular'], function (angular) {
         },
         restartBet: function (data, success) {
           lotteryHttpService.post('restartBet', data).then(success);
+        },
+        updateBetLink: function (data, success) {
+          lotteryHttpService.post('updateBetLink', data).then(success);
         }
       };
     }])
