@@ -127,6 +127,11 @@ http://winner.okooo.com/model/info?mid=1417461400353
 如果当天可以多投注几次，那么就投注几次
 
 
+单关模式：
+
+选择其中一单关，胜平负赔率比较大的
+
+赔率最小的4倍，赔率最大的1倍，搭配来投注
 
 
 
@@ -393,10 +398,6 @@ mongorestore -h localhost -db lottery-analyses-new D:\gitworkspace\lottery-analy
 单关配1号
 
 发财8元模型
-
-
-
-
 
 
 
