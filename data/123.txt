@@ -21,12 +21,8 @@ http://winner.okooo.com/model/info?mid=1419059485702
 
 http://winner.okooo.com/model/info?mid=1417461400353
 
+选择胜赔率比较低的，然后选择让球胜负组合优化
 
-
-
-优化博热二号
-
-每天选择最后两场让球投注，先选择所有的投注，然后按概率最高截取4注，然平均优化
 
 
 
@@ -72,6 +68,17 @@ http://winner.okooo.com/model/info?mid=1417461400353
 
 胜平负模型3： 负负、胜平、平胜
 
+神州一号：胜胜、胜负、负胜
+
+
+分析胜平负投注来看，胜胜、平负和 胜负出现的几率最大
+
+神州一号：胜胜、胜负、负胜
+
+天宫飞船：胜胜、平负和 胜负
+
+嫦娥一号
+
 
 还可以采用胜和不败来投注，分成两组
 
@@ -95,15 +102,41 @@ http://winner.okooo.com/model/info?mid=1417461400353
              如果其中有一场有相等的，那么其中一场相等的与另一场让球的组合投注
 
 
-如果当天可以多投注几次，那么就投注几次
+胜负模型(跟 胜不败模型 选择场次一样)
+
+然后选择胜胜，胜负来优化投注
+
+天天飘红模型（跟 胜不败模型 选择场次一样，选择胜和让球负，胜胜组合）
 
 
-单关模式：
+参考竞彩网 投注
 
-选择其中一单关，胜平负赔率比较大的
+持续盈利模型-2元版
 
-赔率最小的4倍，赔率最大的1倍，搭配来投注
+http://www.sporttery.cn/football/jczj/2015/0215/141640.html
 
+
+持续盈利模型-4元版
+
+http://www.sporttery.cn/football/jczj/2015/0211/140767.html
+
+http://www.sporttery.cn/football/jczj/2015/0213/141149.html
+
+http://www.sporttery.cn/football/jczj/2015/0215/141634.html
+
+
+超级模型（高风险）：参考熊超2串1选择 4串1
+
+http://www.sporttery.cn/football/jczj/2015/0213/141141.html
+http://www.sporttery.cn/football/jczj/2015/0213/141149.html
+
+火星人的思维        8元模型
+
+（参考爱彩推荐套餐1）
+
+木星人的思维
+
+（参考爱彩推荐套餐1）16元模型
 
 
 宝哥分析来投注
@@ -248,9 +281,11 @@ mongodump -h localhost:27017 -d lottery-analyses -o D:\gitworkspace\lottery-anal
 mongodump -h localhost:27017 -d lottery-analyses-new -o D:\gitworkspace\lottery-analyses\data\mongodb
 
 导入
-mongorestore -h localhost -db lottery-analyses D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses
+mongorestore -h localhost -d lottery-analyses D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses
 
 mongorestore -h localhost -db lottery-analyses-new D:\gitworkspace\lottery-analyses\data\mongodb\lottery-analyses-new
+
+
 
 
 之前购买：232
