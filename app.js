@@ -63,7 +63,7 @@ if ('development' === app.get('env')) {
     // view engine setup
     app.set('views', path.join(__dirname, 'app'));
     app.use(express.static(path.join(__dirname, 'app')));
-    process.env.PORT = 9000;
+    process.env.PORT = 9001;
 } else {
     app.use(require('less-middleware')(path.join(__dirname, 'webapp')));
     app.set('views', path.join(__dirname, 'webapp'));

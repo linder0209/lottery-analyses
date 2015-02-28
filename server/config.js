@@ -25,7 +25,7 @@ module.exports = {
   mongodb: {
     host: 'localhost',
     port: '27017',
-    database: 'lottery-analyses-new',
+    database: 'lottery-analyses-hm',
     user: '',
     pass: ''
   },
